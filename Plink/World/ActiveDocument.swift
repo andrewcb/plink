@@ -7,8 +7,14 @@
 //
 
 import Cocoa
+import CoreAudio
+import AudioToolbox
 
-class Document: NSDocument {
+/**
+ The ActiveDocument is the open document in memory, and the objects constructed from it; it owns things such as the audio setup and transport which do not belong to a specific view or window.
+ */
+
+class ActiveDocument: NSDocument {
 
     override init() {
         super.init()

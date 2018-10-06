@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		447219512169014800B15AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219502169014800B15AC0 /* AppDelegate.swift */; };
 		447219532169014800B15AC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219522169014800B15AC0 /* ViewController.swift */; };
-		447219552169014800B15AC0 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* Document.swift */; };
+		447219552169014800B15AC0 /* ActiveDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* ActiveDocument.swift */; };
 		447219572169014C00B15AC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 447219562169014C00B15AC0 /* Assets.xcassets */; };
 		4472195A2169014C00B15AC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 447219582169014C00B15AC0 /* Main.storyboard */; };
 		447219662169014C00B15AC0 /* PlinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219652169014C00B15AC0 /* PlinkTests.swift */; };
@@ -29,7 +29,7 @@
 		4472194D2169014700B15AC0 /* Plink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447219502169014800B15AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447219522169014800B15AC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		447219542169014800B15AC0 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		447219542169014800B15AC0 /* ActiveDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveDocument.swift; sourceTree = "<group>"; };
 		447219562169014C00B15AC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		447219592169014C00B15AC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4472195B2169014C00B15AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,9 +78,12 @@
 		4472194F2169014700B15AC0 /* Plink */ = {
 			isa = PBXGroup;
 			children = (
+				44721972216904BF00B15AC0 /* World */,
+				447219702169049000B15AC0 /* Executive */,
+				447219732169055800B15AC0 /* Model */,
+				447219712169049A00B15AC0 /* UI */,
 				447219502169014800B15AC0 /* AppDelegate.swift */,
 				447219522169014800B15AC0 /* ViewController.swift */,
-				447219542169014800B15AC0 /* Document.swift */,
 				447219562169014C00B15AC0 /* Assets.xcassets */,
 				447219582169014C00B15AC0 /* Main.storyboard */,
 				4472195B2169014C00B15AC0 /* Info.plist */,
@@ -96,6 +99,35 @@
 				447219672169014C00B15AC0 /* Info.plist */,
 			);
 			path = PlinkTests;
+			sourceTree = "<group>";
+		};
+		447219702169049000B15AC0 /* Executive */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Executive;
+			sourceTree = "<group>";
+		};
+		447219712169049A00B15AC0 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		44721972216904BF00B15AC0 /* World */ = {
+			isa = PBXGroup;
+			children = (
+				447219542169014800B15AC0 /* ActiveDocument.swift */,
+			);
+			path = World;
+			sourceTree = "<group>";
+		};
+		447219732169055800B15AC0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,7 +232,7 @@
 			files = (
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
 				447219512169014800B15AC0 /* AppDelegate.swift in Sources */,
-				447219552169014800B15AC0 /* Document.swift in Sources */,
+				447219552169014800B15AC0 /* ActiveDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
