@@ -1,0 +1,465 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		447219512169014800B15AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219502169014800B15AC0 /* AppDelegate.swift */; };
+		447219532169014800B15AC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219522169014800B15AC0 /* ViewController.swift */; };
+		447219552169014800B15AC0 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* Document.swift */; };
+		447219572169014C00B15AC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 447219562169014C00B15AC0 /* Assets.xcassets */; };
+		4472195A2169014C00B15AC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 447219582169014C00B15AC0 /* Main.storyboard */; };
+		447219662169014C00B15AC0 /* PlinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219652169014C00B15AC0 /* PlinkTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		447219622169014C00B15AC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 447219452169014700B15AC0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4472194C2169014700B15AC0;
+			remoteInfo = Plink;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4472194D2169014700B15AC0 /* Plink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plink.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		447219502169014800B15AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		447219522169014800B15AC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		447219542169014800B15AC0 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		447219562169014C00B15AC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		447219592169014C00B15AC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4472195B2169014C00B15AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4472195C2169014C00B15AC0 /* Plink.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Plink.entitlements; sourceTree = "<group>"; };
+		447219612169014C00B15AC0 /* PlinkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlinkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		447219652169014C00B15AC0 /* PlinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlinkTests.swift; sourceTree = "<group>"; };
+		447219672169014C00B15AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4472194A2169014700B15AC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4472195E2169014C00B15AC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		447219442169014700B15AC0 = {
+			isa = PBXGroup;
+			children = (
+				4472194F2169014700B15AC0 /* Plink */,
+				447219642169014C00B15AC0 /* PlinkTests */,
+				4472194E2169014700B15AC0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4472194E2169014700B15AC0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4472194D2169014700B15AC0 /* Plink.app */,
+				447219612169014C00B15AC0 /* PlinkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4472194F2169014700B15AC0 /* Plink */ = {
+			isa = PBXGroup;
+			children = (
+				447219502169014800B15AC0 /* AppDelegate.swift */,
+				447219522169014800B15AC0 /* ViewController.swift */,
+				447219542169014800B15AC0 /* Document.swift */,
+				447219562169014C00B15AC0 /* Assets.xcassets */,
+				447219582169014C00B15AC0 /* Main.storyboard */,
+				4472195B2169014C00B15AC0 /* Info.plist */,
+				4472195C2169014C00B15AC0 /* Plink.entitlements */,
+			);
+			path = Plink;
+			sourceTree = "<group>";
+		};
+		447219642169014C00B15AC0 /* PlinkTests */ = {
+			isa = PBXGroup;
+			children = (
+				447219652169014C00B15AC0 /* PlinkTests.swift */,
+				447219672169014C00B15AC0 /* Info.plist */,
+			);
+			path = PlinkTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4472194C2169014700B15AC0 /* Plink */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4472196A2169014C00B15AC0 /* Build configuration list for PBXNativeTarget "Plink" */;
+			buildPhases = (
+				447219492169014700B15AC0 /* Sources */,
+				4472194A2169014700B15AC0 /* Frameworks */,
+				4472194B2169014700B15AC0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Plink;
+			productName = Plink;
+			productReference = 4472194D2169014700B15AC0 /* Plink.app */;
+			productType = "com.apple.product-type.application";
+		};
+		447219602169014C00B15AC0 /* PlinkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4472196D2169014C00B15AC0 /* Build configuration list for PBXNativeTarget "PlinkTests" */;
+			buildPhases = (
+				4472195D2169014C00B15AC0 /* Sources */,
+				4472195E2169014C00B15AC0 /* Frameworks */,
+				4472195F2169014C00B15AC0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				447219632169014C00B15AC0 /* PBXTargetDependency */,
+			);
+			name = PlinkTests;
+			productName = PlinkTests;
+			productReference = 447219612169014C00B15AC0 /* PlinkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		447219452169014700B15AC0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = Kineticfactory;
+				TargetAttributes = {
+					4472194C2169014700B15AC0 = {
+						CreatedOnToolsVersion = 10.0;
+					};
+					447219602169014C00B15AC0 = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 4472194C2169014700B15AC0;
+					};
+				};
+			};
+			buildConfigurationList = 447219482169014700B15AC0 /* Build configuration list for PBXProject "Plink" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 447219442169014700B15AC0;
+			productRefGroup = 4472194E2169014700B15AC0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4472194C2169014700B15AC0 /* Plink */,
+				447219602169014C00B15AC0 /* PlinkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4472194B2169014700B15AC0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				447219572169014C00B15AC0 /* Assets.xcassets in Resources */,
+				4472195A2169014C00B15AC0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4472195F2169014C00B15AC0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		447219492169014700B15AC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				447219532169014800B15AC0 /* ViewController.swift in Sources */,
+				447219512169014800B15AC0 /* AppDelegate.swift in Sources */,
+				447219552169014800B15AC0 /* Document.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4472195D2169014C00B15AC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				447219662169014C00B15AC0 /* PlinkTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		447219632169014C00B15AC0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4472194C2169014700B15AC0 /* Plink */;
+			targetProxy = 447219622169014C00B15AC0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		447219582169014C00B15AC0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				447219592169014C00B15AC0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		447219682169014C00B15AC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		447219692169014C00B15AC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		4472196B2169014C00B15AC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Plink/Plink.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = RGZSVAB4M3;
+				INFOPLIST_FILE = Plink/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kineticfactory.Plink;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		4472196C2169014C00B15AC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Plink/Plink.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = RGZSVAB4M3;
+				INFOPLIST_FILE = Plink/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kineticfactory.Plink;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		4472196E2169014C00B15AC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = RGZSVAB4M3;
+				INFOPLIST_FILE = PlinkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kineticfactory.PlinkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Plink.app/Contents/MacOS/Plink";
+			};
+			name = Debug;
+		};
+		4472196F2169014C00B15AC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = RGZSVAB4M3;
+				INFOPLIST_FILE = PlinkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kineticfactory.PlinkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Plink.app/Contents/MacOS/Plink";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		447219482169014700B15AC0 /* Build configuration list for PBXProject "Plink" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				447219682169014C00B15AC0 /* Debug */,
+				447219692169014C00B15AC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4472196A2169014C00B15AC0 /* Build configuration list for PBXNativeTarget "Plink" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4472196B2169014C00B15AC0 /* Debug */,
+				4472196C2169014C00B15AC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4472196D2169014C00B15AC0 /* Build configuration list for PBXNativeTarget "PlinkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4472196E2169014C00B15AC0 /* Debug */,
+				4472196F2169014C00B15AC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 447219452169014700B15AC0 /* Project object */;
+}
