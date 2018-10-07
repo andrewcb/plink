@@ -15,8 +15,12 @@ import AudioToolbox
  */
 
 class ActiveDocument: NSDocument {
+    
+    let codeSystem: CodeSystem
+
 
     override init() {
+        self.codeSystem = CodeSystem(env: CodeEngineEnvironment())
         super.init()
         self.hasUndoManager = false
 

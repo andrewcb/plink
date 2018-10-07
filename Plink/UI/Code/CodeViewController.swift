@@ -16,11 +16,17 @@ class CodeViewController: NSViewController {
     
     var font: NSFont = NSFont(name: "Monaco", size: 13.0) ?? NSFont.systemFont(ofSize: 13)
 
+    var codeEngine: CodeLanguageEngine? {
+        return self.activeDocument?.codeSystem.codeEngine
+    }
+    
     override func viewWillAppear() {
         super.viewWillAppear()
         
         splitView.subviews[0].wantsLayer = true
         splitView.subviews[0].layer?.backgroundColor = NSColor.codeBackground.cgColor
+
+        self.activeDocument?.codeSystem.codeEngine?.delegate = self
 
         self.sourceTextView.font = self.font
         self.sourceTextView.backgroundColor = .codeBackground
@@ -45,10 +51,40 @@ class CodeViewController: NSViewController {
         self.replView.echoColor = .codeEchoText
         self.replView.restoredScrollbackColor = .scrollbackRestoredText
         self.replView?.restoredScrollbackDelimiter  = "————————"
-        
+
+        self.replView?.outputRestoredScrollback(self.activeDocument?.codeSystem.scrollback ?? "")
+
+
+        self.replView.evaluator = { [weak self] (line) in
+            self?.codeEngine?.eval(command: line).map { .output($0) }
+        }
     }
 
     @IBAction func doReload(_ sender: Any) {
+        self.codeEngine?.resetState()
+        self.codeEngine?.eval(script: self.sourceTextView.string)
+    }
+}
+
+extension CodeViewController: NSTextViewDelegate {
+    func textDidChange(_ notification: Notification) {
+        self.activeDocument?.codeSystem.script = self.sourceTextView.string
+    }
+}
+
+extension CodeViewController: CodeEngineDelegate {
+    func logToConsole(_ message: String) {
+        DispatchQueue.main.async {
+            self.replView.printOutputLn(message)
+            self.activeDocument?.codeSystem.scrollback = self.replView.scrollbackTextView.string
+        }
+    }
+    
+    func codeLanguageExceptionOccurred(_ message: String) {
+        DispatchQueue.main.async {
+            self.replView.printErrorLn(message)
+            self.activeDocument?.codeSystem.scrollback = self.replView.scrollbackTextView.string
+        }
     }
 }
 

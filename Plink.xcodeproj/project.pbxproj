@@ -25,6 +25,11 @@
 		4472198C216A4EA500B15AC0 /* REPLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198B216A4EA500B15AC0 /* REPLView.swift */; };
 		4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198E216A50AC00B15AC0 /* ColorfulTextButton.swift */; };
 		44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44721991216A51A700B15AC0 /* NSColor+AppSpecific.swift */; };
+		44721996216A534B00B15AC0 /* CodeEngineDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44721994216A534B00B15AC0 /* CodeEngineDelegate.swift */; };
+		44721997216A534B00B15AC0 /* CodeLanguageEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44721995216A534B00B15AC0 /* CodeLanguageEngine.swift */; };
+		4472199A216A543E00B15AC0 /* CodeEngineEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44721999216A543E00B15AC0 /* CodeEngineEnvironment.swift */; };
+		4472199C216A546A00B15AC0 /* JSCoreCodeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472199B216A546A00B15AC0 /* JSCoreCodeEngine.swift */; };
+		4472199E216A55A000B15AC0 /* CodeSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472199D216A55A000B15AC0 /* CodeSystem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +66,11 @@
 		4472198B216A4EA500B15AC0 /* REPLView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = REPLView.swift; sourceTree = "<group>"; };
 		4472198E216A50AC00B15AC0 /* ColorfulTextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorfulTextButton.swift; sourceTree = "<group>"; };
 		44721991216A51A700B15AC0 /* NSColor+AppSpecific.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+AppSpecific.swift"; sourceTree = "<group>"; };
+		44721994216A534B00B15AC0 /* CodeEngineDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeEngineDelegate.swift; sourceTree = "<group>"; };
+		44721995216A534B00B15AC0 /* CodeLanguageEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeLanguageEngine.swift; sourceTree = "<group>"; };
+		44721999216A543E00B15AC0 /* CodeEngineEnvironment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeEngineEnvironment.swift; sourceTree = "<group>"; };
+		4472199B216A546A00B15AC0 /* JSCoreCodeEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSCoreCodeEngine.swift; sourceTree = "<group>"; };
+		4472199D216A55A000B15AC0 /* CodeSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSystem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +138,7 @@
 		447219702169049000B15AC0 /* Executive */ = {
 			isa = PBXGroup;
 			children = (
+				44721993216A531900B15AC0 /* Code */,
 			);
 			path = Executive;
 			sourceTree = "<group>";
@@ -150,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				447219542169014800B15AC0 /* ActiveDocument.swift */,
+				4472199D216A55A000B15AC0 /* CodeSystem.swift */,
 			);
 			path = World;
 			sourceTree = "<group>";
@@ -220,6 +232,25 @@
 				44721991216A51A700B15AC0 /* NSColor+AppSpecific.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		44721993216A531900B15AC0 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				44721998216A535900B15AC0 /* JSCore */,
+				44721994216A534B00B15AC0 /* CodeEngineDelegate.swift */,
+				44721995216A534B00B15AC0 /* CodeLanguageEngine.swift */,
+				44721999216A543E00B15AC0 /* CodeEngineEnvironment.swift */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
+		44721998216A535900B15AC0 /* JSCore */ = {
+			isa = PBXGroup;
+			children = (
+				4472199B216A546A00B15AC0 /* JSCoreCodeEngine.swift */,
+			);
+			path = JSCore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,14 +359,19 @@
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
 				4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */,
 				4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */,
+				44721997216A534B00B15AC0 /* CodeLanguageEngine.swift in Sources */,
 				4472198C216A4EA500B15AC0 /* REPLView.swift in Sources */,
+				44721996216A534B00B15AC0 /* CodeEngineDelegate.swift in Sources */,
 				447219512169014800B15AC0 /* AppDelegate.swift in Sources */,
 				447219792169096800B15AC0 /* NSViewController+.swift in Sources */,
+				4472199E216A55A000B15AC0 /* CodeSystem.swift in Sources */,
 				44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */,
 				4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */,
 				447219762169087200B15AC0 /* WorkspaceViewController.swift in Sources */,
+				4472199A216A543E00B15AC0 /* CodeEngineEnvironment.swift in Sources */,
 				4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */,
 				4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */,
+				4472199C216A546A00B15AC0 /* JSCoreCodeEngine.swift in Sources */,
 				447219552169014800B15AC0 /* ActiveDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
