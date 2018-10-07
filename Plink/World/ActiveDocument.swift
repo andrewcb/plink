@@ -18,6 +18,8 @@ class ActiveDocument: NSDocument {
 
     override init() {
         super.init()
+        self.hasUndoManager = false
+
         // Add your subclass-specific initialization here.
     }
 

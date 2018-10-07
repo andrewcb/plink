@@ -705,7 +705,7 @@
         <!--Workspace View Controller-->
         <scene sceneID="VgK-04-OOR">
             <objects>
-                <viewController id="mne-5M-gmi" customClass="WorkspaceViewController" customModule="GDAW01" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="mne-5M-gmi" customClass="WorkspaceViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="Btl-XY-soA">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="444"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -746,6 +746,9 @@
                                         <subviews>
                                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="bJg-Gz-cDj">
                                                 <rect key="frame" x="0.0" y="0.0" width="480" height="186"/>
+                                                <connections>
+                                                    <segue destination="bZU-1Q-tcq" kind="embed" id="t5C-c6-Js6"/>
+                                                </connections>
                                             </containerView>
                                         </subviews>
                                         <constraints>
@@ -785,7 +788,7 @@
         <!--Transport View Controller-->
         <scene sceneID="KdF-ox-nFz">
             <objects>
-                <viewController id="JM4-3Z-c2K" customClass="TransportViewController" customModule="GDAW01" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="JM4-3Z-c2K" customClass="TransportViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="s4A-9V-jdf">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="80"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -889,7 +892,7 @@
         <!--Mixer View Controller-->
         <scene sceneID="g0Y-Hy-JRo">
             <objects>
-                <viewController id="dNq-Sz-xQS" customClass="MixerViewController" customModule="GDAW01" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="dNq-Sz-xQS" customClass="MixerViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="S0O-Tk-ZJ7">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -939,6 +942,121 @@
                 <customObject id="S1T-Ct-ter" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="812" y="802"/>
+        </scene>
+        <!--Code View Controller-->
+        <scene sceneID="XbD-8D-u7t">
+            <objects>
+                <viewController id="bZU-1Q-tcq" customClass="CodeViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="yYx-5G-dlL">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="295"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T9B-D6-bwJ">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="295"/>
+                                <subviews>
+                                    <customView id="H6i-pm-pn4">
+                                        <rect key="frame" x="0.0" y="0.0" width="226" height="295"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVd-h6-8JP">
+                                                <rect key="frame" x="0.0" y="32" width="226" height="263"/>
+                                                <clipView key="contentView" id="dBc-uv-cir">
+                                                    <rect key="frame" x="0.0" y="0.0" width="226" height="263"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Dj8-YF-93D">
+                                                            <rect key="frame" x="0.0" y="0.0" width="226" height="263"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <color key="backgroundColor" white="0.1038225446" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <size key="minSize" width="226" height="263"/>
+                                                            <size key="maxSize" width="463" height="10000000"/>
+                                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="bZU-1Q-tcq" id="S2z-lO-nWU"/>
+                                                            </connections>
+                                                        </textView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.1010044643" alpha="1" colorSpace="calibratedWhite"/>
+                                                </clipView>
+                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Dx4-Ic-gij">
+                                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Dfb-Fl-Cw4">
+                                                    <rect key="frame" x="210" y="0.0" width="16" height="263"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                            </scrollView>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jwm-CF-AGC" customClass="ColorfulTextButton" customModule="GDAW01" customModuleProvider="target">
+                                                <rect key="frame" x="201" y="0.0" width="17" height="32"/>
+                                                <buttonCell key="cell" type="bevel" title="⟳" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="W5i-vY-e4x">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" white="0.80292968750000004" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="doReload:" target="bZU-1Q-tcq" id="Y0Y-yK-8QF"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="jwm-CF-AGC" secondAttribute="trailing" constant="8" id="0hh-Es-Gcj"/>
+                                            <constraint firstItem="jVd-h6-8JP" firstAttribute="top" secondItem="H6i-pm-pn4" secondAttribute="top" id="8fJ-dw-NXm"/>
+                                            <constraint firstItem="jwm-CF-AGC" firstAttribute="top" secondItem="Dj8-YF-93D" secondAttribute="bottom" id="UOw-dr-Lbg"/>
+                                            <constraint firstAttribute="bottom" secondItem="jVd-h6-8JP" secondAttribute="bottom" constant="32" id="gKj-2D-L5d"/>
+                                            <constraint firstItem="jVd-h6-8JP" firstAttribute="leading" secondItem="H6i-pm-pn4" secondAttribute="leading" id="gWy-qD-pHS"/>
+                                            <constraint firstAttribute="bottom" secondItem="jwm-CF-AGC" secondAttribute="bottom" id="gcg-Zk-Q4w"/>
+                                            <constraint firstAttribute="trailing" secondItem="jVd-h6-8JP" secondAttribute="trailing" id="wre-PP-2li"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView id="LOY-R5-Kae">
+                                        <rect key="frame" x="227" y="0.0" width="223" height="295"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Sks-gg-0vZ" customClass="REPLView" customModule="Plink" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="223" height="295"/>
+                                            </customView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Sks-gg-0vZ" secondAttribute="bottom" id="WVo-qm-Fej"/>
+                                            <constraint firstItem="Sks-gg-0vZ" firstAttribute="top" secondItem="LOY-R5-Kae" secondAttribute="top" id="mVB-KU-P5A"/>
+                                            <constraint firstItem="Sks-gg-0vZ" firstAttribute="leading" secondItem="LOY-R5-Kae" secondAttribute="leading" id="p8X-pc-ueM"/>
+                                            <constraint firstAttribute="trailing" secondItem="Sks-gg-0vZ" secondAttribute="trailing" id="yqA-d4-DdQ"/>
+                                        </constraints>
+                                    </customView>
+                                </subviews>
+                                <holdingPriorities>
+                                    <real value="250"/>
+                                    <real value="250"/>
+                                </holdingPriorities>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="dividerColor">
+                                        <color key="value" white="0.29568206070000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </splitView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="T9B-D6-bwJ" secondAttribute="bottom" id="KPE-g4-8i5"/>
+                            <constraint firstAttribute="trailing" secondItem="T9B-D6-bwJ" secondAttribute="trailing" id="MbQ-5I-wj6"/>
+                            <constraint firstItem="T9B-D6-bwJ" firstAttribute="top" secondItem="yYx-5G-dlL" secondAttribute="top" id="V7L-Yw-uJd"/>
+                            <constraint firstItem="T9B-D6-bwJ" firstAttribute="leading" secondItem="yYx-5G-dlL" secondAttribute="leading" id="nRX-Pq-hVi"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="reloadButton" destination="jwm-CF-AGC" id="h05-6R-Yx1"/>
+                        <outlet property="replView" destination="Sks-gg-0vZ" id="EfX-BB-wNM"/>
+                        <outlet property="sourceTextView" destination="Dj8-YF-93D" id="SYi-on-lD6"/>
+                        <outlet property="splitView" destination="T9B-D6-bwJ" id="fjP-c3-Des"/>
+                    </connections>
+                </viewController>
+                <customObject id="LRL-0A-M6b" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="812" y="1208"/>
         </scene>
     </scenes>
 </document>

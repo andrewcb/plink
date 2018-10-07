@@ -22,6 +22,9 @@
 		4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198421690F2A00B15AC0 /* OneButtonCollectionViewItem.swift */; };
 		4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198521690F2A00B15AC0 /* MixerStripCollectionViewItem.swift */; };
 		4472198A21690F2A00B15AC0 /* MixerStripCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4472198621690F2A00B15AC0 /* MixerStripCollectionViewItem.xib */; };
+		4472198C216A4EA500B15AC0 /* REPLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198B216A4EA500B15AC0 /* REPLView.swift */; };
+		4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198E216A50AC00B15AC0 /* ColorfulTextButton.swift */; };
+		44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44721991216A51A700B15AC0 /* NSColor+AppSpecific.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		4472198421690F2A00B15AC0 /* OneButtonCollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneButtonCollectionViewItem.swift; sourceTree = "<group>"; };
 		4472198521690F2A00B15AC0 /* MixerStripCollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixerStripCollectionViewItem.swift; sourceTree = "<group>"; };
 		4472198621690F2A00B15AC0 /* MixerStripCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerStripCollectionViewItem.xib; sourceTree = "<group>"; };
+		4472198B216A4EA500B15AC0 /* REPLView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = REPLView.swift; sourceTree = "<group>"; };
+		4472198E216A50AC00B15AC0 /* ColorfulTextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorfulTextButton.swift; sourceTree = "<group>"; };
+		44721991216A51A700B15AC0 /* NSColor+AppSpecific.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+AppSpecific.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,10 +135,12 @@
 		447219712169049A00B15AC0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				44721990216A50DD00B15AC0 /* Settings */,
 				44721974216906FB00B15AC0 /* WorkspaceView */,
 				4472197B21690B6700B15AC0 /* Transport */,
 				4472197A21690B5E00B15AC0 /* Mixer */,
 				4472197C21690B6E00B15AC0 /* Code */,
+				4472198D216A509700B15AC0 /* components */,
 				447219772169094A00B15AC0 /* utility */,
 			);
 			path = UI;
@@ -193,8 +201,25 @@
 			isa = PBXGroup;
 			children = (
 				4472198121690D7A00B15AC0 /* CodeViewController.swift */,
+				4472198B216A4EA500B15AC0 /* REPLView.swift */,
 			);
 			path = Code;
+			sourceTree = "<group>";
+		};
+		4472198D216A509700B15AC0 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				4472198E216A50AC00B15AC0 /* ColorfulTextButton.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
+		44721990216A50DD00B15AC0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				44721991216A51A700B15AC0 /* NSColor+AppSpecific.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,9 +326,12 @@
 			files = (
 				4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */,
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
+				4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */,
 				4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */,
+				4472198C216A4EA500B15AC0 /* REPLView.swift in Sources */,
 				447219512169014800B15AC0 /* AppDelegate.swift in Sources */,
 				447219792169096800B15AC0 /* NSViewController+.swift in Sources */,
+				44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */,
 				4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */,
 				447219762169087200B15AC0 /* WorkspaceViewController.swift in Sources */,
 				4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */,
