@@ -16,11 +16,14 @@ import AudioToolbox
 
 class ActiveDocument: NSDocument {
     
+    let audioSystem: AudioSystem? = try? AudioSystem()
+    let transport: Transport = Transport()
     let codeSystem: CodeSystem
 
 
     override init() {
-        self.codeSystem = CodeSystem(env: CodeEngineEnvironment())
+        
+        self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, transport: self.transport))
         super.init()
         self.hasUndoManager = false
 

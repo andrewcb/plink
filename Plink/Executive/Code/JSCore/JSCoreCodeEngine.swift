@@ -31,7 +31,17 @@ class JSCoreCodeEngine: CodeLanguageEngine {
             self?.delegate?.logToConsole(msg as String)
         }
         
+        let getChannelFunc: @convention(block) (NSString) -> (Any?) = { [weak self] name in
+            return self?.env.audioSystem?.channelNamed(name as String).map { JSCoreCodeEngine.Channel(channel: $0) }
+        }
+
+        
         /// API objects/functions set up here
+
+        self.ctx.setObject(unsafeBitCast(logFunc, to: AnyObject.self), forKeyedSubscript: "log" as NSCopying & NSObjectProtocol)
+        self.ctx.setObject(unsafeBitCast(getChannelFunc, to: AnyObject.self), forKeyedSubscript: "getChannel" as NSCopying & NSObjectProtocol)
+        self.ctx.setObject(Transport(transport: env.transport), forKeyedSubscript: "transport" as NSCopying & NSObjectProtocol)
+
         
         ctx.exceptionHandler = { [weak self] (ctx, exc) in
             if let exc = exc {
