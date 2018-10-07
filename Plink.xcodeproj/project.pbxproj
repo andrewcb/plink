@@ -13,6 +13,15 @@
 		447219572169014C00B15AC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 447219562169014C00B15AC0 /* Assets.xcassets */; };
 		4472195A2169014C00B15AC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 447219582169014C00B15AC0 /* Main.storyboard */; };
 		447219662169014C00B15AC0 /* PlinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219652169014C00B15AC0 /* PlinkTests.swift */; };
+		447219762169087200B15AC0 /* WorkspaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219752169087200B15AC0 /* WorkspaceViewController.swift */; };
+		447219792169096800B15AC0 /* NSViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219782169096800B15AC0 /* NSViewController+.swift */; };
+		4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472197D21690BA200B15AC0 /* TransportViewController.swift */; };
+		4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472197F21690D6200B15AC0 /* MixerViewController.swift */; };
+		4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198121690D7A00B15AC0 /* CodeViewController.swift */; };
+		4472198721690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4472198321690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib */; };
+		4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198421690F2A00B15AC0 /* OneButtonCollectionViewItem.swift */; };
+		4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198521690F2A00B15AC0 /* MixerStripCollectionViewItem.swift */; };
+		4472198A21690F2A00B15AC0 /* MixerStripCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4472198621690F2A00B15AC0 /* MixerStripCollectionViewItem.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +46,15 @@
 		447219612169014C00B15AC0 /* PlinkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlinkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		447219652169014C00B15AC0 /* PlinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlinkTests.swift; sourceTree = "<group>"; };
 		447219672169014C00B15AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		447219752169087200B15AC0 /* WorkspaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceViewController.swift; sourceTree = "<group>"; };
+		447219782169096800B15AC0 /* NSViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSViewController+.swift"; sourceTree = "<group>"; };
+		4472197D21690BA200B15AC0 /* TransportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportViewController.swift; sourceTree = "<group>"; };
+		4472197F21690D6200B15AC0 /* MixerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixerViewController.swift; sourceTree = "<group>"; };
+		4472198121690D7A00B15AC0 /* CodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeViewController.swift; sourceTree = "<group>"; };
+		4472198321690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerAddStripCollectionViewItem.xib; sourceTree = "<group>"; };
+		4472198421690F2A00B15AC0 /* OneButtonCollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneButtonCollectionViewItem.swift; sourceTree = "<group>"; };
+		4472198521690F2A00B15AC0 /* MixerStripCollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixerStripCollectionViewItem.swift; sourceTree = "<group>"; };
+		4472198621690F2A00B15AC0 /* MixerStripCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerStripCollectionViewItem.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +129,11 @@
 		447219712169049A00B15AC0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				44721974216906FB00B15AC0 /* WorkspaceView */,
+				4472197B21690B6700B15AC0 /* Transport */,
+				4472197A21690B5E00B15AC0 /* Mixer */,
+				4472197C21690B6E00B15AC0 /* Code */,
+				447219772169094A00B15AC0 /* utility */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -128,6 +151,50 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		44721974216906FB00B15AC0 /* WorkspaceView */ = {
+			isa = PBXGroup;
+			children = (
+				447219752169087200B15AC0 /* WorkspaceViewController.swift */,
+			);
+			path = WorkspaceView;
+			sourceTree = "<group>";
+		};
+		447219772169094A00B15AC0 /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				447219782169096800B15AC0 /* NSViewController+.swift */,
+			);
+			path = utility;
+			sourceTree = "<group>";
+		};
+		4472197A21690B5E00B15AC0 /* Mixer */ = {
+			isa = PBXGroup;
+			children = (
+				4472197F21690D6200B15AC0 /* MixerViewController.swift */,
+				4472198321690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib */,
+				4472198521690F2A00B15AC0 /* MixerStripCollectionViewItem.swift */,
+				4472198621690F2A00B15AC0 /* MixerStripCollectionViewItem.xib */,
+				4472198421690F2A00B15AC0 /* OneButtonCollectionViewItem.swift */,
+			);
+			path = Mixer;
+			sourceTree = "<group>";
+		};
+		4472197B21690B6700B15AC0 /* Transport */ = {
+			isa = PBXGroup;
+			children = (
+				4472197D21690BA200B15AC0 /* TransportViewController.swift */,
+			);
+			path = Transport;
+			sourceTree = "<group>";
+		};
+		4472197C21690B6E00B15AC0 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				4472198121690D7A00B15AC0 /* CodeViewController.swift */,
+			);
+			path = Code;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,8 +278,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4472198A21690F2A00B15AC0 /* MixerStripCollectionViewItem.xib in Resources */,
 				447219572169014C00B15AC0 /* Assets.xcassets in Resources */,
 				4472195A2169014C00B15AC0 /* Main.storyboard in Resources */,
+				4472198721690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,8 +299,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */,
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
+				4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */,
 				447219512169014800B15AC0 /* AppDelegate.swift in Sources */,
+				447219792169096800B15AC0 /* NSViewController+.swift in Sources */,
+				4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */,
+				447219762169087200B15AC0 /* WorkspaceViewController.swift in Sources */,
+				4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */,
+				4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */,
 				447219552169014800B15AC0 /* ActiveDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

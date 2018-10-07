@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MixerStripCollectionViewItem" customModule="GDAW01" customModuleProvider="target">
+            <connections>
+                <outlet property="levelSlider" destination="BaZ-Wb-V3C" id="Gc7-M6-ar2"/>
+                <outlet property="nameField" destination="ulW-xE-mhA" id="CJj-Hp-mG7"/>
+                <outlet property="nodesCollectionView" destination="CD4-Xi-aCA" id="W8X-ur-589"/>
+                <outlet property="panSlider" destination="iOl-Ft-Dz4" id="ZA8-ww-s4b"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="144" height="360"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="SBX-0m-ehX">
+                    <rect key="frame" x="0.0" y="27" width="144" height="173"/>
+                    <subviews>
+                        <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iOl-Ft-Dz4">
+                            <rect key="frame" x="14" y="144" width="116" height="19"/>
+                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" sliderType="linear" id="JZd-VM-gf2"/>
+                            <connections>
+                                <action selector="panChanged:" target="-2" id="SN3-Xi-H5i"/>
+                            </connections>
+                        </slider>
+                        <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BaZ-Wb-V3C">
+                            <rect key="frame" x="63" y="13" width="19" height="127"/>
+                            <sliderCell key="cell" continuous="YES" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="right" sliderType="linear" id="O6w-7k-qvg"/>
+                            <connections>
+                                <action selector="levelChanged:" target="-2" id="7H1-eP-5LO"/>
+                            </connections>
+                        </slider>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="iOl-Ft-Dz4" firstAttribute="leading" secondItem="SBX-0m-ehX" secondAttribute="leading" constant="16" id="FDh-wu-ggS"/>
+                        <constraint firstItem="iOl-Ft-Dz4" firstAttribute="top" secondItem="SBX-0m-ehX" secondAttribute="top" constant="12" id="IM4-WS-kKB"/>
+                        <constraint firstItem="BaZ-Wb-V3C" firstAttribute="centerX" secondItem="SBX-0m-ehX" secondAttribute="centerX" id="coe-Pq-Ltc"/>
+                        <constraint firstAttribute="trailing" secondItem="iOl-Ft-Dz4" secondAttribute="trailing" constant="16" id="e5A-pX-ASs"/>
+                        <constraint firstAttribute="bottom" secondItem="BaZ-Wb-V3C" secondAttribute="bottom" constant="16" id="goO-zp-3M8"/>
+                        <constraint firstItem="BaZ-Wb-V3C" firstAttribute="top" secondItem="iOl-Ft-Dz4" secondAttribute="bottom" constant="8" id="gwP-aU-152"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="cS9-7o-qCk">
+                    <rect key="frame" x="0.0" y="200" width="144" height="160"/>
+                    <subviews>
+                        <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEw-ls-piD">
+                            <rect key="frame" x="0.0" y="0.0" width="144" height="160"/>
+                            <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Vpa-E7-Ph0">
+                                <rect key="frame" x="0.0" y="0.0" width="144" height="160"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <collectionView id="CD4-Xi-aCA">
+                                        <rect key="frame" x="0.0" y="0.0" width="144" height="160"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="oo7-yq-tcW">
+                                            <size key="itemSize" width="50" height="50"/>
+                                            <edgeInsets key="sectionInset" left="0.0" right="0.0" top="2" bottom="2"/>
+                                        </collectionViewFlowLayout>
+                                        <color key="primaryBackgroundColor" white="0.30323660714285716" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="-2" id="cuG-ql-FCW"/>
+                                            <outlet property="delegate" destination="-2" id="rpK-3a-qGG"/>
+                                        </connections>
+                                    </collectionView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.046428571430000003" alpha="1" colorSpace="calibratedWhite"/>
+                            </clipView>
+                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="E2f-nh-FB3">
+                                <rect key="frame" x="-100" y="-100" width="136" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="lab-3a-RMo">
+                                <rect key="frame" x="127" y="1" width="16" height="153"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                        </scrollView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="dEw-ls-piD" secondAttribute="bottom" id="13P-JL-AnQ"/>
+                        <constraint firstItem="dEw-ls-piD" firstAttribute="leading" secondItem="cS9-7o-qCk" secondAttribute="leading" id="6cu-RY-DPE"/>
+                        <constraint firstAttribute="height" constant="160" id="76D-ws-qAa"/>
+                        <constraint firstItem="dEw-ls-piD" firstAttribute="top" secondItem="cS9-7o-qCk" secondAttribute="top" id="Vi1-nn-3jA"/>
+                        <constraint firstAttribute="trailing" secondItem="dEw-ls-piD" secondAttribute="trailing" id="lg6-Rz-qOy"/>
+                    </constraints>
+                </customView>
+                <textField verticalHuggingPriority="751" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ulW-xE-mhA">
+                    <rect key="frame" x="16" y="8" width="112" height="13"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" placeholderString="label" drawsBackground="YES" id="kQD-lv-LJy">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="nameChanged:" target="-2" id="GSO-iT-1lE"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="ulW-xE-mhA" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="16" id="6hV-gu-nUK"/>
+                <constraint firstItem="cS9-7o-qCk" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="7Rq-TN-cxv"/>
+                <constraint firstItem="ulW-xE-mhA" firstAttribute="top" secondItem="SBX-0m-ehX" secondAttribute="bottom" constant="8" id="JL4-6a-G60"/>
+                <constraint firstAttribute="trailing" secondItem="SBX-0m-ehX" secondAttribute="trailing" id="L7l-Bn-jgX"/>
+                <constraint firstAttribute="bottom" secondItem="ulW-xE-mhA" secondAttribute="bottom" constant="8" id="NEW-aF-iIh"/>
+                <constraint firstAttribute="trailing" secondItem="cS9-7o-qCk" secondAttribute="trailing" id="UKV-OZ-Rwt"/>
+                <constraint firstAttribute="trailing" secondItem="ulW-xE-mhA" secondAttribute="trailing" constant="16" id="Ynn-dt-bbh"/>
+                <constraint firstItem="SBX-0m-ehX" firstAttribute="top" secondItem="cS9-7o-qCk" secondAttribute="bottom" id="feC-yP-zng"/>
+                <constraint firstItem="cS9-7o-qCk" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="sDK-zd-GXi"/>
+                <constraint firstItem="SBX-0m-ehX" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="vpr-ir-k2C"/>
+            </constraints>
+        </customView>
+        <collectionViewItem nibName="MixerStripCollectionViewItem" id="f1B-Hd-XTI" customClass="MixerStripCollectionViewItem" customModule="GDAW01" customModuleProvider="target"/>
+    </objects>
+</document>
