@@ -17,5 +17,6 @@ struct CodeEngineEnvironment {
     /// the transport: tempo, start/stop, and such, will go here
     let transport: Transport
 
-    // TODO
+    /// the scheduler: trigger functions at intervals/times
+    let scheduler: Scheduler
 }

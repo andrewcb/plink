@@ -40,13 +40,15 @@
 		447219B3216A5A2900B15AC0 /* AudioUnitPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219B2216A5A2900B15AC0 /* AudioUnitPreset.swift */; };
 		447219B7216A5ADB00B15AC0 /* Transport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219B6216A5ADB00B15AC0 /* Transport.swift */; };
 		447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219B8216A5C2D00B15AC0 /* AudioSystem.swift */; };
-		447219BC216A5E5400B15AC0 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BB216A5E5400B15AC0 /* Channel.swift */; };
-		447219BE216A5E8F00B15AC0 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BD216A5E8F00B15AC0 /* Unit.swift */; };
-		447219C0216A5F9800B15AC0 /* TransportWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BF216A5F9800B15AC0 /* TransportWrapper.swift */; };
+		447219BC216A5E5400B15AC0 /* ChannelJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BB216A5E5400B15AC0 /* ChannelJSWrapper.swift */; };
+		447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BD216A5E8F00B15AC0 /* UnitJSWrapper.swift */; };
+		447219C0216A5F9800B15AC0 /* TransportJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BF216A5F9800B15AC0 /* TransportJSWrapper.swift */; };
 		447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219C2216AC89400B15AC0 /* AudioUnitListViewController.swift */; };
 		447219C7216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219C4216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift */; };
 		447219C8216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 447219C5216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib */; };
 		447219C9216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 447219C6216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib */; };
+		447219CB216AE2D800B15AC0 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219CA216AE2D800B15AC0 /* Scheduler.swift */; };
+		447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219CC216AE3E500B15AC0 /* SchedulerJSWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,13 +100,15 @@
 		447219B2216A5A2900B15AC0 /* AudioUnitPreset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitPreset.swift; sourceTree = "<group>"; };
 		447219B6216A5ADB00B15AC0 /* Transport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
 		447219B8216A5C2D00B15AC0 /* AudioSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSystem.swift; sourceTree = "<group>"; };
-		447219BB216A5E5400B15AC0 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
-		447219BD216A5E8F00B15AC0 /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
-		447219BF216A5F9800B15AC0 /* TransportWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportWrapper.swift; sourceTree = "<group>"; };
+		447219BB216A5E5400B15AC0 /* ChannelJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelJSWrapper.swift; sourceTree = "<group>"; };
+		447219BD216A5E8F00B15AC0 /* UnitJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitJSWrapper.swift; sourceTree = "<group>"; };
+		447219BF216A5F9800B15AC0 /* TransportJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportJSWrapper.swift; sourceTree = "<group>"; };
 		447219C2216AC89400B15AC0 /* AudioUnitListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitListViewController.swift; sourceTree = "<group>"; };
 		447219C4216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixerStripNodeCollectionViewItem.swift; sourceTree = "<group>"; };
 		447219C5216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerStripNodeCollectionViewItem.xib; sourceTree = "<group>"; };
 		447219C6216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerStripAddNodeCollectionViewItem.xib; sourceTree = "<group>"; };
+		447219CA216AE2D800B15AC0 /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		447219CC216AE3E500B15AC0 /* SchedulerJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerJSWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +204,7 @@
 				4472199D216A55A000B15AC0 /* CodeSystem.swift */,
 				447219B8216A5C2D00B15AC0 /* AudioSystem.swift */,
 				447219B6216A5ADB00B15AC0 /* Transport.swift */,
+				447219CA216AE2D800B15AC0 /* Scheduler.swift */,
 			);
 			path = World;
 			sourceTree = "<group>";
@@ -345,9 +350,10 @@
 		447219BA216A5E3D00B15AC0 /* Wrappers */ = {
 			isa = PBXGroup;
 			children = (
-				447219BB216A5E5400B15AC0 /* Channel.swift */,
-				447219BD216A5E8F00B15AC0 /* Unit.swift */,
-				447219BF216A5F9800B15AC0 /* TransportWrapper.swift */,
+				447219BB216A5E5400B15AC0 /* ChannelJSWrapper.swift */,
+				447219BD216A5E8F00B15AC0 /* UnitJSWrapper.swift */,
+				447219BF216A5F9800B15AC0 /* TransportJSWrapper.swift */,
+				447219CC216AE3E500B15AC0 /* SchedulerJSWrapper.swift */,
 			);
 			path = Wrappers;
 			sourceTree = "<group>";
@@ -485,20 +491,22 @@
 				447219512169014800B15AC0 /* AppDelegate.swift in Sources */,
 				447219792169096800B15AC0 /* NSViewController+.swift in Sources */,
 				4472199E216A55A000B15AC0 /* CodeSystem.swift in Sources */,
-				447219BE216A5E8F00B15AC0 /* Unit.swift in Sources */,
+				447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */,
 				44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */,
-				447219BC216A5E5400B15AC0 /* Channel.swift in Sources */,
+				447219BC216A5E5400B15AC0 /* ChannelJSWrapper.swift in Sources */,
 				4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */,
 				447219762169087200B15AC0 /* WorkspaceViewController.swift in Sources */,
 				447219A2216A593000B15AC0 /* TickTime.swift in Sources */,
 				447219B7216A5ADB00B15AC0 /* Transport.swift in Sources */,
 				4472199A216A543E00B15AC0 /* CodeEngineEnvironment.swift in Sources */,
 				4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */,
-				447219C0216A5F9800B15AC0 /* TransportWrapper.swift in Sources */,
+				447219C0216A5F9800B15AC0 /* TransportJSWrapper.swift in Sources */,
 				447219AF216A59BC00B15AC0 /* AudioUnitGraph.swift in Sources */,
+				447219CB216AE2D800B15AC0 /* Scheduler.swift in Sources */,
 				447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */,
 				447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */,
 				447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */,
+				447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */,
 				4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */,
 				4472199C216A546A00B15AC0 /* JSCoreCodeEngine.swift in Sources */,
 				447219552169014800B15AC0 /* ActiveDocument.swift in Sources */,

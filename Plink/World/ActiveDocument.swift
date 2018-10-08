@@ -19,12 +19,13 @@ class ActiveDocument: NSDocument {
     let audioSystem: AudioSystem? = try? AudioSystem()
     let transport: Transport = Transport()
     let codeSystem: CodeSystem
-
+    let scheduler: Scheduler = Scheduler()
 
     override init() {
         
-        self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, transport: self.transport))
+        self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, transport: self.transport, scheduler: self.scheduler))
         super.init()
+        self.transport.clients.append(self.scheduler)
         self.hasUndoManager = false
 
         // Add your subclass-specific initialization here.
