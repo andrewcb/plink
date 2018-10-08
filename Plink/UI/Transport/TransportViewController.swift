@@ -38,7 +38,7 @@ class TransportViewController: NSViewController {
     }
     
     @IBAction func stopButtonPressed(_ sender: Any) {
-        self.activeDocument?.transport.running = true
+        self.activeDocument?.transport.running = false
     }
     
     @IBAction func tempoValueChanged(_ sender: NSControl) {
