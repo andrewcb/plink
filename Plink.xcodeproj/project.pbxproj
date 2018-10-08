@@ -49,6 +49,10 @@
 		447219C9216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 447219C6216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib */; };
 		447219CB216AE2D800B15AC0 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219CA216AE2D800B15AC0 /* Scheduler.swift */; };
 		447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219CC216AE3E500B15AC0 /* SchedulerJSWrapper.swift */; };
+		447219CF216AE9F700B15AC0 /* AudioSystemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219CE216AE9F700B15AC0 /* AudioSystemModel.swift */; };
+		447219D3216AEA0B00B15AC0 /* CodeSystemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D0216AEA0A00B15AC0 /* CodeSystemModel.swift */; };
+		447219D4216AEA0B00B15AC0 /* TransportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D1216AEA0A00B15AC0 /* TransportModel.swift */; };
+		447219D5216AEA0B00B15AC0 /* WorkspaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D2216AEA0A00B15AC0 /* WorkspaceModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +113,10 @@
 		447219C6216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerStripAddNodeCollectionViewItem.xib; sourceTree = "<group>"; };
 		447219CA216AE2D800B15AC0 /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
 		447219CC216AE3E500B15AC0 /* SchedulerJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerJSWrapper.swift; sourceTree = "<group>"; };
+		447219CE216AE9F700B15AC0 /* AudioSystemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSystemModel.swift; sourceTree = "<group>"; };
+		447219D0216AEA0A00B15AC0 /* CodeSystemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeSystemModel.swift; sourceTree = "<group>"; };
+		447219D1216AEA0A00B15AC0 /* TransportModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportModel.swift; sourceTree = "<group>"; };
+		447219D2216AEA0A00B15AC0 /* WorkspaceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +220,10 @@
 		447219732169055800B15AC0 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				447219CE216AE9F700B15AC0 /* AudioSystemModel.swift */,
+				447219D0216AEA0A00B15AC0 /* CodeSystemModel.swift */,
+				447219D1216AEA0A00B15AC0 /* TransportModel.swift */,
+				447219D2216AEA0A00B15AC0 /* WorkspaceModel.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -480,6 +492,7 @@
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
 				447219B3216A5A2900B15AC0 /* AudioUnitPreset.swift in Sources */,
 				4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */,
+				447219D3216AEA0B00B15AC0 /* CodeSystemModel.swift in Sources */,
 				4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */,
 				447219C7216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift in Sources */,
 				44721997216A534B00B15AC0 /* CodeLanguageEngine.swift in Sources */,
@@ -495,7 +508,9 @@
 				44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */,
 				447219BC216A5E5400B15AC0 /* ChannelJSWrapper.swift in Sources */,
 				4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */,
+				447219D4216AEA0B00B15AC0 /* TransportModel.swift in Sources */,
 				447219762169087200B15AC0 /* WorkspaceViewController.swift in Sources */,
+				447219CF216AE9F700B15AC0 /* AudioSystemModel.swift in Sources */,
 				447219A2216A593000B15AC0 /* TickTime.swift in Sources */,
 				447219B7216A5ADB00B15AC0 /* Transport.swift in Sources */,
 				4472199A216A543E00B15AC0 /* CodeEngineEnvironment.swift in Sources */,
@@ -505,6 +520,7 @@
 				447219CB216AE2D800B15AC0 /* Scheduler.swift in Sources */,
 				447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */,
 				447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */,
+				447219D5216AEA0B00B15AC0 /* WorkspaceModel.swift in Sources */,
 				447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */,
 				447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */,
 				4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */,

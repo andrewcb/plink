@@ -22,4 +22,12 @@ class CodeSystem {
         self.codeEngine = nil
     }
     
+    func snapshot() -> CodeSystemModel {
+        return CodeSystemModel(script: self.script, scrollback: self.scrollback ?? "")
+    }
+    
+    func set(from model: CodeSystemModel) {
+        self.script = model.script
+        self.scrollback = model.scrollback
+    }
 }

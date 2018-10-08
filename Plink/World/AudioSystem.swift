@@ -75,7 +75,19 @@ class AudioSystem {
             self._headNode = self.findHeadNode()
         }
         
-
+        init(graph: AudioUnitGraph, snapshot: AudioSystemModel.ChannelModel) throws {
+            self.name = snapshot.name
+            self.instrument = try snapshot.instrument.map {
+                try AudioUnitGraph.Node(graph: graph, presetData: $0)
+            }
+            self._inserts = try snapshot.inserts.map {
+                try AudioUnitGraph.Node(graph: graph, presetData: $0)
+            }
+            self._headNode = self.findHeadNode()
+            
+            self.gain = snapshot.gain
+            self.pan = snapshot.pan
+        }
         
         func loadInstrument(fromDescription description: AudioComponentDescription) throws {
             self.instrument = try self.audioSystem?.graph.addNode(withDescription: description)
@@ -102,7 +114,11 @@ class AudioSystem {
             get { return self.audioSystem.flatMap { try? $0.getPan(forChannelIndex: self.index) }.map { ($0*2.0)-1.0 } ?? Float32.nan }
             set(v) { try? self.audioSystem?.setPan(forChannelIndex: self.index, to: (v+1.0)*0.5) }
         }
-        
+
+        func snapshot() throws -> AudioSystemModel.ChannelModel {
+            let instPresetData = try self.instrument?.getPresetData()
+            return AudioSystemModel.ChannelModel(name: self.name, gain: self.gain, pan: self.pan, instrument: instPresetData, inserts: try self.inserts.map { try $0.getPresetData() })
+        }
     }
     
     var channels: [Channel] = []
@@ -182,6 +198,19 @@ class AudioSystem {
     }
     fileprivate func setPan(forChannelIndex index: Int, to value: AudioUnitParameterValue) throws {
         return try self.mixerNode.getInstance().setParameterValue(1, scope: kAudioUnitScope_Input, element: AudioUnitElement(index), to: value)
+    }
+    
+    //MARK: save/restore
+    
+    func snapshot() throws -> AudioSystemModel {
+        return AudioSystemModel(channels: try self.channels.map { try $0.snapshot() })
+    }
+    
+    func set(from snapshot: AudioSystemModel) throws {
+        try self.clear()
+        for ch in snapshot.channels {
+            try self.add(channel: try Channel(graph: self.graph, snapshot: ch))
+        }
     }
     
 }

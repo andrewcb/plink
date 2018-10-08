@@ -64,6 +64,13 @@ public class Transport {
         }
     }
 
+    func snapshot() -> TransportModel {
+        return TransportModel(tempo: self.tempo)
+    }
+    
+    func set(from model: TransportModel) {
+        self.tempo = model.tempo
+    }
 }
 
 //MARK: asynchronous execution for scripting purposes and such
