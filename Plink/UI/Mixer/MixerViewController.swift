@@ -24,6 +24,11 @@ class MixerViewController: NSViewController {
         // Do view setup here.
         self.setupCollectionView()
     }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        self.mixerCollectionView.reloadData()
+    }
 
     private func setupCollectionView() {
         let layout = Layout()
@@ -37,6 +42,32 @@ class MixerViewController: NSViewController {
     override func viewDidLayout() {
         self.mixerCollectionView.collectionViewLayout?.invalidateLayout()
     }
+    
+    // MARK: opening the component selector
+    private var _selectorCompletion: ((AudioUnitComponent)->())?
+    private var _selectorTypesNeeded: [OSType] = [kAudioUnitType_MusicDevice]
+    private var _popover: NSPopover?
+    func openAudioUnitDialog(fromView view: NSView, withTypes types: [OSType], completion completion:@escaping ((AudioUnitComponent)->())) {
+        self._selectorTypesNeeded = types
+        self._selectorCompletion = completion
+        let popover = NSPopover()
+        let vc = self.storyboard!.instantiateController(withIdentifier: "AudioUnitListPopoverViewController") as! AudioUnitListViewController
+        vc.typesNeeded = types
+        vc.onSelection = { [weak self] (component) in
+            self?._popover?.close()
+            completion(component)
+        }
+        popover.contentViewController =  vc as NSViewController
+        popover.behavior = .transient
+//        popover.delegate = self
+        let anchorRect: NSRect = view.superview!.convert(view.frame, to: self.view)
+        self._popover = popover
+        popover.show(relativeTo: anchorRect, of: self.view, preferredEdge: .maxX)
+    }
+
+    
+    // MARK: Opening the AudioUnit interface view
+    // TODO:
 }
 
 extension MixerViewController: NSCollectionViewDataSource {
@@ -45,12 +76,54 @@ extension MixerViewController: NSCollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
-//        return (self.audioSystem?.channels.count ?? 0) + 1
+        guard let audioSystem = self.activeDocument?.audioSystem else { return 0 }
+        return audioSystem.channels.count + 1
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        fatalError("Not implemented yet")
+        guard let audioSystem = self.activeDocument?.audioSystem else { fatalError() /* no audio system == no cells */ }
+        guard indexPath[1] < audioSystem.channels.count else {
+            let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MixerAddStripCollectionViewItem"), for: indexPath) as! OneButtonCollectionViewItem
+            item.onPress = { [weak self] _ in
+                print("Add a channel!")
+                do {
+                    try audioSystem.createChannel()
+                    self?.mixerCollectionView.reloadData()
+                } catch {
+                    print("Adding channel failed: \(error)")
+                }
+            }
+            return item
+            
+        }
+        let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MixerStripCollectionViewItem"), for: indexPath)
+        guard let collectionViewItem = item as? MixerStripCollectionViewItem
+        else {return item}
+        let channel = audioSystem.channels[indexPath[1]]
+        collectionViewItem.channel = channel
+        collectionViewItem.onRequestInstrumentChoice = { (view) in
+            self.openAudioUnitDialog(fromView: view, withTypes: [kAudioUnitType_MusicDevice]) { (component) in
+                print("Will set instrument for \(channel) to \(component)")
+                try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
+                collectionViewItem.refresh()
+            }
+        }
+        collectionViewItem.onRequestInsertAdd = { (view) in
+            // TODO: allow combinations of types
+            self.openAudioUnitDialog(fromView: view, withTypes: [kAudioUnitType_Effect, kAudioUnitType_MusicEffect]) { (component) in
+                print("Will add insert for \(channel) to \(component)")
+                try! channel.addInsert(fromDescription: component.audioComponentDescription)
+                collectionViewItem.refresh()
+            }
+            
+        }
+//        collectionViewItem.onRequestAUInterfaceWindowOpen = { node in
+//            self.openUnitInterface(forNode: node)
+//        }
+        collectionViewItem.view.wantsLayer = true
+        collectionViewItem.view.layer?.backgroundColor = NSColor.mixerBackground.cgColor
+        collectionViewItem.nameField.stringValue = channel.name
+        return item
     }
 }
 

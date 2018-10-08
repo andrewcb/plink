@@ -43,6 +43,10 @@
 		447219BC216A5E5400B15AC0 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BB216A5E5400B15AC0 /* Channel.swift */; };
 		447219BE216A5E8F00B15AC0 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BD216A5E8F00B15AC0 /* Unit.swift */; };
 		447219C0216A5F9800B15AC0 /* TransportWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BF216A5F9800B15AC0 /* TransportWrapper.swift */; };
+		447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219C2216AC89400B15AC0 /* AudioUnitListViewController.swift */; };
+		447219C7216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219C4216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift */; };
+		447219C8216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 447219C5216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib */; };
+		447219C9216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 447219C6216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +101,10 @@
 		447219BB216A5E5400B15AC0 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		447219BD216A5E8F00B15AC0 /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
 		447219BF216A5F9800B15AC0 /* TransportWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportWrapper.swift; sourceTree = "<group>"; };
+		447219C2216AC89400B15AC0 /* AudioUnitListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitListViewController.swift; sourceTree = "<group>"; };
+		447219C4216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixerStripNodeCollectionViewItem.swift; sourceTree = "<group>"; };
+		447219C5216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerStripNodeCollectionViewItem.xib; sourceTree = "<group>"; };
+		447219C6216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerStripAddNodeCollectionViewItem.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +186,7 @@
 				4472197B21690B6700B15AC0 /* Transport */,
 				4472197A21690B5E00B15AC0 /* Mixer */,
 				4472197C21690B6E00B15AC0 /* Code */,
+				447219C1216AC86F00B15AC0 /* AudioUnitList */,
 				4472198D216A509700B15AC0 /* components */,
 				447219772169094A00B15AC0 /* utility */,
 			);
@@ -225,6 +234,9 @@
 				4472198321690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib */,
 				4472198521690F2A00B15AC0 /* MixerStripCollectionViewItem.swift */,
 				4472198621690F2A00B15AC0 /* MixerStripCollectionViewItem.xib */,
+				447219C6216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib */,
+				447219C4216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift */,
+				447219C5216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib */,
 				4472198421690F2A00B15AC0 /* OneButtonCollectionViewItem.swift */,
 			);
 			path = Mixer;
@@ -340,6 +352,14 @@
 			path = Wrappers;
 			sourceTree = "<group>";
 		};
+		447219C1216AC86F00B15AC0 /* AudioUnitList */ = {
+			isa = PBXGroup;
+			children = (
+				447219C2216AC89400B15AC0 /* AudioUnitListViewController.swift */,
+			);
+			path = AudioUnitList;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -390,6 +410,11 @@
 				TargetAttributes = {
 					4472194C2169014700B15AC0 = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 					447219602169014C00B15AC0 = {
 						CreatedOnToolsVersion = 10.0;
@@ -425,6 +450,8 @@
 				447219572169014C00B15AC0 /* Assets.xcassets in Resources */,
 				4472195A2169014C00B15AC0 /* Main.storyboard in Resources */,
 				4472198721690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib in Resources */,
+				447219C9216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib in Resources */,
+				447219C8216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +475,7 @@
 				447219B3216A5A2900B15AC0 /* AudioUnitPreset.swift in Sources */,
 				4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */,
 				4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */,
+				447219C7216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift in Sources */,
 				44721997216A534B00B15AC0 /* CodeLanguageEngine.swift in Sources */,
 				4472198C216A4EA500B15AC0 /* REPLView.swift in Sources */,
 				447219AE216A59BC00B15AC0 /* NSError+OSStatus.swift in Sources */,
@@ -469,6 +497,7 @@
 				447219C0216A5F9800B15AC0 /* TransportWrapper.swift in Sources */,
 				447219AF216A59BC00B15AC0 /* AudioUnitGraph.swift in Sources */,
 				447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */,
+				447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */,
 				447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */,
 				4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */,
 				4472199C216A546A00B15AC0 /* JSCoreCodeEngine.swift in Sources */,
@@ -625,7 +654,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Plink/Plink.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RGZSVAB4M3;
@@ -644,7 +672,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Plink/Plink.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = RGZSVAB4M3;
