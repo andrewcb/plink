@@ -1007,7 +1007,6 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="jwm-CF-AGC" secondAttribute="trailing" constant="8" id="0hh-Es-Gcj"/>
                                             <constraint firstItem="jVd-h6-8JP" firstAttribute="top" secondItem="H6i-pm-pn4" secondAttribute="top" id="8fJ-dw-NXm"/>
-                                            <constraint firstItem="jwm-CF-AGC" firstAttribute="top" secondItem="Dj8-YF-93D" secondAttribute="bottom" id="UOw-dr-Lbg"/>
                                             <constraint firstAttribute="bottom" secondItem="jVd-h6-8JP" secondAttribute="bottom" constant="32" id="gKj-2D-L5d"/>
                                             <constraint firstItem="jVd-h6-8JP" firstAttribute="leading" secondItem="H6i-pm-pn4" secondAttribute="leading" id="gWy-qD-pHS"/>
                                             <constraint firstAttribute="bottom" secondItem="jwm-CF-AGC" secondAttribute="bottom" id="gcg-Zk-Q4w"/>
