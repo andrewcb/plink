@@ -76,12 +76,16 @@ class Scheduler {
 
 extension Scheduler: TransportClient {
     func runFor(time: TickTime) {
-        for action in self.periodicActions {
-            action.executeIfPermitted(at: time)
-        }
-        
-        for action in singleActions[time.value] ?? [] {
-            action.action()
-        }
+        let singles = singleActions[time.value] ?? []
+        // FIXME: make a queue for the language environment
+//        DispatchQueue.main.async {
+            for action in self.periodicActions {
+                action.executeIfPermitted(at: time)
+            }
+            
+            for action in singles {
+                action.action()
+            }
+//        }
     }
 }

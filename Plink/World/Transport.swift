@@ -86,6 +86,9 @@ extension Transport {
      Executes code asynchronously within a time in (possibly fractional) beats respective to the current tempo; this works whether or not the transport is running.
      */
     func async(inBeats beats: Double, execute closure: @escaping ()->Void) {
-        Timer.scheduledTimer(withTimeInterval: beats * Double(TickDuration.ticksPerBeat) * self.tickDuration, repeats: false, block: { _ in closure() })
+        let interval = beats * Double(TickDuration.ticksPerBeat) * self.tickDuration
+        DispatchQueue.main.async {
+            Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: { _ in closure() })
+        }
     }
 }
