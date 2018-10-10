@@ -32,6 +32,7 @@ class CodeViewController: NSViewController {
         self.sourceTextView.backgroundColor = .codeBackground
         self.sourceTextView.textColor = .codeRegularText
         self.sourceTextView.insertionPointColor = .codeRegularText
+        self.sourceTextView.string = self.activeDocument?.codeSystem.script ?? ""
 
         self.sourceTextView.isAutomaticQuoteSubstitutionEnabled = false
         self.sourceTextView.isGrammarCheckingEnabled = false
@@ -61,7 +62,6 @@ class CodeViewController: NSViewController {
     }
 
     @IBAction func doReload(_ sender: Any) {
-        self.codeEngine?.resetState()
         self.codeEngine?.eval(script: self.sourceTextView.string)
     }
 }
