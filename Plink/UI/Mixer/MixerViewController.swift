@@ -67,7 +67,21 @@ class MixerViewController: NSViewController {
 
     
     // MARK: Opening the AudioUnit interface view
-    // TODO:
+    
+    private var audioUnitInterfaceView: NSView? = nil
+    func openUnitInterface(forNode node: AudioUnitGraph.Node ) {
+        self.audioUnitInterfaceView = loadInterfaceViewForAudioUnit((try! node.getInstance()).auRef, CGSize(width: 640, height: 480))
+        self.performSegue(withIdentifier: "OpenUnitInterface", sender: nil)
+    }
+    
+    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        if let windowController = segue.destinationController as? NSWindowController {
+            if let uivc = windowController.contentViewController as? UnitInterfaceViewController {
+                uivc.containedView = self.audioUnitInterfaceView
+            }
+        }
+    }
 }
 
 extension MixerViewController: NSCollectionViewDataSource {
@@ -117,9 +131,9 @@ extension MixerViewController: NSCollectionViewDataSource {
             }
             
         }
-//        collectionViewItem.onRequestAUInterfaceWindowOpen = { node in
-//            self.openUnitInterface(forNode: node)
-//        }
+        collectionViewItem.onRequestAUInterfaceWindowOpen = { node in
+            self.openUnitInterface(forNode: node)
+        }
         collectionViewItem.view.wantsLayer = true
         collectionViewItem.view.layer?.backgroundColor = NSColor.mixerBackground.cgColor
         collectionViewItem.nameField.stringValue = channel.name
