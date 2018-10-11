@@ -1282,7 +1282,7 @@
         <!--Parameters-->
         <scene sceneID="1Wu-M8-GOW">
             <objects>
-                <viewController title="Parameters" id="Ba7-da-Kpg" sceneMemberID="viewController">
+                <viewController title="Parameters" id="Ba7-da-Kpg" customClass="UnitParametersViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="q6J-C3-Qxa">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1301,7 +1301,7 @@
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
                                                 <tableColumn width="116" minWidth="40" maxWidth="1000" id="u4r-QJ-9OM">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Name">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1313,7 +1313,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView id="gd2-bF-DRm">
+                                                        <tableCellView identifier="NameCell" id="gd2-bF-DRm">
                                                             <rect key="frame" x="1" y="1" width="116" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -1334,7 +1334,7 @@
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                                 <tableColumn width="326" minWidth="40" maxWidth="1000" id="oO1-WI-Z19">
-                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1346,7 +1346,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView id="WpX-gb-EeH">
+                                                        <tableCellView identifier="ValueCell" id="WpX-gb-EeH">
                                                             <rect key="frame" x="120" y="1" width="326" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -1367,6 +1367,10 @@
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
+                                            <connections>
+                                                <outlet property="dataSource" destination="Ba7-da-Kpg" id="5E7-te-BUy"/>
+                                                <outlet property="delegate" destination="Ba7-da-Kpg" id="uqE-Jx-sj5"/>
+                                            </connections>
                                         </tableView>
                                     </subviews>
                                 </clipView>
@@ -1391,6 +1395,9 @@
                             <constraint firstAttribute="bottom" secondItem="eyg-J3-Y0T" secondAttribute="bottom" id="rXk-Oc-S4h"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="dNn-pe-vbh" id="onP-HE-yXy"/>
+                    </connections>
                 </viewController>
                 <customObject id="UoD-YT-eof" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -68,17 +68,21 @@ class MixerViewController: NSViewController {
     
     // MARK: Opening the AudioUnit interface view
     
-    private var audioUnitInterfaceView: NSView? = nil
+    private var audioUnitInstanceForGUI: AudioUnitInstance?
     func openUnitInterface(forNode node: AudioUnitGraph.Node ) {
-        self.audioUnitInterfaceView = loadInterfaceViewForAudioUnit((try! node.getInstance()).auRef, CGSize(width: 640, height: 480))
-        self.performSegue(withIdentifier: "OpenUnitInterface", sender: nil)
+        do {
+            self.audioUnitInstanceForGUI = try node.getInstance()
+            self.performSegue(withIdentifier: "OpenUnitInterface", sender: nil)
+        } catch {
+            
+        }
     }
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         if let windowController = segue.destinationController as? NSWindowController {
             if let uivc = windowController.contentViewController as? UnitInterfaceViewController {
-                uivc.containedView = self.audioUnitInterfaceView
+                uivc.audioUnitInstance = self.audioUnitInstanceForGUI
             }
         }
     }

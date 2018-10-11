@@ -8,13 +8,23 @@
 
 import Cocoa
 
-// a simple protocol to make this compose nicely
+// some simple protocols to make this compose nicely
+protocol AcceptsAUInstance {
+    var audioUnitInstance: AudioUnitInstance? { get set }
+}
 protocol ContainsView {
     var containedView: NSView? { get set }
 }
 
 /** The parent view controller for the unit interface window */
-class UnitInterfaceViewController: NSViewController, ContainsView {
+class UnitInterfaceViewController: NSViewController, AcceptsAUInstance {
+    var audioUnitInstance: AudioUnitInstance? {
+        didSet {
+            self.containedView = self.audioUnitInstance.flatMap { loadInterfaceViewForAudioUnit($0.auRef, CGSize(width: 640, height: 480))
+            }
+
+        }
+    }
     var containedView: NSView? {
         didSet {
             self.pushContainedView()
@@ -32,6 +42,9 @@ class UnitInterfaceViewController: NSViewController, ContainsView {
         for vc in self.tabViewController?.children ?? [] {
             if var cv = vc as? ContainsView {
                 cv.containedView = self.containedView
+            }
+            if var ai = vc as? AcceptsAUInstance {
+                ai.audioUnitInstance = self.audioUnitInstance
             }
         }
     }
