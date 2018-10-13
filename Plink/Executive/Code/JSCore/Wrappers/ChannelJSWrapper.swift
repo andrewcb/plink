@@ -17,14 +17,16 @@ extension JSCoreCodeEngine {
 
     @objc public class Channel: NSObject, ChannelExports {
         weak var channel: AudioSystem.Channel!
-        
-        init(channel: AudioSystem.Channel) {
+        weak var engine: JSCoreCodeEngine!
+
+        init(channel: AudioSystem.Channel, engine: JSCoreCodeEngine) {
             self.channel = channel
+            self.engine = engine
             super.init()
         }
         
         @objc public var instrument: Unit? {
-            return self.channel.instrument.flatMap({ try? $0.getInstance() }).map { JSCoreCodeEngine.Unit(instance: $0) }
+            return self.channel.instrument.flatMap({ try? $0.getInstance() }).map { JSCoreCodeEngine.Unit(instance: $0, engine: self.engine) }
             
         }
     }

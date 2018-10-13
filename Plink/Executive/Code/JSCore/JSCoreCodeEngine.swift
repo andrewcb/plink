@@ -32,7 +32,8 @@ class JSCoreCodeEngine: CodeLanguageEngine {
         }
         
         let getChannelFunc: @convention(block) (NSString) -> (Any?) = { [weak self] name in
-            return self?.env.audioSystem?.channelNamed(name as String).map { JSCoreCodeEngine.Channel(channel: $0) }
+            guard let self = self else { return nil }
+            return self.env.audioSystem?.channelNamed(name as String).map { JSCoreCodeEngine.Channel(channel: $0, engine: self) }
         }
 
         
