@@ -1,5 +1,5 @@
 //
-//  AudioUnitInstance.swift
+//  AudioUnitInstanceBase.swift
 //  Plink
 //
 //  Created by acb on 07/12/2017.
@@ -10,8 +10,8 @@ import Foundation
 import AudioToolbox
 import CoreAudio
 
-// Encapsulate an AudioUnit. Internally, this is weakly typed, and, say, attempting to send MIDI to a non-instrument will probably cause a runtime error, but this is a very thin wrapper.
-public struct AudioUnitInstance {
+// A basic no-frills encapsulation of an AudioUnit. Internally, this is weakly typed, and, say, attempting to send MIDI to a non-instrument will probably cause a runtime error, but this is a very thin wrapper.
+public struct AudioUnitInstanceBase {
     public var auRef: AudioUnit
     
     // A struct to encapsulate the specs of a parameter in a more modern fashion

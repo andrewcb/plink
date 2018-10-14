@@ -31,7 +31,7 @@
 		4472199C216A546A00B15AC0 /* JSCoreCodeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472199B216A546A00B15AC0 /* JSCoreCodeEngine.swift */; };
 		4472199E216A55A000B15AC0 /* CodeSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472199D216A55A000B15AC0 /* CodeSystem.swift */; };
 		447219A2216A593000B15AC0 /* TickTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A1216A593000B15AC0 /* TickTime.swift */; };
-		447219AC216A59BC00B15AC0 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A6216A59BC00B15AC0 /* AudioUnitInstance.swift */; };
+		447219AC216A59BC00B15AC0 /* AudioUnitInstanceBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A6216A59BC00B15AC0 /* AudioUnitInstanceBase.swift */; };
 		447219AD216A59BC00B15AC0 /* AudioUnitComponentDescription+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A7216A59BC00B15AC0 /* AudioUnitComponentDescription+.swift */; };
 		447219AE216A59BC00B15AC0 /* NSError+OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A8216A59BC00B15AC0 /* NSError+OSStatus.swift */; };
 		447219AF216A59BC00B15AC0 /* AudioUnitGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A9216A59BC00B15AC0 /* AudioUnitGraph.swift */; };
@@ -100,7 +100,7 @@
 		4472199B216A546A00B15AC0 /* JSCoreCodeEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSCoreCodeEngine.swift; sourceTree = "<group>"; };
 		4472199D216A55A000B15AC0 /* CodeSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSystem.swift; sourceTree = "<group>"; };
 		447219A1216A593000B15AC0 /* TickTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TickTime.swift; sourceTree = "<group>"; };
-		447219A6216A59BC00B15AC0 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
+		447219A6216A59BC00B15AC0 /* AudioUnitInstanceBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceBase.swift; sourceTree = "<group>"; };
 		447219A7216A59BC00B15AC0 /* AudioUnitComponentDescription+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AudioUnitComponentDescription+.swift"; sourceTree = "<group>"; };
 		447219A8216A59BC00B15AC0 /* NSError+OSStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+OSStatus.swift"; sourceTree = "<group>"; };
 		447219A9216A59BC00B15AC0 /* AudioUnitGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitGraph.swift; sourceTree = "<group>"; };
@@ -365,7 +365,7 @@
 			children = (
 				447219DF216BBC6400B15AC0 /* AudioToolboxHelpers.h */,
 				447219DE216BBC6400B15AC0 /* AudioToolboxHelpers.m */,
-				447219A6216A59BC00B15AC0 /* AudioUnitInstance.swift */,
+				447219A6216A59BC00B15AC0 /* AudioUnitInstanceBase.swift */,
 				447219A7216A59BC00B15AC0 /* AudioUnitComponentDescription+.swift */,
 				447219A8216A59BC00B15AC0 /* NSError+OSStatus.swift */,
 				447219A9216A59BC00B15AC0 /* AudioUnitGraph.swift */,
@@ -525,7 +525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */,
-				447219AC216A59BC00B15AC0 /* AudioUnitInstance.swift in Sources */,
+				447219AC216A59BC00B15AC0 /* AudioUnitInstanceBase.swift in Sources */,
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
 				447219B3216A5A2900B15AC0 /* AudioUnitPreset.swift in Sources */,
 				4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */,

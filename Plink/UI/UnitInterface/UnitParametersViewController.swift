@@ -20,8 +20,8 @@ class UnitParameterValueCell: NSTableCellView {
 }
 
 class UnitParametersViewController: NSViewController, AcceptsAUInstance {
-    var audioUnitInstance: AudioUnitInstance?
-    var paramInfo: [AudioUnitInstance.ParameterInfo]?
+    var audioUnitInstance: AudioUnitInstanceBase?
+    var paramInfo: [AudioUnitInstanceBase.ParameterInfo]?
     
     @IBOutlet var tableView: NSTableView!
     

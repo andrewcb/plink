@@ -68,7 +68,7 @@ class MixerViewController: NSViewController {
     
     // MARK: Opening the AudioUnit interface view
     
-    private var audioUnitInstanceForGUI: AudioUnitInstance?
+    private var audioUnitInstanceForGUI: AudioUnitInstanceBase?
     func openUnitInterface(forNode node: AudioUnitGraph.Node ) {
         do {
             self.audioUnitInstanceForGUI = try node.getInstance()
