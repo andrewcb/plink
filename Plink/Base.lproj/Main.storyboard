@@ -1313,7 +1313,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="NameCell" id="gd2-bF-DRm">
+                                                        <tableCellView identifier="NameCell" id="gd2-bF-DRm" customClass="UnitParameterNameCell" customModule="Plink" customModuleProvider="target">
                                                             <rect key="frame" x="1" y="1" width="116" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -1346,20 +1346,33 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView identifier="ValueCell" id="WpX-gb-EeH">
+                                                        <tableCellView identifier="ValueCell" id="WpX-gb-EeH" customClass="UnitParameterValueCell" customModule="Plink" customModuleProvider="target">
                                                             <rect key="frame" x="120" y="1" width="326" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9Y-ut-KW2">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="326" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="LBX-fp-MQ0">
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="e9Y-ut-KW2">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="69" height="17"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="32" id="H0x-sj-vcB"/>
+                                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="y35-Ar-wst"/>
+                                                                    </constraints>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="0.1234567" id="LBX-fp-MQ0">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
+                                                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dwo-wc-H30">
+                                                                    <rect key="frame" x="96" y="-5" width="19" height="27"/>
+                                                                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="vT2-zF-kTH"/>
+                                                                </stepper>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="dwo-wc-H30" firstAttribute="leading" secondItem="e9Y-ut-KW2" secondAttribute="trailing" constant="32" id="HTe-9O-Vm9"/>
+                                                                <constraint firstItem="e9Y-ut-KW2" firstAttribute="centerY" secondItem="dwo-wc-H30" secondAttribute="centerY" id="N8l-pR-bwD"/>
+                                                                <constraint firstItem="e9Y-ut-KW2" firstAttribute="centerY" secondItem="WpX-gb-EeH" secondAttribute="centerY" id="fkB-51-Cbg"/>
+                                                                <constraint firstItem="e9Y-ut-KW2" firstAttribute="leading" secondItem="WpX-gb-EeH" secondAttribute="leading" constant="2" id="wNQ-hT-9On"/>
+                                                            </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="e9Y-ut-KW2" id="n2G-iE-NCo"/>
                                                             </connections>

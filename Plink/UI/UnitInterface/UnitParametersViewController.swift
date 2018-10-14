@@ -8,6 +8,17 @@
 
 import Cocoa
 
+class UnitParameterNameCell: NSTableCellView {
+    
+}
+class UnitParameterValueCell: NSTableCellView {
+    var value: AudioUnitParameterValue? = nil {
+        didSet {
+            self.textField?.stringValue = self.value.map { "\($0)" } ?? "?"
+        }
+    }
+}
+
 class UnitParametersViewController: NSViewController, AcceptsAUInstance {
     var audioUnitInstance: AudioUnitInstance?
     var paramInfo: [AudioUnitInstance.ParameterInfo]?
@@ -30,28 +41,14 @@ extension UnitParametersViewController: NSTableViewDataSource {
 extension UnitParametersViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard row < paramInfo?.count ?? 0, let paramInfo = self.paramInfo?[row] else { return nil }
-        var cellIdentifier: String
-        var contents: String
         if tableColumn == self.tableView.tableColumns[0] {
-            cellIdentifier = "NameCell"
-            contents = paramInfo.name ?? "-"
+            let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "NameCell"), owner: nil) as? UnitParameterNameCell
+            cell?.textField?.stringValue = paramInfo.name ?? "-"
+            return cell
         } else { // column 1
-            cellIdentifier = "ValueCell"
-            do {
-                if let val = try self.audioUnitInstance?.getParameterValue(paramInfo.id, scope: kAudioUnitScope_Global, element: 0) {
-                    contents = "\(val)"
-                } else {
-                    contents = ""
-                }
-            } catch {
-                contents = ":-/"
-
-            }
-        }
-        if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: nil) as? NSTableCellView {
-            cell.textField?.stringValue = contents
+            let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ValueCell"), owner: nil) as? UnitParameterValueCell
+            cell?.value = (try? self.audioUnitInstance?.getParameterValue(paramInfo.id, scope: kAudioUnitScope_Global, element: 0)).flatMap { $0 }
             return cell
         }
-        return nil
     }
 }
