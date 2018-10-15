@@ -20,15 +20,26 @@ class UnitParameterValueCell: NSTableCellView {
 }
 
 class UnitParametersViewController: NSViewController, AcceptsAUInstance {
-    var audioUnitInstance: AudioUnitInstanceBase?
+    var audioUnitInstance: ManagedAudioUnitInstance?
     var paramInfo: [AudioUnitInstanceBase.ParameterInfo]?
+    
+    private var listenerId: Int?
     
     @IBOutlet var tableView: NSTableView!
     
     override func viewWillAppear() {
-        self.paramInfo = self.audioUnitInstance.flatMap { try? $0.getAllParameterInfo(forScope: kAudioUnitScope_Global) }
+        self.paramInfo = self.audioUnitInstance.map { $0.allParameterInfo(forScope: kAudioUnitScope_Global) }
+        self.listenerId = self.audioUnitInstance?.addParameterValueListener({ (inst, paramId, scope, elem, val) in
+            self.tableView.reloadData()
+        })
         self.tableView.reloadData()
         
+    }
+    
+    override func viewWillDisappear() {
+        if let listenerId = self.listenerId {
+            self.audioUnitInstance?.removeParameterValueListener(withID: listenerId)
+        }
     }
 }
 

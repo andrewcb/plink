@@ -34,7 +34,7 @@ public class AudioUnitGraph {
     public class Node {
         var graph: AudioUnitGraph?
         let node: AUNode
-        var _audioUnit: AudioUnitInstanceBase? = nil
+        var _audioUnit: ManagedAudioUnitInstance? = nil
         // (output)->(node,input) pairs that this node is connected to
         var _destinations: [UInt32:(Node, UInt32)] = [:]
         var _sources: [UInt32:(Node, UInt32)] = [:]
@@ -61,11 +61,11 @@ public class AudioUnitGraph {
             try self.init(graph: graph, preset: try AudioUnitPreset(data: presetData))
         }
         
-        public func getInstance() throws -> AudioUnitInstanceBase {
+        public func getInstance() throws -> ManagedAudioUnitInstance {
             guard let graph = self.graph else { throw Error.noGraph }
 
             if self._audioUnit == nil {
-                self._audioUnit = try graph.getAudioUnit(for: self.node)
+                self._audioUnit = ManagedAudioUnitInstance(instance: try graph.getAudioUnit(for: self.node))
             }
             return self._audioUnit!
         }

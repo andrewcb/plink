@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		445F6A9B21738F1500E4419A /* ManagedAudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9A21738F1500E4419A /* ManagedAudioUnitInstance.swift */; };
+		445F6A9D2174D67F00E4419A /* ConnectionRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */; };
 		447219512169014800B15AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219502169014800B15AC0 /* AppDelegate.swift */; };
 		447219532169014800B15AC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219522169014800B15AC0 /* ViewController.swift */; };
 		447219552169014800B15AC0 /* ActiveDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* ActiveDocument.swift */; };
@@ -71,6 +73,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		445F6A9A21738F1500E4419A /* ManagedAudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedAudioUnitInstance.swift; sourceTree = "<group>"; };
+		445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionRegistry.swift; sourceTree = "<group>"; };
 		4472194D2169014700B15AC0 /* Plink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447219502169014800B15AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447219522169014800B15AC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				447219782169096800B15AC0 /* NSViewController+.swift */,
+				445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */,
 			);
 			path = utility;
 			sourceTree = "<group>";
@@ -372,6 +377,7 @@
 				447219AA216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift */,
 				447219AB216A59BC00B15AC0 /* AudioUnitComponent.swift */,
 				447219DD216BBC6200B15AC0 /* Plink-Bridging-Header.h */,
+				445F6A9A21738F1500E4419A /* ManagedAudioUnitInstance.swift */,
 			);
 			path = "AudioUnit helpers";
 			sourceTree = "<group>";
@@ -546,6 +552,7 @@
 				447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */,
 				44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */,
 				447219E0216BBC6400B15AC0 /* AudioToolboxHelpers.m in Sources */,
+				445F6A9D2174D67F00E4419A /* ConnectionRegistry.swift in Sources */,
 				447219BC216A5E5400B15AC0 /* ChannelJSWrapper.swift in Sources */,
 				4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */,
 				447219D4216AEA0B00B15AC0 /* TransportModel.swift in Sources */,
@@ -557,6 +564,7 @@
 				4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */,
 				447219C0216A5F9800B15AC0 /* TransportJSWrapper.swift in Sources */,
 				447219DA216BB48100B15AC0 /* UnitParametersViewController.swift in Sources */,
+				445F6A9B21738F1500E4419A /* ManagedAudioUnitInstance.swift in Sources */,
 				447219AF216A59BC00B15AC0 /* AudioUnitGraph.swift in Sources */,
 				447219CB216AE2D800B15AC0 /* Scheduler.swift in Sources */,
 				447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */,

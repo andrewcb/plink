@@ -19,14 +19,14 @@ import JavaScriptCore
 extension JSCoreCodeEngine {
 
     @objc public class Unit: NSObject, UnitExports {
-        var instance: AudioUnitInstanceBase
+        var instance: ManagedAudioUnitInstance
         weak var engine: JSCoreCodeEngine!
         var paramNameMap: [String:AudioUnitParameterID]
         
-        init(instance: AudioUnitInstanceBase, engine: JSCoreCodeEngine) {
+        init(instance: ManagedAudioUnitInstance, engine: JSCoreCodeEngine) {
             self.instance = instance
             self.engine = engine
-            let allParamInfo = (try? instance.getAllParameterInfo(forScope: kAudioUnitScope_Global)) ?? []
+            let allParamInfo = instance.allParameterInfo(forScope: kAudioUnitScope_Global)
             self.paramNameMap = [String:AudioUnitParameterID](allParamInfo.compactMap { (info) in info.name.map { ($0, info.id) } }, uniquingKeysWith: { (old, new)  in old })
             super.init()
         }

@@ -10,7 +10,7 @@ import Cocoa
 
 // some simple protocols to make this compose nicely
 protocol AcceptsAUInstance {
-    var audioUnitInstance: AudioUnitInstanceBase? { get set }
+    var audioUnitInstance: ManagedAudioUnitInstance? { get set }
 }
 protocol ContainsView {
     var containedView: NSView? { get set }
@@ -18,11 +18,9 @@ protocol ContainsView {
 
 /** The parent view controller for the unit interface window */
 class UnitInterfaceViewController: NSViewController, AcceptsAUInstance {
-    var audioUnitInstance: AudioUnitInstanceBase? {
+    var audioUnitInstance: ManagedAudioUnitInstance? {
         didSet {
-            self.containedView = self.audioUnitInstance.flatMap { loadInterfaceViewForAudioUnit($0.auRef, CGSize(width: 640, height: 480))
-            }
-
+            self.containedView = self.audioUnitInstance?.loadInterfaceView(withSize: CGSize(width: 640, height: 480)) 
         }
     }
     var containedView: NSView? {
