@@ -12,9 +12,39 @@ class UnitParameterNameCell: NSTableCellView {
     
 }
 class UnitParameterValueCell: NSTableCellView {
+    @IBOutlet var stepper: NSStepper!
+    var paramInfo: AudioUnitInstanceBase.ParameterInfo? {
+        didSet {
+            if let paramInfo = self.paramInfo {
+                self.stepper.minValue = Double(paramInfo.range.lowerBound)
+                self.stepper.maxValue = Double(paramInfo.range.upperBound)
+                self.stepper.increment = (Double(paramInfo.range.upperBound) - Double(paramInfo.range.lowerBound)) * 0.0625
+            }
+        }
+    }
     var value: AudioUnitParameterValue? = nil {
         didSet {
-            self.textField?.stringValue = self.value.map { "\($0)" } ?? "?"
+            self.textField?.stringValue = self.value.map { String(format: "%0.3f", $0)  } ?? "?"
+            if let value = self.value {
+                self.stepper.doubleValue = Double(value)
+            }
+        }
+    }
+    var onValueSet: ((AudioUnitParameterValue)->())?
+    
+    private func setValue(_ val: AudioUnitParameterValue) {
+        self.value = val
+        self.onValueSet?(val)
+    }
+    
+    @IBAction func valueChanged(_ sender: Any) {
+        print("param: \(self.paramInfo!.name), \(self.paramInfo!.unit.description), \(self.paramInfo!.range), \(self.paramInfo?.flags)")
+        if sender as? NSStepper == self.stepper {
+            print("stepper: value = \(self.stepper.doubleValue)")
+            self.setValue(AudioUnitParameterValue(self.stepper.doubleValue))
+        } else if sender as? NSTextField == self.textField {
+            print("text field: value = \(self.textField!.stringValue)")
+            (AudioUnitParameterValue(self.textField!.stringValue) ?? self.value).map { self.setValue($0) }
         }
     }
 }
@@ -58,7 +88,9 @@ extension UnitParametersViewController: NSTableViewDelegate {
             return cell
         } else { // column 1
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ValueCell"), owner: nil) as? UnitParameterValueCell
+            cell?.paramInfo = paramInfo
             cell?.value = (try? self.audioUnitInstance?.getParameterValue(paramInfo.id, scope: kAudioUnitScope_Global, element: 0)).flatMap { $0 }
+            cell?.onValueSet = { [weak self] in try? self?.audioUnitInstance?.setParameterValue(paramInfo.id, scope: kAudioUnitScope_Global, element: 0, to: $0) }
             return cell
         }
     }
