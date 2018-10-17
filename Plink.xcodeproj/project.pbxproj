@@ -10,6 +10,7 @@
 		445F6A9B21738F1500E4419A /* ManagedAudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9A21738F1500E4419A /* ManagedAudioUnitInstance.swift */; };
 		445F6A9D2174D67F00E4419A /* ConnectionRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */; };
 		445F6A9F2175627300E4419A /* AudioUnitParameterUnit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9E2175627300E4419A /* AudioUnitParameterUnit+.swift */; };
+		445F6AA22176AB8300E4419A /* AudioSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6AA12176AB8300E4419A /* AudioSystemTests.swift */; };
 		447219512169014800B15AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219502169014800B15AC0 /* AppDelegate.swift */; };
 		447219532169014800B15AC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219522169014800B15AC0 /* ViewController.swift */; };
 		447219552169014800B15AC0 /* ActiveDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* ActiveDocument.swift */; };
@@ -77,6 +78,7 @@
 		445F6A9A21738F1500E4419A /* ManagedAudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedAudioUnitInstance.swift; sourceTree = "<group>"; };
 		445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionRegistry.swift; sourceTree = "<group>"; };
 		445F6A9E2175627300E4419A /* AudioUnitParameterUnit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioUnitParameterUnit+.swift"; sourceTree = "<group>"; };
+		445F6AA12176AB8300E4419A /* AudioSystemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSystemTests.swift; sourceTree = "<group>"; };
 		4472194D2169014700B15AC0 /* Plink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447219502169014800B15AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447219522169014800B15AC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +157,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		445F6AA02176AB5B00E4419A /* World */ = {
+			isa = PBXGroup;
+			children = (
+				445F6AA12176AB8300E4419A /* AudioSystemTests.swift */,
+			);
+			path = World;
+			sourceTree = "<group>";
+		};
 		447219442169014700B15AC0 = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +205,7 @@
 		447219642169014C00B15AC0 /* PlinkTests */ = {
 			isa = PBXGroup;
 			children = (
+				445F6AA02176AB5B00E4419A /* World */,
 				447219652169014C00B15AC0 /* PlinkTests.swift */,
 				447219672169014C00B15AC0 /* Info.plist */,
 			);
@@ -587,6 +598,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				447219662169014C00B15AC0 /* PlinkTests.swift in Sources */,
+				445F6AA22176AB8300E4419A /* AudioSystemTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
