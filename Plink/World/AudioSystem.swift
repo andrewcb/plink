@@ -133,9 +133,8 @@ class AudioSystem {
     
     private func modifyingGraph(_ actions: (() throws ->())) throws {
         try graph.stop()
+        try graph.uninitialize()
         try actions()
-        // is this the best way?
-        //        try graph.uninitialize()
         try graph.initialize()
         try graph.start()
     }
