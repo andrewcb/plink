@@ -61,6 +61,14 @@ public class ManagedAudioUnitInstance {
         
     }
     
+    public func getProperty<T>(withID id: AudioUnitPropertyID, scope: AudioUnitScope, element: AudioUnitElement) throws -> T {
+        return try self.instance.getProperty(withID: id, scope: scope, element: element)
+    }
+    
+    public func setProperty<T>(withID id: AudioUnitPropertyID, scope: AudioUnitScope, element: AudioUnitElement, to value: T) throws {
+        try self.instance.setProperty(withID: id, scope: scope, element: element, to: value)
+    }
+    
     public func render(withFlags flags: AudioUnitRenderActionFlags = [], timeStamp: AudioTimeStamp, outputBusNumber: UInt32 = 0, numberOfFrames: UInt32, data: inout AudioBufferList) throws {
         try self.instance.render(withFlags:flags, timeStamp: timeStamp, outputBusNumber: outputBusNumber, numberOfFrames:numberOfFrames, data:&data)
     }

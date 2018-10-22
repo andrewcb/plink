@@ -18,6 +18,8 @@ class MixerViewController: NSViewController {
     }
     
     @IBOutlet var mixerCollectionView: NSCollectionView!
+    
+    var levelUpdateTimer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,20 @@ class MixerViewController: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         self.mixerCollectionView.reloadData()
+        self.levelUpdateTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.updateLevels), userInfo: nil, repeats: true)
+    }
+    
+    override func viewWillDisappear() {
+        self.levelUpdateTimer?.invalidate()
+        self.levelUpdateTimer = nil
+        super.viewWillDisappear()
+    }
+    
+    @objc func updateLevels() {
+        guard let audioSystem = self.activeDocument?.audioSystem else { return }
+        guard let master = audioSystem.masterLevel else { print("No level returned"); return }
+        print("MASTER: peak = \(master.peak); avg = \(master.average)")
+
     }
 
     private func setupCollectionView() {

@@ -18,6 +18,7 @@ extension AudioComponentDescription {
     
     public static var defaultOutput = AudioComponentDescription(type: kAudioUnitType_Output, subType: kAudioUnitSubType_DefaultOutput, manufacturer: kAudioUnitManufacturer_Apple)
     public static var stereoMixer = AudioComponentDescription(type: kAudioUnitType_Mixer, subType: kAudioUnitSubType_StereoMixer, manufacturer: kAudioUnitManufacturer_Apple)
+    public static var multiChannelMixer = AudioComponentDescription(type: kAudioUnitType_Mixer, subType: kAudioUnitSubType_MultiChannelMixer, manufacturer: kAudioUnitManufacturer_Apple)
 }
 
 extension AudioComponentDescription: Equatable {

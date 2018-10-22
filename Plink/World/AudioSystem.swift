@@ -14,6 +14,32 @@ class AudioSystem {
     let mixerNode: AudioUnitGraph.Node
     let outNode: AudioUnitGraph.Node
     
+    struct LevelMeterValue {
+        let average: AudioUnitParameterValue
+        let peak: AudioUnitParameterValue
+    }
+    
+    private func getMeterLevel(forScope scope: AudioUnitScope, element: AudioUnitElement) -> LevelMeterValue? {
+        guard
+            let audioUnit = mixerNode._audioUnit
+        else { return nil }
+        do {
+            let avg = try audioUnit.getParameterValue(kMultiChannelMixerParam_PostAveragePower, scope: scope, element: element)
+            let peak = try audioUnit.getParameterValue(kMultiChannelMixerParam_PostPeakHoldLevel, scope: scope, element: element)
+            return LevelMeterValue(average: avg, peak: peak)
+
+        } catch {
+            print("getMeterLevel: error \(error)")
+            return nil
+        }
+    }
+    public var masterLevel: LevelMeterValue? {
+        return self.getMeterLevel(forScope: kAudioUnitScope_Output, element: 0)
+    }
+    public func level(forChannel channel: Int) -> LevelMeterValue? {
+        return self.getMeterLevel(forScope: kAudioUnitScope_Input, element: AudioUnitElement(channel))
+    }
+    
     /// A Channel, currently consisting of an instrument and some inserts
     class Channel {
         var name: String
@@ -125,10 +151,15 @@ class AudioSystem {
     
     init() throws {
         self.graph = try AudioUnitGraph()
-        self.mixerNode = try self.graph.addNode(withDescription: .stereoMixer)
+        self.mixerNode = try self.graph.addNode(withDescription: .multiChannelMixer)
         self.outNode = try self.graph.addNode(withDescription: .defaultOutput)
         try self.mixerNode.connect(to: self.outNode)
         try graph.open()
+        let inst = try self.mixerNode.getInstance()
+        try inst.setParameterValue(kMultiChannelMixerParam_Volume, scope: kAudioUnitScope_Output, element: 0, to: 1.0)
+        try self.mixerNode.getInstance().setProperty(withID: kAudioUnitProperty_MeteringMode, scope: kAudioUnitScope_Output, element: 0, to: UInt32(1))
+        try graph.initialize()
+//        try graph.start()
     }
     
     private func modifyingGraph(_ actions: (() throws ->())) throws {
@@ -159,9 +190,12 @@ class AudioSystem {
         let index = self.channels.count
         try self.modifyingGraph {
             try channel.headNode?.connect(element: 0, to: self.mixerNode, destElement: UInt32(index))
+            try self.mixerNode._audioUnit?.setProperty(withID: kAudioUnitProperty_MeteringMode, scope: kAudioUnitScope_Input, element: UInt32(index), to: UInt32(1))
+            try self.mixerNode.getInstance().setProperty(withID: kAudioUnitProperty_MeteringMode, scope: kAudioUnitScope_Output, element: 0, to: UInt32(1))
             channel.onHeadNodeChanged = { (_, _) in
                 do {
                     try channel.headNode?.connect(element: 0, to: self.mixerNode, destElement: UInt32(index))
+                    try self.mixerNode._audioUnit?.setProperty(withID: kAudioUnitProperty_MeteringMode, scope: kAudioUnitScope_Input, element: UInt32(index), to: UInt32(1))
                 } catch {
                     fatalError("Failed to reconnect head node: \(error)")
                 }
@@ -169,6 +203,7 @@ class AudioSystem {
             self.channels.append(channel)
             channel.audioSystem = self
             channel.index = index
+            try self.mixerNode.getInstance().setParameterValue(kMultiChannelMixerParam_Volume, scope: kAudioUnitScope_Input, element: AudioUnitElement(index), to: 1.0)
         }
         
     }
@@ -187,16 +222,16 @@ class AudioSystem {
     
     //MARK: internal functions called from the channel
     fileprivate func getGain(forChannelIndex index: Int) throws -> AudioUnitParameterValue {
-        return try self.mixerNode.getInstance().getParameterValue(0, scope: kAudioUnitScope_Input, element: AudioUnitElement(index))
+        return try self.mixerNode.getInstance().getParameterValue(kMultiChannelMixerParam_Volume, scope: kAudioUnitScope_Input, element: AudioUnitElement(index))
     }
     fileprivate func getPan(forChannelIndex index: Int) throws -> AudioUnitParameterValue {
-        return try self.mixerNode.getInstance().getParameterValue(1, scope: kAudioUnitScope_Input, element: AudioUnitElement(index))
+        return try self.mixerNode.getInstance().getParameterValue(kMultiChannelMixerParam_Pan, scope: kAudioUnitScope_Input, element: AudioUnitElement(index))
     }
     fileprivate func setGain(forChannelIndex index: Int, to value: AudioUnitParameterValue) throws {
-        return try self.mixerNode.getInstance().setParameterValue(0, scope: kAudioUnitScope_Input, element: AudioUnitElement(index), to: value)
+        return try self.mixerNode.getInstance().setParameterValue(kMultiChannelMixerParam_Volume, scope: kAudioUnitScope_Input, element: AudioUnitElement(index), to: value)
     }
     fileprivate func setPan(forChannelIndex index: Int, to value: AudioUnitParameterValue) throws {
-        return try self.mixerNode.getInstance().setParameterValue(1, scope: kAudioUnitScope_Input, element: AudioUnitElement(index), to: value)
+        return try self.mixerNode.getInstance().setParameterValue(kMultiChannelMixerParam_Pan, scope: kAudioUnitScope_Input, element: AudioUnitElement(index), to: value)
     }
     
     //MARK: save/restore
