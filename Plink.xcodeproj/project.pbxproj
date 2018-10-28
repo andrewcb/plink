@@ -11,6 +11,7 @@
 		445F6A9D2174D67F00E4419A /* ConnectionRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */; };
 		445F6A9F2175627300E4419A /* AudioUnitParameterUnit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9E2175627300E4419A /* AudioUnitParameterUnit+.swift */; };
 		445F6AA22176AB8300E4419A /* AudioSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6AA12176AB8300E4419A /* AudioSystemTests.swift */; };
+		445F6AA4218146E200E4419A /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6AA3218146E200E4419A /* LevelMeterView.swift */; };
 		447219512169014800B15AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219502169014800B15AC0 /* AppDelegate.swift */; };
 		447219532169014800B15AC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219522169014800B15AC0 /* ViewController.swift */; };
 		447219552169014800B15AC0 /* ActiveDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* ActiveDocument.swift */; };
@@ -62,6 +63,8 @@
 		447219DC216BB77000B15AC0 /* UnitInterfaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219DB216BB77000B15AC0 /* UnitInterfaceViewController.swift */; };
 		447219E0216BBC6400B15AC0 /* AudioToolboxHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 447219DE216BBC6400B15AC0 /* AudioToolboxHelpers.m */; };
 		447219E3216CF46800B15AC0 /* test640x480.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 447219E2216CF46800B15AC0 /* test640x480.jpg */; };
+		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
+		44ED39722184A6CE00CB15B4 /* NSRect+ComposableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,7 @@
 		445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionRegistry.swift; sourceTree = "<group>"; };
 		445F6A9E2175627300E4419A /* AudioUnitParameterUnit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioUnitParameterUnit+.swift"; sourceTree = "<group>"; };
 		445F6AA12176AB8300E4419A /* AudioSystemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSystemTests.swift; sourceTree = "<group>"; };
+		445F6AA3218146E200E4419A /* LevelMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMeterView.swift; sourceTree = "<group>"; };
 		4472194D2169014700B15AC0 /* Plink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447219502169014800B15AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447219522169014800B15AC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +141,8 @@
 		447219DE216BBC6400B15AC0 /* AudioToolboxHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioToolboxHelpers.m; sourceTree = "<group>"; };
 		447219DF216BBC6400B15AC0 /* AudioToolboxHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioToolboxHelpers.h; sourceTree = "<group>"; };
 		447219E2216CF46800B15AC0 /* test640x480.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test640x480.jpg; sourceTree = "<group>"; };
+		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
+		44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+ComposableTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +211,7 @@
 		447219642169014C00B15AC0 /* PlinkTests */ = {
 			isa = PBXGroup;
 			children = (
+				44ED396F2184A60F00CB15B4 /* UI */,
 				445F6AA02176AB5B00E4419A /* World */,
 				447219652169014C00B15AC0 /* PlinkTests.swift */,
 				447219672169014C00B15AC0 /* Info.plist */,
@@ -272,6 +279,7 @@
 			children = (
 				447219782169096800B15AC0 /* NSViewController+.swift */,
 				445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */,
+				44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */,
 			);
 			path = utility;
 			sourceTree = "<group>";
@@ -312,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				4472198E216A50AC00B15AC0 /* ColorfulTextButton.swift */,
+				445F6AA3218146E200E4419A /* LevelMeterView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -431,6 +440,22 @@
 				447219E2216CF46800B15AC0 /* test640x480.jpg */,
 			);
 			path = diagnostics;
+			sourceTree = "<group>";
+		};
+		44ED396F2184A60F00CB15B4 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				44ED39702184A61700CB15B4 /* utility */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		44ED39702184A61700CB15B4 /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */,
+			);
+			path = utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -561,6 +586,7 @@
 				447219B1216A59BC00B15AC0 /* AudioUnitComponent.swift in Sources */,
 				447219512169014800B15AC0 /* AppDelegate.swift in Sources */,
 				447219792169096800B15AC0 /* NSViewController+.swift in Sources */,
+				445F6AA4218146E200E4419A /* LevelMeterView.swift in Sources */,
 				4472199E216A55A000B15AC0 /* CodeSystem.swift in Sources */,
 				447219DC216BB77000B15AC0 /* UnitInterfaceViewController.swift in Sources */,
 				447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */,
@@ -576,6 +602,7 @@
 				447219B7216A5ADB00B15AC0 /* Transport.swift in Sources */,
 				4472199A216A543E00B15AC0 /* CodeEngineEnvironment.swift in Sources */,
 				4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */,
+				44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */,
 				447219C0216A5F9800B15AC0 /* TransportJSWrapper.swift in Sources */,
 				447219DA216BB48100B15AC0 /* UnitParametersViewController.swift in Sources */,
 				445F6A9F2175627300E4419A /* AudioUnitParameterUnit+.swift in Sources */,
@@ -599,6 +626,7 @@
 			files = (
 				447219662169014C00B15AC0 /* PlinkTests.swift in Sources */,
 				445F6AA22176AB8300E4419A /* AudioSystemTests.swift in Sources */,
+				44ED39722184A6CE00CB15B4 /* NSRect+ComposableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

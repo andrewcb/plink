@@ -859,12 +859,21 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RAn-3u-9ch" customClass="LevelMeterView" customModule="Plink" customModuleProvider="target">
+                                <rect key="frame" x="321" y="38" width="117" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="128" id="232-sL-qn9"/>
+                                    <constraint firstAttribute="height" constant="22" id="iC1-hR-8wH"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="dS6-fr-4tc" firstAttribute="top" secondItem="aua-PE-zju" secondAttribute="top" id="1Ns-px-ZnW"/>
                             <constraint firstItem="dS6-fr-4tc" firstAttribute="height" secondItem="aua-PE-zju" secondAttribute="height" id="563-DQ-OjW"/>
                             <constraint firstItem="fw5-Uj-Vam" firstAttribute="leading" secondItem="oxO-dE-266" secondAttribute="trailing" constant="16" id="6z8-ws-dkx"/>
                             <constraint firstItem="aua-PE-zju" firstAttribute="leading" secondItem="s4A-9V-jdf" secondAttribute="leading" constant="20" id="EE9-PM-vzR"/>
+                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="RAn-3u-9ch" secondAttribute="trailing" constant="12" id="KwO-js-zT4"/>
+                            <constraint firstItem="RAn-3u-9ch" firstAttribute="centerY" secondItem="aud-xw-Zrd" secondAttribute="centerY" id="XvV-pf-72i"/>
                             <constraint firstItem="dS6-fr-4tc" firstAttribute="leading" secondItem="aua-PE-zju" secondAttribute="trailing" id="YAA-IQ-5a7"/>
                             <constraint firstItem="oxO-dE-266" firstAttribute="leading" secondItem="dS6-fr-4tc" secondAttribute="trailing" constant="16" id="aTA-Vi-tR1"/>
                             <constraint firstItem="4tF-Z4-7JX" firstAttribute="trailing" secondItem="aud-xw-Zrd" secondAttribute="trailing" id="ecv-6x-YL5"/>
@@ -874,10 +883,12 @@
                             <constraint firstItem="fw5-Uj-Vam" firstAttribute="top" secondItem="4tF-Z4-7JX" secondAttribute="bottom" constant="3" id="ifx-Io-KpH"/>
                             <constraint firstItem="aud-xw-Zrd" firstAttribute="leading" secondItem="fw5-Uj-Vam" secondAttribute="trailing" constant="8" id="pwm-mC-RNE"/>
                             <constraint firstItem="aud-xw-Zrd" firstAttribute="centerY" secondItem="fw5-Uj-Vam" secondAttribute="centerY" id="uOJ-Mq-n54"/>
+                            <constraint firstItem="RAn-3u-9ch" firstAttribute="leading" secondItem="aud-xw-Zrd" secondAttribute="trailing" constant="8" id="vs6-GT-fAT"/>
                             <constraint firstItem="4tF-Z4-7JX" firstAttribute="leading" secondItem="fw5-Uj-Vam" secondAttribute="leading" id="ywY-ND-JbP"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="levelMeter" destination="RAn-3u-9ch" id="6gy-Oa-YPc"/>
                         <outlet property="playButton" destination="dS6-fr-4tc" id="svi-OJ-Uve"/>
                         <outlet property="positionLabel" destination="oxO-dE-266" id="U3z-a0-PBS"/>
                         <outlet property="stopButton" destination="aua-PE-zju" id="WPq-5H-GRX"/>

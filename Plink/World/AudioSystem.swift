@@ -9,34 +9,49 @@
 import Foundation
 import AudioToolbox
 
+struct StereoPair<T> {
+    let left: T
+    let right: T
+    
+    func map<U>(_ f: ((T) throws -> (U))) rethrows -> StereoPair<U> {
+        return StereoPair<U>(left: try f(self.left), right: try f(self.right))
+    }
+    
+    func asArray() -> [T] { return [self.left, self.right] }
+}
+
 class AudioSystem {
     let graph: AudioUnitGraph
     let mixerNode: AudioUnitGraph.Node
     let outNode: AudioUnitGraph.Node
     
-    struct LevelMeterValue {
+    struct ChannelLevelReading {
         let average: AudioUnitParameterValue
         let peak: AudioUnitParameterValue
     }
+
+    typealias StereoLevelReading = StereoPair<ChannelLevelReading>
     
-    private func getMeterLevel(forScope scope: AudioUnitScope, element: AudioUnitElement) -> LevelMeterValue? {
+    private func getMeterLevel(forScope scope: AudioUnitScope, element: AudioUnitElement) -> StereoLevelReading? {
         guard
             let audioUnit = mixerNode._audioUnit
         else { return nil }
         do {
-            let avg = try audioUnit.getParameterValue(kMultiChannelMixerParam_PostAveragePower, scope: scope, element: element)
-            let peak = try audioUnit.getParameterValue(kMultiChannelMixerParam_PostPeakHoldLevel, scope: scope, element: element)
-            return LevelMeterValue(average: avg, peak: peak)
+            let lavg = try audioUnit.getParameterValue(kMultiChannelMixerParam_PostAveragePower, scope: scope, element: element)
+            let lpeak = try audioUnit.getParameterValue(kMultiChannelMixerParam_PostPeakHoldLevel, scope: scope, element: element)
+            let ravg = try audioUnit.getParameterValue(kMultiChannelMixerParam_PostAveragePower+1, scope: scope, element: element)
+            let rpeak = try audioUnit.getParameterValue(kMultiChannelMixerParam_PostPeakHoldLevel+1, scope: scope, element: element)
+            return StereoLevelReading(left: ChannelLevelReading(average: lavg, peak: lpeak), right: ChannelLevelReading(average: ravg, peak: rpeak))
 
         } catch {
             print("getMeterLevel: error \(error)")
             return nil
         }
     }
-    public var masterLevel: LevelMeterValue? {
+    public var masterLevel: StereoLevelReading? {
         return self.getMeterLevel(forScope: kAudioUnitScope_Output, element: 0)
     }
-    public func level(forChannel channel: Int) -> LevelMeterValue? {
+    public func level(forChannel channel: Int) -> StereoLevelReading? {
         return self.getMeterLevel(forScope: kAudioUnitScope_Input, element: AudioUnitElement(channel))
     }
     

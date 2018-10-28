@@ -14,16 +14,32 @@ class TransportViewController: NSViewController {
     @IBOutlet var positionLabel: NSTextField!
     @IBOutlet var tempoField: NSTextField!
     @IBOutlet var tempoStepper: NSStepper!
+    @IBOutlet var levelMeter: LevelMeterView!
 
+    var levelUpdateTimer: Timer?
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        self.levelMeter.orientation = .horizontal
         self.transportTempoChanged()
         self.activeDocument?.transport.onTempoChange = { self.transportTempoChanged() }
         self.activeDocument?.transport.onRunningStateChange = { self.transportRunningStateChanged() }
         self.activeDocument?.transport.clients.append(self)
+        self.levelUpdateTimer = Timer.scheduledTimer(timeInterval: 0.04, target: self, selector: #selector(self.updateLevels), userInfo: nil, repeats: true)
+
     }
 
+    override func viewWillDisappear() {
+        self.levelUpdateTimer?.invalidate()
+        self.levelUpdateTimer = nil
+        super.viewWillDisappear()
+    }
+    
+    @objc func updateLevels() {
+        guard let audioSystem = self.activeDocument?.audioSystem else { return }
+        guard let master = audioSystem.masterLevel else { print("No level returned"); return }
+        self.levelMeter.levelReading = master        
+    }
     func transportTempoChanged() {
         guard let transport = self.activeDocument?.transport else { return }
         self.tempoField.doubleValue = transport.tempo
