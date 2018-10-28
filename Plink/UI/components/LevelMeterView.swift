@@ -61,10 +61,25 @@ class LevelMeterView: NSView {
         
         ctx.saveGraphicsState()
 
-        (normalisedLevels.asArray().enumerated().map { clipRect(forNLevel: $0.element.0, channel: $0.offset) }).clip()
+        let normArray = normalisedLevels.asArray()
+        (normArray.enumerated().map { clipRect(forNLevel: $0.element.0, channel: $0.offset) }).clip()
 
         gradient.draw(in: self.bounds, angle: (self.orientation == .vertical ? 90.0 : 0.0))
 
+        // Draw peaks
+        
+        for ch in normArray.enumerated() {
+            if ch.element.1 > ch.element.0 {
+                self.gradient.interpolatedColor(atLocation: ch.element.1).setFill()
+                let rect: NSRect
+                switch(self.orientation) {
+                case .horizontal: rect = NSRect(x: ch.element.1 * self.bounds.width, y: self.bounds.height*CGFloat(ch.offset)*0.5, width: 2, height: self.bounds.height*0.5)
+                case .vertical: rect = NSRect(x: self.bounds.width*CGFloat(ch.offset)*0.5, y: ch.element.1 * self.bounds.height, width: self.bounds.width * 0.5, height: 2)
+                }
+                rect.fill()
+            }
+        }
+        
         ctx.restoreGraphicsState()
     }
     
