@@ -22,6 +22,7 @@ class MixerStripCollectionViewItem: NSCollectionViewItem {
     @IBOutlet var levelSlider: NSSlider!
     @IBOutlet var panSlider: NSSlider!
     @IBOutlet var nodesCollectionView: NSCollectionView!
+    @IBOutlet var levelMeter: LevelMeterView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,5 +106,15 @@ extension MixerStripCollectionViewItem: NSCollectionViewDataSource {
 extension MixerStripCollectionViewItem: NSCollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
         return NSSize(width: self.view.bounds.width - 4.0, height: 30.0)
+    }
+}
+
+extension MixerStripCollectionViewItem: RefreshableDisplay {
+    func refreshDisplay() {
+        guard
+            let channel = self.channel?.index,
+            let level = self.channel?.audioSystem?.level(forChannel: 0)
+        else { return }
+        self.levelMeter.levelReading = level
     }
 }

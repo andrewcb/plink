@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="MixerStripCollectionViewItem" customModule="GDAW01" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="MixerStripCollectionViewItem" customModule="Plink" customModuleProvider="target">
             <connections>
+                <outlet property="levelMeter" destination="2hQ-nq-Y2Z" id="ZtW-R0-DGH"/>
                 <outlet property="levelSlider" destination="BaZ-Wb-V3C" id="Gc7-M6-ar2"/>
                 <outlet property="nameField" destination="ulW-xE-mhA" id="CJj-Hp-mG7"/>
                 <outlet property="nodesCollectionView" destination="CD4-Xi-aCA" id="W8X-ur-589"/>
@@ -23,13 +25,12 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="SBX-0m-ehX">
                     <rect key="frame" x="0.0" y="27" width="144" height="173"/>
                     <subviews>
-                        <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iOl-Ft-Dz4">
-                            <rect key="frame" x="14" y="144" width="116" height="19"/>
-                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" sliderType="linear" id="JZd-VM-gf2"/>
-                            <connections>
-                                <action selector="panChanged:" target="-2" id="SN3-Xi-H5i"/>
-                            </connections>
-                        </slider>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="2hQ-nq-Y2Z" customClass="LevelMeterView" customModule="Plink" customModuleProvider="target">
+                            <rect key="frame" x="48" y="16" width="48" height="122"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="48" id="rBB-Ap-q7w"/>
+                            </constraints>
+                        </customView>
                         <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BaZ-Wb-V3C">
                             <rect key="frame" x="63" y="13" width="19" height="127"/>
                             <sliderCell key="cell" continuous="YES" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="right" sliderType="linear" id="O6w-7k-qvg"/>
@@ -37,14 +38,24 @@
                                 <action selector="levelChanged:" target="-2" id="7H1-eP-5LO"/>
                             </connections>
                         </slider>
+                        <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iOl-Ft-Dz4">
+                            <rect key="frame" x="14" y="144" width="116" height="19"/>
+                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" sliderType="linear" id="JZd-VM-gf2"/>
+                            <connections>
+                                <action selector="panChanged:" target="-2" id="SN3-Xi-H5i"/>
+                            </connections>
+                        </slider>
                     </subviews>
                     <constraints>
                         <constraint firstItem="iOl-Ft-Dz4" firstAttribute="leading" secondItem="SBX-0m-ehX" secondAttribute="leading" constant="16" id="FDh-wu-ggS"/>
                         <constraint firstItem="iOl-Ft-Dz4" firstAttribute="top" secondItem="SBX-0m-ehX" secondAttribute="top" constant="12" id="IM4-WS-kKB"/>
+                        <constraint firstItem="2hQ-nq-Y2Z" firstAttribute="centerX" secondItem="BaZ-Wb-V3C" secondAttribute="centerX" id="IsD-Eg-opY"/>
+                        <constraint firstItem="2hQ-nq-Y2Z" firstAttribute="bottom" secondItem="BaZ-Wb-V3C" secondAttribute="bottom" id="VdW-SP-KoQ"/>
                         <constraint firstItem="BaZ-Wb-V3C" firstAttribute="centerX" secondItem="SBX-0m-ehX" secondAttribute="centerX" id="coe-Pq-Ltc"/>
                         <constraint firstAttribute="trailing" secondItem="iOl-Ft-Dz4" secondAttribute="trailing" constant="16" id="e5A-pX-ASs"/>
                         <constraint firstAttribute="bottom" secondItem="BaZ-Wb-V3C" secondAttribute="bottom" constant="16" id="goO-zp-3M8"/>
                         <constraint firstItem="BaZ-Wb-V3C" firstAttribute="top" secondItem="iOl-Ft-Dz4" secondAttribute="bottom" constant="8" id="gwP-aU-152"/>
+                        <constraint firstItem="2hQ-nq-Y2Z" firstAttribute="top" secondItem="BaZ-Wb-V3C" secondAttribute="top" id="rOl-Yg-R27"/>
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="cS9-7o-qCk">
@@ -94,7 +105,7 @@
                     <rect key="frame" x="16" y="8" width="112" height="13"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" placeholderString="label" drawsBackground="YES" id="kQD-lv-LJy">
                         <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
@@ -115,6 +126,6 @@
                 <constraint firstItem="SBX-0m-ehX" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="vpr-ir-k2C"/>
             </constraints>
         </customView>
-        <collectionViewItem nibName="MixerStripCollectionViewItem" id="f1B-Hd-XTI" customClass="MixerStripCollectionViewItem" customModule="GDAW01" customModuleProvider="target"/>
+        <collectionViewItem nibName="MixerStripCollectionViewItem" id="f1B-Hd-XTI" customClass="MixerStripCollectionViewItem" customModule="Plink" customModuleProvider="target"/>
     </objects>
 </document>

@@ -9,6 +9,11 @@
 import Cocoa
 import AudioToolbox
 
+/// Something that can be told to refresh its displayed value, inexpensively, at a relatively high frequency
+protocol RefreshableDisplay {
+    func refreshDisplay()
+}
+
 class MixerViewController: NSViewController {
 
     class Layout: NSCollectionViewFlowLayout {
@@ -30,7 +35,7 @@ class MixerViewController: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         self.mixerCollectionView.reloadData()
-//        self.levelUpdateTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.updateLevels), userInfo: nil, repeats: true)
+        self.levelUpdateTimer = Timer.scheduledTimer(timeInterval: 0.04, target: self, selector: #selector(self.updateLevels), userInfo: nil, repeats: true)
     }
     
     override func viewWillDisappear() {
@@ -41,8 +46,9 @@ class MixerViewController: NSViewController {
     
     @objc func updateLevels() {
         guard let audioSystem = self.activeDocument?.audioSystem else { return }
-        guard let master = audioSystem.masterLevel else { print("No level returned"); return }
-//        print("MASTER: peak = \(master.left.peak),\(master.right.peak); avg = \(master.left.average), \(master.right.average)")
+        for item in self.mixerCollectionView.visibleItems() {
+            (item as? RefreshableDisplay)?.refreshDisplay()
+        }
 
     }
 
