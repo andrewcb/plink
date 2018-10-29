@@ -50,8 +50,9 @@ class LevelMeterView: NSView {
         self.bounds.fill()
         
         func clipRect(forNLevel nlevel: CGFloat, channel: Int) -> NSRect {
+            let channelPos = (self.orientation == .horizontal) ? 1-channel : channel
             let slices = (self.orientation == .vertical) ? self.bounds.sliceHorizontally(intoPieces: 2) : self.bounds.sliceVertically(intoPieces: 2)
-            return slices[channel].scaled(x: self.orientation == .vertical ? 1.0 : nlevel, y: self.orientation == .vertical ? nlevel : 1.0)
+            return slices[channelPos].scaled(x: self.orientation == .vertical ? 1.0 : nlevel, y: self.orientation == .vertical ? nlevel : 1.0)
         }
         
         guard
