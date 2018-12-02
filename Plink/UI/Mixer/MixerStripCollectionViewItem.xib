@@ -30,6 +30,11 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="rBB-Ap-q7w"/>
                             </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                    <color key="value" white="0.22661272321428569" alpha="1" colorSpace="calibratedWhite"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </customView>
                         <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BaZ-Wb-V3C">
                             <rect key="frame" x="63" y="13" width="19" height="127"/>

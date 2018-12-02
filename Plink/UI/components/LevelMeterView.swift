@@ -15,6 +15,7 @@ class LevelMeterView: NSView {
         case horizontal
     }
     
+    @IBInspectable var backgroundColor: NSColor = NSColor.black
     var orientation: Orientation = .vertical
     var levelReading: AudioSystem.StereoLevelReading? {
         didSet {
@@ -46,7 +47,7 @@ class LevelMeterView: NSView {
     
     override func draw(_ dirtyRect: NSRect) {
         
-        NSColor.black.setFill()
+        self.backgroundColor.setFill()
         self.bounds.fill()
         
         func clipRect(forNLevel nlevel: CGFloat, channel: Int) -> NSRect {
