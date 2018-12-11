@@ -21,9 +21,9 @@ struct StereoPair<T> {
 }
 
 class AudioSystem {
-    let graph: AudioUnitGraph
-    let mixerNode: AudioUnitGraph.Node
-    let outNode: AudioUnitGraph.Node
+    let graph: AudioUnitGraph<ManagedAudioUnitInstance>
+    let mixerNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node
+    let outNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node
     
     struct ChannelLevelReading {
         let average: AudioUnitParameterValue
@@ -60,7 +60,7 @@ class AudioSystem {
         var name: String
         var audioSystem: AudioSystem? = nil
         var index: Int = -1
-        var instrument: AudioUnitGraph.Node? = nil {
+        var instrument: AudioUnitGraph<ManagedAudioUnitInstance>.Node? = nil {
             didSet(prev) {
                 guard prev != self.instrument else { return }
                 do {
@@ -77,12 +77,12 @@ class AudioSystem {
                 }
             }
         }
-        var _inserts: [AudioUnitGraph.Node] = []
-        var inserts: [AudioUnitGraph.Node] {
+        var _inserts: [AudioUnitGraph<ManagedAudioUnitInstance>.Node] = []
+        var inserts: [AudioUnitGraph<ManagedAudioUnitInstance>.Node] {
             return self._inserts
         }
         // methods for adding inserts
-        func add(insert: AudioUnitGraph.Node) throws {
+        func add(insert: AudioUnitGraph<ManagedAudioUnitInstance>.Node) throws {
             let lastHead = self.headNode
             self._inserts.append(insert)
             try self.audioSystem?.graph.stop()
@@ -94,29 +94,31 @@ class AudioSystem {
         }
         
         /// The node that's at the end of the chain
-        var _headNode: AudioUnitGraph.Node? {
+        var _headNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node? {
             didSet(prev) {
                 self.onHeadNodeChanged?(self, prev)
+                print("head node changed:")
+                audioSystem!.graph.dump()
             }
         }
-        var headNode: AudioUnitGraph.Node? {
+        var headNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node? {
             return self._headNode
         }
-        private func findHeadNode() -> AudioUnitGraph.Node? {
+        private func findHeadNode() -> AudioUnitGraph<ManagedAudioUnitInstance>.Node? {
             return self.inserts.last ?? self.instrument
         }
         
         // notification method; called with the Channel and
-        var onHeadNodeChanged: ((Channel,AudioUnitGraph.Node?)->())? = nil
+        var onHeadNodeChanged: ((Channel,AudioUnitGraph<ManagedAudioUnitInstance>.Node?)->())? = nil
         
-        init(name: String, instrument: AudioUnitGraph.Node? = nil, inserts: [AudioUnitGraph.Node] = []) {
+        init(name: String, instrument: AudioUnitGraph<ManagedAudioUnitInstance>.Node? = nil, inserts: [AudioUnitGraph<ManagedAudioUnitInstance>.Node] = []) {
             self.name = name
             self.instrument = instrument
             self._inserts = inserts
             self._headNode = self.findHeadNode()
         }
         
-        init(graph: AudioUnitGraph, snapshot: AudioSystemModel.ChannelModel) throws {
+        init(graph: AudioUnitGraph<ManagedAudioUnitInstance>, snapshot: AudioSystemModel.ChannelModel) throws {
             self.name = snapshot.name
             self.instrument = try snapshot.instrument.map {
                 try AudioUnitGraph.Node(graph: graph, presetData: $0)

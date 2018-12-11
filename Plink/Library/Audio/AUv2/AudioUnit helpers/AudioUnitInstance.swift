@@ -1,38 +1,21 @@
 //
-//  AudioUnitInstanceBase.swift
+//  AudioUnitInstanceProtocol.swift
 //  Plink
 //
-//  Created by acb on 07/12/2017.
-//  Copyright © 2017 acb. All rights reserved.
+//  Created by acb on 03/12/2018.
+//  Copyright © 2018 Kineticfactory. All rights reserved.
 //
 
 import Foundation
-import AudioToolbox
-import CoreAudio
 
-// A basic no-frills encapsulation of an AudioUnit. Internally, this is weakly typed, and, say, attempting to send MIDI to a non-instrument will probably cause a runtime error, but this is a very thin wrapper.
-public struct AudioUnitInstanceBase {
-    public var auRef: AudioUnit
-    
-    // A struct to encapsulate the specs of a parameter in a more modern fashion
-    public struct ParameterInfo {
-        public let id: AudioUnitParameterID
-        public let name: String?
-        public let unit: AudioUnitParameterUnit
-        public let range: ClosedRange<AudioUnitParameterValue>
-        public let defaultValue: AudioUnitParameterValue
-        public let flags: AudioUnitParameterOptions
-        
-        init(id: AudioUnitParameterID, info: AudioUnitParameterInfo) {
-            self.id = id
-            self.name = (info.cfNameString?.takeUnretainedValue()).map { $0 as String }
-            self.unit = info.unit
-            self.range = (info.minValue...info.maxValue)
-            self.defaultValue = info.defaultValue
-            self.flags = info.flags
-        }
-    }
-    
+
+// A protocol that encompasses an minimal wrapper for an AudioUnit instance, allowing client code to compose their own stateful functionality tied to the unit's lifecycle
+public protocol AudioUnitInstance {
+    var auRef: AudioUnit { get }
+    init(auRef: AudioUnit)
+}
+
+extension AudioUnitInstance {
     public func getAudioUnitComponent() -> AudioUnitComponent? {
         let component = AudioComponentInstanceGetComponent(self.auRef)
         if component == OpaquePointer(bitPattern: 0) { return nil }
@@ -80,14 +63,14 @@ public struct AudioUnitInstanceBase {
         try self.setProperty(withID: id, scope: scope, element: element, data: &valueVar, dataSize: UInt32(MemoryLayout<T>.size))
     }
     
-    public func getAllParameterInfo(forScope scope: AudioUnitScope) throws -> [ParameterInfo] {
+    public func getAllParameterInfo(forScope scope: AudioUnitScope) throws -> [AudioUnitInstanceParameterInfo] {
         let paramIDs: [AudioUnitParameterID] = try self.getPropertyArray(withID: kAudioUnitProperty_ParameterList, scope: scope, element: 0)
         var paramSize: UInt32 = self.getPropertyInfo(withID: kAudioUnitProperty_ParameterInfo, scope: scope, element: 0).0
         // getProperty<T> crashes on this for some reason; we need to make some ugly state here
         var parameterInfo = AudioUnitParameterInfo(name: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), unitName: nil, clumpID: 0, cfNameString: nil, unit: AudioUnitParameterUnit.customUnit, minValue: 0.0, maxValue: 0.0, defaultValue: 0.0, flags: [])
-        return try paramIDs.map { (id) -> ParameterInfo in
+        return try paramIDs.map { (id) -> AudioUnitInstanceParameterInfo in
             try self.getProperty(withID: kAudioUnitProperty_ParameterInfo, scope: scope, element: id, data: &parameterInfo, dataSize: &paramSize)
-            return ParameterInfo(id: id, info: parameterInfo)
+            return AudioUnitInstanceParameterInfo(id: id, info: parameterInfo)
         }
     }
     
@@ -123,7 +106,7 @@ public struct AudioUnitInstanceBase {
         if status != noErr { throw NSError(osstatus:status) }
         return classInfo
     }
-
+    
     
     public func setClassInfo(fromDict dict: CFDictionary) throws {
         var classInfo = dict

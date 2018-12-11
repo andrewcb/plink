@@ -24,7 +24,7 @@ extension AUNode {
     }
 }
 
-public class AudioUnitGraph {
+public class AudioUnitGraph<Instance: AudioUnitInstance> {
     public var auRef: AUGraph
     
     /// An action to perform when opening the Graph (and loading AudioUnit Instances); this should set up each instance as needed
@@ -34,7 +34,7 @@ public class AudioUnitGraph {
     public class Node {
         var graph: AudioUnitGraph?
         let node: AUNode
-        var _audioUnit: ManagedAudioUnitInstance? = nil
+        var _audioUnit: Instance? = nil
         // (output)->(node,input) pairs that this node is connected to
         var _destinations: [UInt32:(Node, UInt32)] = [:]
         var _sources: [UInt32:(Node, UInt32)] = [:]
@@ -61,11 +61,11 @@ public class AudioUnitGraph {
             try self.init(graph: graph, preset: try AudioUnitPreset(data: presetData))
         }
         
-        public func getInstance() throws -> ManagedAudioUnitInstance {
+        public func getInstance() throws -> Instance {
             guard let graph = self.graph else { throw Error.noGraph }
 
             if self._audioUnit == nil {
-                self._audioUnit = ManagedAudioUnitInstance(instance: try graph.getAudioUnit(for: self.node))
+                self._audioUnit = try graph.getAudioUnit(for: self.node)
             }
             return self._audioUnit!
         }
@@ -274,8 +274,8 @@ public class AudioUnitGraph {
         return unit
     }
     
-    public func getAudioUnit(for node: AUNode) throws -> AudioUnitInstanceBase {
-        return AudioUnitInstanceBase(auRef: try self.getAURef(for: node))
+    public func getAudioUnit(for node: AUNode) throws -> Instance {
+        return Instance(auRef: try self.getAURef(for: node))
     }
     
     public func connect(node fromNode: AUNode, element fromElement: AudioUnitElement, toNode: AUNode, element toElement: AudioUnitElement) throws {

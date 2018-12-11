@@ -36,7 +36,7 @@
 		4472199C216A546A00B15AC0 /* JSCoreCodeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472199B216A546A00B15AC0 /* JSCoreCodeEngine.swift */; };
 		4472199E216A55A000B15AC0 /* CodeSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472199D216A55A000B15AC0 /* CodeSystem.swift */; };
 		447219A2216A593000B15AC0 /* TickTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A1216A593000B15AC0 /* TickTime.swift */; };
-		447219AC216A59BC00B15AC0 /* AudioUnitInstanceBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A6216A59BC00B15AC0 /* AudioUnitInstanceBase.swift */; };
+		447219AC216A59BC00B15AC0 /* BasicAudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A6216A59BC00B15AC0 /* BasicAudioUnitInstance.swift */; };
 		447219AD216A59BC00B15AC0 /* AudioUnitComponentDescription+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A7216A59BC00B15AC0 /* AudioUnitComponentDescription+.swift */; };
 		447219AE216A59BC00B15AC0 /* NSError+OSStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A8216A59BC00B15AC0 /* NSError+OSStatus.swift */; };
 		447219AF216A59BC00B15AC0 /* AudioUnitGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219A9216A59BC00B15AC0 /* AudioUnitGraph.swift */; };
@@ -63,6 +63,8 @@
 		447219DC216BB77000B15AC0 /* UnitInterfaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219DB216BB77000B15AC0 /* UnitInterfaceViewController.swift */; };
 		447219E0216BBC6400B15AC0 /* AudioToolboxHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 447219DE216BBC6400B15AC0 /* AudioToolboxHelpers.m */; };
 		447219E3216CF46800B15AC0 /* test640x480.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 447219E2216CF46800B15AC0 /* test640x480.jpg */; };
+		44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */; };
+		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
 		44ED39722184A6CE00CB15B4 /* NSRect+ComposableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */; };
 /* End PBXBuildFile section */
@@ -112,7 +114,7 @@
 		4472199B216A546A00B15AC0 /* JSCoreCodeEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSCoreCodeEngine.swift; sourceTree = "<group>"; };
 		4472199D216A55A000B15AC0 /* CodeSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSystem.swift; sourceTree = "<group>"; };
 		447219A1216A593000B15AC0 /* TickTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TickTime.swift; sourceTree = "<group>"; };
-		447219A6216A59BC00B15AC0 /* AudioUnitInstanceBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceBase.swift; sourceTree = "<group>"; };
+		447219A6216A59BC00B15AC0 /* BasicAudioUnitInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioUnitInstance.swift; sourceTree = "<group>"; };
 		447219A7216A59BC00B15AC0 /* AudioUnitComponentDescription+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AudioUnitComponentDescription+.swift"; sourceTree = "<group>"; };
 		447219A8216A59BC00B15AC0 /* NSError+OSStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+OSStatus.swift"; sourceTree = "<group>"; };
 		447219A9216A59BC00B15AC0 /* AudioUnitGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitGraph.swift; sourceTree = "<group>"; };
@@ -141,6 +143,8 @@
 		447219DE216BBC6400B15AC0 /* AudioToolboxHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioToolboxHelpers.m; sourceTree = "<group>"; };
 		447219DF216BBC6400B15AC0 /* AudioToolboxHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioToolboxHelpers.h; sourceTree = "<group>"; };
 		447219E2216CF46800B15AC0 /* test640x480.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test640x480.jpg; sourceTree = "<group>"; };
+		44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
+		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
 		44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+ComposableTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -392,7 +396,9 @@
 			children = (
 				447219DF216BBC6400B15AC0 /* AudioToolboxHelpers.h */,
 				447219DE216BBC6400B15AC0 /* AudioToolboxHelpers.m */,
-				447219A6216A59BC00B15AC0 /* AudioUnitInstanceBase.swift */,
+				44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */,
+				44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */,
+				447219A6216A59BC00B15AC0 /* BasicAudioUnitInstance.swift */,
 				447219A7216A59BC00B15AC0 /* AudioUnitComponentDescription+.swift */,
 				447219A8216A59BC00B15AC0 /* NSError+OSStatus.swift */,
 				447219A9216A59BC00B15AC0 /* AudioUnitGraph.swift */,
@@ -570,7 +576,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */,
-				447219AC216A59BC00B15AC0 /* AudioUnitInstanceBase.swift in Sources */,
+				447219AC216A59BC00B15AC0 /* BasicAudioUnitInstance.swift in Sources */,
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
 				447219B3216A5A2900B15AC0 /* AudioUnitPreset.swift in Sources */,
 				4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */,
@@ -589,6 +595,7 @@
 				445F6AA4218146E200E4419A /* LevelMeterView.swift in Sources */,
 				4472199E216A55A000B15AC0 /* CodeSystem.swift in Sources */,
 				447219DC216BB77000B15AC0 /* UnitInterfaceViewController.swift in Sources */,
+				44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */,
 				447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */,
 				44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */,
 				447219E0216BBC6400B15AC0 /* AudioToolboxHelpers.m in Sources */,
@@ -606,6 +613,7 @@
 				447219C0216A5F9800B15AC0 /* TransportJSWrapper.swift in Sources */,
 				447219DA216BB48100B15AC0 /* UnitParametersViewController.swift in Sources */,
 				445F6A9F2175627300E4419A /* AudioUnitParameterUnit+.swift in Sources */,
+				44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */,
 				445F6A9B21738F1500E4419A /* ManagedAudioUnitInstance.swift in Sources */,
 				447219AF216A59BC00B15AC0 /* AudioUnitGraph.swift in Sources */,
 				447219CB216AE2D800B15AC0 /* Scheduler.swift in Sources */,

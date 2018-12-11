@@ -16,7 +16,7 @@ class MixerStripCollectionViewItem: NSCollectionViewItem {
     var onRequestInstrumentChoice: ((NSView)->())?
     var onRequestInsertAdd: ((NSView)->())?
 
-    var onRequestAUInterfaceWindowOpen: ((AudioUnitGraph.Node)->())?
+    var onRequestAUInterfaceWindowOpen: ((AudioUnitGraph<ManagedAudioUnitInstance>.Node)->())?
 
     @IBOutlet var nameField: NSTextField!
     @IBOutlet var levelSlider: NSSlider!
@@ -68,7 +68,7 @@ extension MixerStripCollectionViewItem: NSCollectionViewDataSource {
         }
     }
     
-    private func node(forIndexPath indexPath: IndexPath) -> AudioUnitGraph.Node? {
+    private func node(forIndexPath indexPath: IndexPath) -> AudioUnitGraph<ManagedAudioUnitInstance>.Node? {
         switch(indexPath[0]) {
         case Section.instrument.rawValue: return channel?.instrument
         case Section.inserts.rawValue:

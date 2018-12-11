@@ -13,7 +13,7 @@ class UnitParameterNameCell: NSTableCellView {
 }
 class UnitParameterValueCell: NSTableCellView {
     @IBOutlet var stepper: NSStepper!
-    var paramInfo: AudioUnitInstanceBase.ParameterInfo? {
+    var paramInfo: AudioUnitInstanceParameterInfo? {
         didSet {
             if let paramInfo = self.paramInfo {
                 self.stepper.minValue = Double(paramInfo.range.lowerBound)
@@ -51,7 +51,7 @@ class UnitParameterValueCell: NSTableCellView {
 
 class UnitParametersViewController: NSViewController, AcceptsAUInstance {
     var audioUnitInstance: ManagedAudioUnitInstance?
-    var paramInfo: [AudioUnitInstanceBase.ParameterInfo]?
+    var paramInfo: [AudioUnitInstanceParameterInfo]?
     
     private var listenerId: Int?
     

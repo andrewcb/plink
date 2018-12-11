@@ -8,39 +8,38 @@
 
 import Foundation
 
-/** A wrapper around an AudioUnitInstanceBase, adding some stateful management; i.e., this keeps track of the instance's parameter values and sends notifications if they change */
+/** An enhanced type of AudioUnitInstance, adding some stateful management; i.e., this keeps track of the instance's parameter values and sends notifications if they change */
 
-public class ManagedAudioUnitInstance {
-    let instance: AudioUnitInstanceBase
+public class ManagedAudioUnitInstance: AudioUnitInstance {
+    public var auRef: AudioUnit
     
+    required public init(auRef: AudioUnit) {
+        self.auRef = auRef
+    }
+
     typealias ParameterValueListener = ((ManagedAudioUnitInstance, AudioUnitParameterID, AudioUnitScope, AudioUnitElement, AudioUnitParameterValue)->())
     
     var parameterValueListenerRegistry = ConnectionRegistry<ParameterValueListener>()
     func addParameterValueListener(_ listener: @escaping ParameterValueListener) -> ConnectionRegistry<Any>.Id {
         return self.parameterValueListenerRegistry.add(connection: listener)
     }
+    
     func removeParameterValueListener(withID id: ConnectionRegistry<Any>.Id) {
         self.parameterValueListenerRegistry.removeConnection(withId: id)
     }
     
-    private var _parameterInfo: [AudioUnitScope:[AudioUnitInstanceBase.ParameterInfo]] = [:]
+    private var _parameterInfo: [AudioUnitScope:[AudioUnitInstanceParameterInfo]] = [:]
     
-    init(instance: AudioUnitInstanceBase) {
-        self.instance = instance
-    }
-    
-    public func getAudioUnitComponent() -> AudioUnitComponent? {
-        return self.instance.getAudioUnitComponent()
-    }
-    
+    // TODO: move to AudioUnitInstance extension?
     public func loadInterfaceView(withSize size: CGSize) -> NSView? {
-        return loadInterfaceViewForAudioUnit(self.instance.auRef, size)
+        return loadInterfaceViewForAudioUnit(self.auRef, size)
     }
     
-    public func allParameterInfo(forScope scope: AudioUnitScope) -> [AudioUnitInstanceBase.ParameterInfo] {
+    // TODO: make this an override?
+    public func allParameterInfo(forScope scope: AudioUnitScope) -> [AudioUnitInstanceParameterInfo] {
         if self._parameterInfo[scope] == nil {
             do {
-                self._parameterInfo[scope] = try self.instance.getAllParameterInfo(forScope: scope)
+                self._parameterInfo[scope] = try self.getAllParameterInfo(forScope: scope)
             } catch {
                 print("Error in getAllParameterInfo(forScope:\(scope)): \(error)")
             }
@@ -49,44 +48,11 @@ public class ManagedAudioUnitInstance {
     }
     
     
-    public func getParameterValue(_ id: AudioUnitParameterID, scope: AudioUnitScope, element: AudioUnitElement) throws -> AudioUnitParameterValue {
-        return try self.instance.getParameterValue(id,scope:scope,element:element)
-    }
-    
     public func setParameterValue(_ id: AudioUnitParameterID, scope: AudioUnitScope, element: AudioUnitElement, to value: AudioUnitParameterValue) throws {
-        try self.instance.setParameterValue(id, scope: scope, element: element, to: value)
+        try (self as AudioUnitInstance).setParameterValue(id, scope: scope, element: element, to: value)
         self.parameterValueListenerRegistry.connections.forEach {
             $0(self, id, scope, element, value)
         }
         
-    }
-    
-    public func getProperty<T>(withID id: AudioUnitPropertyID, scope: AudioUnitScope, element: AudioUnitElement) throws -> T {
-        return try self.instance.getProperty(withID: id, scope: scope, element: element)
-    }
-    
-    public func setProperty<T>(withID id: AudioUnitPropertyID, scope: AudioUnitScope, element: AudioUnitElement, to value: T) throws {
-        try self.instance.setProperty(withID: id, scope: scope, element: element, to: value)
-    }
-    
-    public func render(withFlags flags: AudioUnitRenderActionFlags = [], timeStamp: AudioTimeStamp, outputBusNumber: UInt32 = 0, numberOfFrames: UInt32, data: inout AudioBufferList) throws {
-        try self.instance.render(withFlags:flags, timeStamp: timeStamp, outputBusNumber: outputBusNumber, numberOfFrames:numberOfFrames, data:&data)
-    }
-    
-    public func sendMIDIEvent(_ statusByte: UInt8, _ data1: UInt8, _ data2: UInt8, atSampleOffset offset: UInt32) throws {
-        try self.instance.sendMIDIEvent(statusByte, data1, data2, atSampleOffset:offset)
-        
-    }
-    
-    public func getClassInfo() throws -> CFDictionary? {
-        return try self.instance.getClassInfo()
-    }
-    
-    public func setClassInfo(fromDict dict: CFDictionary) throws {
-        try self.instance.setClassInfo(fromDict: dict)
-    }
-
-    public func setRenderCallback(_ callback: @escaping AURenderCallback) {
-        self.instance.setRenderCallback(callback)
     }
 }
