@@ -35,5 +35,8 @@ extension JSCoreCodeEngine {
             self.transport.async(inBeats: beats, execute: { block.call(withArguments:[]) })
         }
         
+        public override var description: String {
+            return "<Transport: tempo = \(self.tempo)>"
+        }
     }
 }
