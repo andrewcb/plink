@@ -44,6 +44,7 @@ class JSCoreCodeEngine: CodeLanguageEngine {
         self.ctx.setObject(Transport(transport: env.transport), forKeyedSubscript: "transport" as NSCopying & NSObjectProtocol)
         self.ctx.setObject(Scheduler(scheduler: env.scheduler, engine: self), forKeyedSubscript: "scheduler" as NSCopying & NSObjectProtocol)
 
+        self.setupMIDINote()
         
         ctx.exceptionHandler = { [weak self] (ctx, exc) in
             if let exc = exc {

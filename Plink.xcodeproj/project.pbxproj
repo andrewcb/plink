@@ -67,6 +67,12 @@
 		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
 		44ED39722184A6CE00CB15B4 /* NSRect+ComposableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */; };
+		44ED3974218755DC00CB15B4 /* WithTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED3973218755DB00CB15B4 /* WithTime.swift */; };
+		44ED39782187590A00CB15B4 /* MIDINote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED39762187590A00CB15B4 /* MIDINote.swift */; };
+		44ED39792187590A00CB15B4 /* MIDIEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED39772187590A00CB15B4 /* MIDIEvent.swift */; };
+		44ED397D218764E700CB15B4 /* LookaheadIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED397B218764E700CB15B4 /* LookaheadIterator.swift */; };
+		44ED397E218764E700CB15B4 /* Merge2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED397C218764E700CB15B4 /* Merge2.swift */; };
+		44ED39802187661600CB15B4 /* MIDINoteJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED397F2187661600CB15B4 /* MIDINoteJSWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +153,12 @@
 		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
 		44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+ComposableTests.swift"; sourceTree = "<group>"; };
+		44ED3973218755DB00CB15B4 /* WithTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithTime.swift; sourceTree = "<group>"; };
+		44ED39762187590A00CB15B4 /* MIDINote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDINote.swift; sourceTree = "<group>"; };
+		44ED39772187590A00CB15B4 /* MIDIEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MIDIEvent.swift; sourceTree = "<group>"; };
+		44ED397B218764E700CB15B4 /* LookaheadIterator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookaheadIterator.swift; sourceTree = "<group>"; };
+		44ED397C218764E700CB15B4 /* Merge2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Merge2.swift; sourceTree = "<group>"; };
+		44ED397F2187661600CB15B4 /* MIDINoteJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDINoteJSWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,8 +372,10 @@
 		4472199F216A586800B15AC0 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				44ED397A218764D400CB15B4 /* Iterator */,
 				447219A0216A592500B15AC0 /* Time */,
 				447219A3216A598400B15AC0 /* Audio */,
+				44ED3975218758D200CB15B4 /* MIDI */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -370,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				447219A1216A593000B15AC0 /* TickTime.swift */,
+				44ED3973218755DB00CB15B4 /* WithTime.swift */,
 			);
 			path = Time;
 			sourceTree = "<group>";
@@ -418,6 +433,7 @@
 				447219BD216A5E8F00B15AC0 /* UnitJSWrapper.swift */,
 				447219BF216A5F9800B15AC0 /* TransportJSWrapper.swift */,
 				447219CC216AE3E500B15AC0 /* SchedulerJSWrapper.swift */,
+				44ED397F2187661600CB15B4 /* MIDINoteJSWrapper.swift */,
 			);
 			path = Wrappers;
 			sourceTree = "<group>";
@@ -462,6 +478,24 @@
 				44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */,
 			);
 			path = utility;
+			sourceTree = "<group>";
+		};
+		44ED3975218758D200CB15B4 /* MIDI */ = {
+			isa = PBXGroup;
+			children = (
+				44ED39772187590A00CB15B4 /* MIDIEvent.swift */,
+				44ED39762187590A00CB15B4 /* MIDINote.swift */,
+			);
+			path = MIDI;
+			sourceTree = "<group>";
+		};
+		44ED397A218764D400CB15B4 /* Iterator */ = {
+			isa = PBXGroup;
+			children = (
+				44ED397B218764E700CB15B4 /* LookaheadIterator.swift */,
+				44ED397C218764E700CB15B4 /* Merge2.swift */,
+			);
+			path = Iterator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -575,6 +609,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44ED39782187590A00CB15B4 /* MIDINote.swift in Sources */,
 				4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */,
 				447219AC216A59BC00B15AC0 /* BasicAudioUnitInstance.swift in Sources */,
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
@@ -590,6 +625,7 @@
 				44721996216A534B00B15AC0 /* CodeEngineDelegate.swift in Sources */,
 				447219AD216A59BC00B15AC0 /* AudioUnitComponentDescription+.swift in Sources */,
 				447219B1216A59BC00B15AC0 /* AudioUnitComponent.swift in Sources */,
+				44ED397D218764E700CB15B4 /* LookaheadIterator.swift in Sources */,
 				447219512169014800B15AC0 /* AppDelegate.swift in Sources */,
 				447219792169096800B15AC0 /* NSViewController+.swift in Sources */,
 				445F6AA4218146E200E4419A /* LevelMeterView.swift in Sources */,
@@ -603,11 +639,14 @@
 				447219BC216A5E5400B15AC0 /* ChannelJSWrapper.swift in Sources */,
 				4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */,
 				447219D4216AEA0B00B15AC0 /* TransportModel.swift in Sources */,
+				44ED39802187661600CB15B4 /* MIDINoteJSWrapper.swift in Sources */,
 				447219762169087200B15AC0 /* WorkspaceViewController.swift in Sources */,
 				447219CF216AE9F700B15AC0 /* AudioSystemModel.swift in Sources */,
 				447219A2216A593000B15AC0 /* TickTime.swift in Sources */,
 				447219B7216A5ADB00B15AC0 /* Transport.swift in Sources */,
 				4472199A216A543E00B15AC0 /* CodeEngineEnvironment.swift in Sources */,
+				44ED397E218764E700CB15B4 /* Merge2.swift in Sources */,
+				44ED39792187590A00CB15B4 /* MIDIEvent.swift in Sources */,
 				4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */,
 				44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */,
 				447219C0216A5F9800B15AC0 /* TransportJSWrapper.swift in Sources */,
@@ -622,6 +661,7 @@
 				447219D5216AEA0B00B15AC0 /* WorkspaceModel.swift in Sources */,
 				447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */,
 				447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */,
+				44ED3974218755DC00CB15B4 /* WithTime.swift in Sources */,
 				4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */,
 				4472199C216A546A00B15AC0 /* JSCoreCodeEngine.swift in Sources */,
 				447219552169014800B15AC0 /* ActiveDocument.swift in Sources */,
