@@ -113,4 +113,16 @@ class Scheduler {
         masterAt[time] = nil
     }
     
+    /// MARK: blocking wait
+    
+    let sleepQueue = DispatchQueue(label: "Scheduler.sleep")
+    func sleep(until time: TickTime) {
+        let ds = DispatchSemaphore(value: 0)
+        self.schedule(atMasterTime: time) {
+            ds.signal()
+        }
+        sleepQueue.sync {
+            ds.wait()
+        }
+    }
 }
