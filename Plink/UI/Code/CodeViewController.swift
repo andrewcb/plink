@@ -20,6 +20,8 @@ class CodeViewController: NSViewController {
         return self.activeDocument?.codeSystem.codeEngine
     }
     
+    let evalQueue = DispatchQueue(label: "CodeViewController.eval", qos: DispatchQoS.background, attributes: DispatchQueue.Attributes.concurrent, autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit  , target: nil)
+    
     override func viewWillAppear() {
         super.viewWillAppear()
         
@@ -57,7 +59,14 @@ class CodeViewController: NSViewController {
 
 
         self.replView.evaluator = { [weak self] (line) in
-            self?.codeEngine?.eval(command: line).map { .output($0) }
+            self?.evalQueue.async {
+                if let output = self?.codeEngine?.eval(command: line) {
+                    DispatchQueue.main.async {
+                        self?.replView.println(response: .output(output))
+                    }
+                }// .map { .output($0) }
+            }
+            return nil
         }
     }
 
