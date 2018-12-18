@@ -55,4 +55,15 @@ public class ManagedAudioUnitInstance: AudioUnitInstance {
         }
         
     }
+    
+    //MARK: MIDINote
+    func play(MIDINote note: MIDINote, withTransport transport: Transport, scheduler: Scheduler)  throws {
+        let onTime = transport.masterTickTime
+        let offTime = onTime + note.duration
+        try self.sendMIDIEvent(0x90 | note.channel, note.note, note.velocity, atSampleOffset: 0)
+        scheduler.schedule(atMasterTime: offTime) { [weak self] () in
+            // if Note On didn't throw, this probably won't
+            try? self?.sendMIDIEvent(0x80 | note.channel, note.note, note.velocity, atSampleOffset: 0)
+        }
+    }
 }

@@ -11,6 +11,7 @@ import JavaScriptCore
 
 @objc protocol UnitExports: JSExport {
     func sendMIDIEvent(_ b1: Int, _ b2: Int, _ b3: Int)
+    func playNote(_ note: JSCoreCodeEngine.MIDINote)
     func getParam(_ name: String) -> JSValue
     func setParam(_ name: String, _ value: Float32) -> JSValue
 }
@@ -33,6 +34,11 @@ extension JSCoreCodeEngine {
         
         @objc func sendMIDIEvent(_ b1: Int, _ b2: Int, _ b3: Int) {
             try? self.instance.sendMIDIEvent(UInt8(b1 & 0xff), UInt8(b2 & 0x7f), UInt8(b2 & 0x7f), atSampleOffset: 0)
+        }
+        
+        @objc func playNote(_ note: JSCoreCodeEngine.MIDINote) {
+            let note = note.note
+            try? self.instance.play(MIDINote: note, withTransport: self.engine.env.transport, scheduler: self.engine.env.scheduler)
         }
         
         func getParam(_ name: String) -> JSValue {

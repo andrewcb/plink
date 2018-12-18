@@ -26,6 +26,7 @@ class ActiveDocument: NSDocument {
         self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, transport: self.transport, scheduler: self.scheduler))
         super.init()
         self.transport.onRunningTick.append( { self.scheduler.runFor(time: $0) })
+        self.transport.onMasterTick.append( { self.scheduler.masterTick($0) })
         self.hasUndoManager = false
     }
 

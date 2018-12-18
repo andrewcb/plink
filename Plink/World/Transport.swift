@@ -65,7 +65,10 @@ public class Transport {
     
     /// callbacks to be notified of a tick if the state is currently running
     public var onRunningTick: [((TickTime)->())] = []
-
+    
+    /// callbacks to be called every tick when the master transport is running
+    public var onMasterTick: [((TickTime)->())] = []
+    
     // Mach timing
     var timebaseInfo = mach_timebase_info()
     
@@ -93,6 +96,10 @@ public class Transport {
             while(self.masterRunning) {
                 let start_time = mach_absolute_time()
                 
+                for client in self.onMasterTick {
+                    client(self.masterTickTime)
+                }
+
                 if case let .starting(t) = self.transmissionState {
                     self.transmissionState = .running(t-self.masterTickTime)
                 }

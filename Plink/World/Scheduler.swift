@@ -68,6 +68,24 @@ class Scheduler {
         }
     }
     
+    /// master scheduling; this is more low-level, not being exposed to the executive API, and is just a mapping of times to closures, with each removed as it is executed
+    
+    // TODO: make this an ordered linked list, for efficient lookup/removal
+    var masterAt: [TickTime: (()->Void)] = [:]
+    
+    func schedule(atMasterTime time: TickTime, action: @escaping (()->())) {
+        // TODO: add locking here
+        if let prevAction = masterAt[time] {
+            masterAt[time] = { prevAction() ; action() }
+        } else {
+            masterAt[time] = action
+        }
+    }
+    
+    
+    
+    ///
+    
     func clear() {
         self.singleActions = [:]
         self.periodicActions = []
@@ -86,6 +104,13 @@ class Scheduler {
                 action.action()
             }
 //        }
+    }
+    
+    func masterTick(_ time: TickTime) {
+        if let action = masterAt[time] {
+            action()
+        }
+        masterAt[time] = nil
     }
     
 }

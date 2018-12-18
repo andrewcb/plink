@@ -59,5 +59,7 @@ extension TickTime: CustomStringConvertible {
     }
 }
 
+extension TickTime: Hashable {}
+
 public typealias TickDuration = TickTime // it'll do for now
 public typealias TickOffset = TickTime // it'll do for now
