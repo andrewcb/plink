@@ -24,7 +24,8 @@ class TransportViewController: NSViewController {
         self.transportTempoChanged()
         self.activeDocument?.transport.onTempoChange = { self.transportTempoChanged() }
         self.activeDocument?.transport.onRunningStateChange = { self.transportRunningStateChanged() }
-        self.activeDocument?.transport.clients.append(self)
+        self.activeDocument?.transport.onRunningTick.append( { self.runFor(time: $0) })
+
         self.levelUpdateTimer = Timer.scheduledTimer(timeInterval: 0.04, target: self, selector: #selector(self.updateLevels), userInfo: nil, repeats: true)
 
     }
@@ -50,11 +51,11 @@ class TransportViewController: NSViewController {
     }
     
     @IBAction func playButtonPressed(_ sender: Any) {
-        self.activeDocument?.transport.running = true
+        self.activeDocument?.transport.startInPlace()
     }
     
     @IBAction func stopButtonPressed(_ sender: Any) {
-        self.activeDocument?.transport.running = false
+        self.activeDocument?.transport.stop()
     }
     
     @IBAction func tempoValueChanged(_ sender: NSControl) {
@@ -63,9 +64,8 @@ class TransportViewController: NSViewController {
             transport.tempo = sender.doubleValue
         }
     }
-}
 
-extension TransportViewController: TransportClient {
+    /// Receive a running program time
     func runFor(time: TickTime) {
         DispatchQueue.main.async {
             self.positionLabel.stringValue = "\(time.beatValue).\(time.tickValue)"

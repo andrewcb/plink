@@ -12,19 +12,19 @@ public struct TickTime {
     
     public init(_ value: Int) { self.value =  value }
 
-    static public func +(lhs: TickTime, rhs: TickDuration) -> TickTime {
+    static public func +(lhs: TickTime, rhs: TickOffset) -> TickTime {
         return TickTime(lhs.value + rhs.value)
     }
     
-    static public func -(lhs: TickTime, rhs: TickDuration) -> TickTime {
+    static public func -(lhs: TickTime, rhs: TickOffset) -> TickTime {
         return TickTime(lhs.value - rhs.value)
     }
     
-    static public func +=(v: inout TickTime, inc: TickDuration) {
+    static public func +=(v: inout TickTime, inc: TickOffset) {
         v = TickTime(v.value+inc.value)
     }
     
-    static public func -=(v: inout TickTime, inc: TickDuration) {
+    static public func -=(v: inout TickTime, inc: TickOffset) {
         v = TickTime(v.value-inc.value)
     }
 
@@ -60,3 +60,4 @@ extension TickTime: CustomStringConvertible {
 }
 
 public typealias TickDuration = TickTime // it'll do for now
+public typealias TickOffset = TickTime // it'll do for now

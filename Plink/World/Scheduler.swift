@@ -72,9 +72,8 @@ class Scheduler {
         self.singleActions = [:]
         self.periodicActions = []
     }
-}
 
-extension Scheduler: TransportClient {
+    /// Receive a running program time
     func runFor(time: TickTime) {
         let singles = singleActions[time.value] ?? []
         // FIXME: make a queue for the language environment
@@ -88,4 +87,5 @@ extension Scheduler: TransportClient {
             }
 //        }
     }
+    
 }
