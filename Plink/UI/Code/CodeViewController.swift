@@ -59,8 +59,9 @@ class CodeViewController: NSViewController {
 
 
         self.replView.evaluator = { [weak self] (line) in
+            guard let codeEngine = self?.codeEngine else { return nil }
             self?.evalQueue.async {
-                if let output = self?.codeEngine?.eval(command: line) {
+                if let output = codeEngine.eval(command: line) {
                     DispatchQueue.main.async {
                         self?.replView.println(response: .output(output))
                     }
