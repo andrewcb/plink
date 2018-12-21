@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -790,7 +790,7 @@
             <objects>
                 <viewController id="JM4-3Z-c2K" customClass="TransportViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="s4A-9V-jdf">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="80"/>
+                        <rect key="frame" x="0.0" y="0.0" width="461" height="80"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dS6-fr-4tc">
@@ -859,10 +859,10 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RAn-3u-9ch" customClass="LevelMeterView" customModule="Plink" customModuleProvider="target">
-                                <rect key="frame" x="321" y="38" width="117" height="22"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="RAn-3u-9ch" customClass="LevelMeterView" customModule="Plink" customModuleProvider="target">
+                                <rect key="frame" x="321" y="38" width="128" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="128" id="232-sL-qn9"/>
+                                    <constraint firstAttribute="width" constant="128" id="232-sL-qn9"/>
                                     <constraint firstAttribute="height" constant="22" id="iC1-hR-8wH"/>
                                 </constraints>
                             </customView>
@@ -872,7 +872,7 @@
                             <constraint firstItem="dS6-fr-4tc" firstAttribute="height" secondItem="aua-PE-zju" secondAttribute="height" id="563-DQ-OjW"/>
                             <constraint firstItem="fw5-Uj-Vam" firstAttribute="leading" secondItem="oxO-dE-266" secondAttribute="trailing" constant="16" id="6z8-ws-dkx"/>
                             <constraint firstItem="aua-PE-zju" firstAttribute="leading" secondItem="s4A-9V-jdf" secondAttribute="leading" constant="20" id="EE9-PM-vzR"/>
-                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="RAn-3u-9ch" secondAttribute="trailing" constant="12" id="KwO-js-zT4"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RAn-3u-9ch" secondAttribute="trailing" constant="12" id="KwO-js-zT4"/>
                             <constraint firstItem="RAn-3u-9ch" firstAttribute="centerY" secondItem="aud-xw-Zrd" secondAttribute="centerY" id="XvV-pf-72i"/>
                             <constraint firstItem="dS6-fr-4tc" firstAttribute="leading" secondItem="aua-PE-zju" secondAttribute="trailing" id="YAA-IQ-5a7"/>
                             <constraint firstItem="oxO-dE-266" firstAttribute="leading" secondItem="dS6-fr-4tc" secondAttribute="trailing" constant="16" id="aTA-Vi-tR1"/>
