@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4455B35B21D59308002F0426 /* ModuleSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */; };
+		4455B35D21D5932E002F0426 /* ModuleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */; };
+		4455B35F21D59996002F0426 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35E21D59996002F0426 /* SourceViewController.swift */; };
+		4455B36121D599A6002F0426 /* REPLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B36021D599A6002F0426 /* REPLViewController.swift */; };
 		445F6A9B21738F1500E4419A /* ManagedAudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9A21738F1500E4419A /* ManagedAudioUnitInstance.swift */; };
 		445F6A9D2174D67F00E4419A /* ConnectionRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */; };
 		445F6A9F2175627300E4419A /* AudioUnitParameterUnit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9E2175627300E4419A /* AudioUnitParameterUnit+.swift */; };
@@ -22,7 +26,6 @@
 		447219792169096800B15AC0 /* NSViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219782169096800B15AC0 /* NSViewController+.swift */; };
 		4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472197D21690BA200B15AC0 /* TransportViewController.swift */; };
 		4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472197F21690D6200B15AC0 /* MixerViewController.swift */; };
-		4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198121690D7A00B15AC0 /* CodeViewController.swift */; };
 		4472198721690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4472198321690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib */; };
 		4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198421690F2A00B15AC0 /* OneButtonCollectionViewItem.swift */; };
 		4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4472198521690F2A00B15AC0 /* MixerStripCollectionViewItem.swift */; };
@@ -86,6 +89,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleSiteViewController.swift; sourceTree = "<group>"; };
+		4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleCoordinator.swift; sourceTree = "<group>"; };
+		4455B35E21D59996002F0426 /* SourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceViewController.swift; sourceTree = "<group>"; };
+		4455B36021D599A6002F0426 /* REPLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = REPLViewController.swift; sourceTree = "<group>"; };
 		445F6A9A21738F1500E4419A /* ManagedAudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedAudioUnitInstance.swift; sourceTree = "<group>"; };
 		445F6A9C2174D67F00E4419A /* ConnectionRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionRegistry.swift; sourceTree = "<group>"; };
 		445F6A9E2175627300E4419A /* AudioUnitParameterUnit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioUnitParameterUnit+.swift"; sourceTree = "<group>"; };
@@ -106,7 +113,6 @@
 		447219782169096800B15AC0 /* NSViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSViewController+.swift"; sourceTree = "<group>"; };
 		4472197D21690BA200B15AC0 /* TransportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportViewController.swift; sourceTree = "<group>"; };
 		4472197F21690D6200B15AC0 /* MixerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixerViewController.swift; sourceTree = "<group>"; };
-		4472198121690D7A00B15AC0 /* CodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeViewController.swift; sourceTree = "<group>"; };
 		4472198321690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerAddStripCollectionViewItem.xib; sourceTree = "<group>"; };
 		4472198421690F2A00B15AC0 /* OneButtonCollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneButtonCollectionViewItem.swift; sourceTree = "<group>"; };
 		4472198521690F2A00B15AC0 /* MixerStripCollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixerStripCollectionViewItem.swift; sourceTree = "<group>"; };
@@ -179,6 +185,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4455B35921D592CB002F0426 /* ModuleManagement */ = {
+			isa = PBXGroup;
+			children = (
+				4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */,
+				4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */,
+			);
+			path = ModuleManagement;
+			sourceTree = "<group>";
+		};
 		445F6AA02176AB5B00E4419A /* World */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +261,7 @@
 		447219712169049A00B15AC0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				4455B35921D592CB002F0426 /* ModuleManagement */,
 				44721990216A50DD00B15AC0 /* Settings */,
 				44721974216906FB00B15AC0 /* WorkspaceView */,
 				4472197B21690B6700B15AC0 /* Transport */,
@@ -326,7 +342,8 @@
 		4472197C21690B6E00B15AC0 /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				4472198121690D7A00B15AC0 /* CodeViewController.swift */,
+				4455B35E21D59996002F0426 /* SourceViewController.swift */,
+				4455B36021D599A6002F0426 /* REPLViewController.swift */,
 				4472198B216A4EA500B15AC0 /* REPLView.swift */,
 			);
 			path = Code;
@@ -612,6 +629,7 @@
 				44ED39782187590A00CB15B4 /* MIDINote.swift in Sources */,
 				4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */,
 				447219AC216A59BC00B15AC0 /* BasicAudioUnitInstance.swift in Sources */,
+				4455B35B21D59308002F0426 /* ModuleSiteViewController.swift in Sources */,
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
 				447219B3216A5A2900B15AC0 /* AudioUnitPreset.swift in Sources */,
 				4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */,
@@ -620,6 +638,8 @@
 				447219C7216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift in Sources */,
 				44721997216A534B00B15AC0 /* CodeLanguageEngine.swift in Sources */,
 				4472198C216A4EA500B15AC0 /* REPLView.swift in Sources */,
+				4455B35D21D5932E002F0426 /* ModuleCoordinator.swift in Sources */,
+				4455B36121D599A6002F0426 /* REPLViewController.swift in Sources */,
 				447219D8216BB46E00B15AC0 /* UnitGUIViewController.swift in Sources */,
 				447219AE216A59BC00B15AC0 /* NSError+OSStatus.swift in Sources */,
 				44721996216A534B00B15AC0 /* CodeEngineDelegate.swift in Sources */,
@@ -647,7 +667,6 @@
 				4472199A216A543E00B15AC0 /* CodeEngineEnvironment.swift in Sources */,
 				44ED397E218764E700CB15B4 /* Merge2.swift in Sources */,
 				44ED39792187590A00CB15B4 /* MIDIEvent.swift in Sources */,
-				4472198221690D7A00B15AC0 /* CodeViewController.swift in Sources */,
 				44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */,
 				447219C0216A5F9800B15AC0 /* TransportJSWrapper.swift in Sources */,
 				447219DA216BB48100B15AC0 /* UnitParametersViewController.swift in Sources */,
@@ -656,6 +675,7 @@
 				445F6A9B21738F1500E4419A /* ManagedAudioUnitInstance.swift in Sources */,
 				447219AF216A59BC00B15AC0 /* AudioUnitGraph.swift in Sources */,
 				447219CB216AE2D800B15AC0 /* Scheduler.swift in Sources */,
+				4455B35F21D59996002F0426 /* SourceViewController.swift in Sources */,
 				447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */,
 				447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */,
 				447219D5216AEA0B00B15AC0 /* WorkspaceModel.swift in Sources */,
