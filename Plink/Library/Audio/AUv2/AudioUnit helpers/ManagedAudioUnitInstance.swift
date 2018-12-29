@@ -58,7 +58,7 @@ public class ManagedAudioUnitInstance: AudioUnitInstance {
     
     //MARK: MIDINote
     func play(MIDINote note: MIDINote, withMetronome metronome: Metronome, scheduler: Scheduler)  throws {
-        let onTime = metronome.masterTickTime
+        let onTime = metronome.tickTime
         let offTime = onTime + note.duration
         try self.sendMIDIEvent(0x90 | note.channel, note.note, note.velocity, atSampleOffset: 0)
         // Should scheduler have a hold on the Metronome?

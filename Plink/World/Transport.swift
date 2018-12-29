@@ -53,7 +53,7 @@ public class Transport {
         switch(self.transmissionState) {
         case .stopped(let t): return t
         case .starting(let t): return t
-        case .running(let offset): return metronome.masterTickTime + offset
+        case .running(let offset): return metronome.tickTime + offset
         }
     }
 
@@ -67,7 +67,7 @@ public class Transport {
     /// Handle a tick from the metronome
     func metronomeTick(_ time: TickTime) {
         if case let .starting(t) = self.transmissionState {
-            self.transmissionState = .running(t-self.metronome.masterTickTime)
+            self.transmissionState = .running(t-self.metronome.tickTime)
         }
         if case let .running(offset) = self.transmissionState {
             let pos = self.programPosition

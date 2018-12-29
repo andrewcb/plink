@@ -14,7 +14,7 @@ public class Metronome {
     var tickUsec: useconds_t = useconds_t(((60.0/120.0) / Double (TickTime.ticksPerBeat)) * 1000000)
     
     /** The master tick time; in normal circumstances, this will be running constantly. This is not to be confused with the position in any current sequence/arrangement/program, which would be calculated from this and the running state. */
-    public private(set) var masterTickTime: TickTime = 0
+    public private(set) var tickTime: TickTime = 0
     
     
     private let dqueue = DispatchQueue(label: "metronome")
@@ -32,30 +32,30 @@ public class Metronome {
     
     public init() {
         guard mach_timebase_info(&self.timebaseInfo) == KERN_SUCCESS else { fatalError("Cannot get Mach timebase info?!")}
-        self.masterRunning = true
-        self.startMasterTransport()
+        self.isRunning = true
+        self.start()
     }
 
     /** Is the master transport running? */
-    public var masterRunning: Bool = false {
+    public var isRunning: Bool = false {
         didSet(prev) {
-            guard self.masterRunning != prev else { return }
-            if self.masterRunning {
-                self.startMasterTransport()
+            guard self.isRunning != prev else { return }
+            if self.isRunning {
+                self.start()
             } else {
             }
             self.onGlobalRunningStateChange?()
         }
     }
     
-    private func startMasterTransport() {
+    private func start() {
         self.dqueue.async {
             
-            while(self.masterRunning) {
+            while(self.isRunning) {
                 let start_time = mach_absolute_time()
                 
                 for client in self.onTick {
-                    client(self.masterTickTime)
+                    client(self.tickTime)
                 }
                 
                 let elapsed_nsec = (mach_absolute_time() - start_time) * UInt64(self.timebaseInfo.numer) / UInt64(self.timebaseInfo.denom)
@@ -63,7 +63,7 @@ public class Metronome {
                 if elapsed_usec < self.tickUsec {
                     usleep(self.tickUsec - elapsed_usec)
                 }
-                self.masterTickTime += 1
+                self.tickTime += 1
             }
         }
     }

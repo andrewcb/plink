@@ -53,7 +53,7 @@ extension JSCoreCodeEngine {
         
         func sleep(_ ticks: Int) {
             let transport = self.engine.env.metronome
-            let now = transport.masterTickTime
+            let now = transport.tickTime
             self.scheduler.sleep(until: now+TickOffset(ticks))
         }
         
