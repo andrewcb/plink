@@ -17,16 +17,16 @@ import AudioToolbox
 class ActiveDocument: NSDocument {
     
     let audioSystem: AudioSystem? = try? AudioSystem()
-    let transport: Metronome = Metronome()
+    let metronome: Metronome = Metronome()
     let codeSystem: CodeSystem
     let scheduler: Scheduler = Scheduler()
 
     override init() {
         
-        self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, metronome: self.transport, scheduler: self.scheduler))
+        self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, metronome: self.metronome, scheduler: self.scheduler))
         super.init()
-        self.transport.onRunningTick.append( { self.scheduler.runFor(time: $0) })
-        self.transport.onMasterTick.append( { self.scheduler.masterTick($0) })
+        self.metronome.onRunningTick.append( { self.scheduler.runFor(time: $0) })
+        self.metronome.onMasterTick.append( { self.scheduler.masterTick($0) })
         self.hasUndoManager = false
     }
 
@@ -45,12 +45,12 @@ class ActiveDocument: NSDocument {
 
     private func snapshot() throws -> WorkspaceModel {
         // FIXME: forced unwrap
-        return WorkspaceModel(audioSystem: try self.audioSystem!.snapshot(), transport: self.transport.snapshot(), codeSystem: self.codeSystem.snapshot())
+        return WorkspaceModel(audioSystem: try self.audioSystem!.snapshot(), metronome: self.metronome.snapshot(), codeSystem: self.codeSystem.snapshot())
     }
     
     private func set(from snapshot: WorkspaceModel) throws {
         try self.audioSystem?.set(from: snapshot.audioSystem)
-        self.transport.set(from: snapshot.transport)
+        self.metronome.set(from: snapshot.metronome)
         self.codeSystem.set(from: snapshot.codeSystem)
     }
     

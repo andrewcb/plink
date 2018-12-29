@@ -121,11 +121,11 @@ public class Metronome {
         }
     }
 
-    func snapshot() -> TransportModel {
-        return TransportModel(tempo: self.tempo)
+    func snapshot() -> MetronomeModel {
+        return MetronomeModel(tempo: self.tempo)
     }
     
-    func set(from model: TransportModel) {
+    func set(from model: MetronomeModel) {
         self.tempo = model.tempo
     }
 }

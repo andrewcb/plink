@@ -11,22 +11,22 @@ import Foundation
 struct WorkspaceModel: Codable {
     
     var audioSystem: AudioSystemModel
-    var transport: TransportModel
+    var metronome: MetronomeModel
     var codeSystem: CodeSystemModel
     
     // AAAABBBBCCCC = A.B.C
-    static let currentDocumentVersion: Int = 0x000100000000
+    static let currentDocumentVersion: Int = 0x000100010000
 
     enum CodingKeys: String, CodingKey {
         case audioSystem
-        case transport
+        case metronome
         case codeSystem
         case documentVersion
     }
     
-    init(audioSystem: AudioSystemModel, transport: TransportModel, codeSystem: CodeSystemModel) {
+    init(audioSystem: AudioSystemModel, metronome: MetronomeModel, codeSystem: CodeSystemModel) {
         self.audioSystem = audioSystem
-        self.transport = transport
+        self.metronome = metronome
         self.codeSystem = codeSystem
     }
     
@@ -34,7 +34,7 @@ struct WorkspaceModel: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.audioSystem = try container.decode(AudioSystemModel.self, forKey: .audioSystem)
-        self.transport = try container.decode(TransportModel.self, forKey: .transport)
+        self.metronome = try container.decode(MetronomeModel.self, forKey: .metronome)
         self.codeSystem = try container.decode(CodeSystemModel.self, forKey: .codeSystem)
 
     }
@@ -43,7 +43,7 @@ struct WorkspaceModel: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(WorkspaceModel.currentDocumentVersion, forKey: .documentVersion)
         try container.encode(self.audioSystem, forKey: .audioSystem)
-        try container.encode(self.transport, forKey: .transport)
+        try container.encode(self.metronome, forKey: .metronome)
         try container.encode(self.codeSystem, forKey: .codeSystem)
     }
 }

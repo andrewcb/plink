@@ -59,7 +59,7 @@
 		447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219CC216AE3E500B15AC0 /* SchedulerJSWrapper.swift */; };
 		447219CF216AE9F700B15AC0 /* AudioSystemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219CE216AE9F700B15AC0 /* AudioSystemModel.swift */; };
 		447219D3216AEA0B00B15AC0 /* CodeSystemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D0216AEA0A00B15AC0 /* CodeSystemModel.swift */; };
-		447219D4216AEA0B00B15AC0 /* TransportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D1216AEA0A00B15AC0 /* TransportModel.swift */; };
+		447219D4216AEA0B00B15AC0 /* MetronomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D1216AEA0A00B15AC0 /* MetronomeModel.swift */; };
 		447219D5216AEA0B00B15AC0 /* WorkspaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D2216AEA0A00B15AC0 /* WorkspaceModel.swift */; };
 		447219D8216BB46E00B15AC0 /* UnitGUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D7216BB46E00B15AC0 /* UnitGUIViewController.swift */; };
 		447219DA216BB48100B15AC0 /* UnitParametersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D9216BB48100B15AC0 /* UnitParametersViewController.swift */; };
@@ -146,7 +146,7 @@
 		447219CC216AE3E500B15AC0 /* SchedulerJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerJSWrapper.swift; sourceTree = "<group>"; };
 		447219CE216AE9F700B15AC0 /* AudioSystemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSystemModel.swift; sourceTree = "<group>"; };
 		447219D0216AEA0A00B15AC0 /* CodeSystemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeSystemModel.swift; sourceTree = "<group>"; };
-		447219D1216AEA0A00B15AC0 /* TransportModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransportModel.swift; sourceTree = "<group>"; };
+		447219D1216AEA0A00B15AC0 /* MetronomeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetronomeModel.swift; sourceTree = "<group>"; };
 		447219D2216AEA0A00B15AC0 /* WorkspaceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceModel.swift; sourceTree = "<group>"; };
 		447219D7216BB46E00B15AC0 /* UnitGUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitGUIViewController.swift; sourceTree = "<group>"; };
 		447219D9216BB48100B15AC0 /* UnitParametersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitParametersViewController.swift; sourceTree = "<group>"; };
@@ -292,7 +292,7 @@
 			children = (
 				447219CE216AE9F700B15AC0 /* AudioSystemModel.swift */,
 				447219D0216AEA0A00B15AC0 /* CodeSystemModel.swift */,
-				447219D1216AEA0A00B15AC0 /* TransportModel.swift */,
+				447219D1216AEA0A00B15AC0 /* MetronomeModel.swift */,
 				447219D2216AEA0A00B15AC0 /* WorkspaceModel.swift */,
 			);
 			path = "Data Model";
@@ -658,7 +658,7 @@
 				445F6A9D2174D67F00E4419A /* ConnectionRegistry.swift in Sources */,
 				447219BC216A5E5400B15AC0 /* ChannelJSWrapper.swift in Sources */,
 				4472198021690D6200B15AC0 /* MixerViewController.swift in Sources */,
-				447219D4216AEA0B00B15AC0 /* TransportModel.swift in Sources */,
+				447219D4216AEA0B00B15AC0 /* MetronomeModel.swift in Sources */,
 				44ED39802187661600CB15B4 /* MIDINoteJSWrapper.swift in Sources */,
 				447219762169087200B15AC0 /* WorkspaceViewController.swift in Sources */,
 				447219CF216AE9F700B15AC0 /* AudioSystemModel.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  TransportModel.swift
+//  MetronomeModel.swift
 //  Plink
 //
 //  Created by acb on 22/09/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TransportModel: Codable {
+struct MetronomeModel: Codable {
     let tempo: Double
     
     enum CodingKeys: String, CodingKey {

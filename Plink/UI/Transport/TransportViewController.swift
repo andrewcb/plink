@@ -22,9 +22,9 @@ class TransportViewController: NSViewController {
         super.viewWillAppear()
         self.levelMeter.orientation = .horizontal
         self.transportTempoChanged()
-        self.activeDocument?.transport.onTempoChange = { self.transportTempoChanged() }
-        self.activeDocument?.transport.onRunningStateChange = { self.transportRunningStateChanged() }
-        self.activeDocument?.transport.onRunningTick.append( { self.runFor(time: $0) })
+        self.activeDocument?.metronome.onTempoChange = { self.transportTempoChanged() }
+        self.activeDocument?.metronome.onRunningStateChange = { self.transportRunningStateChanged() }
+        self.activeDocument?.metronome.onRunningTick.append( { self.runFor(time: $0) })
 
         self.levelUpdateTimer = Timer.scheduledTimer(timeInterval: 0.04, target: self, selector: #selector(self.updateLevels), userInfo: nil, repeats: true)
 
@@ -42,7 +42,7 @@ class TransportViewController: NSViewController {
         self.levelMeter.levelReading = master        
     }
     func transportTempoChanged() {
-        guard let transport = self.activeDocument?.transport else { return }
+        guard let transport = self.activeDocument?.metronome else { return }
         self.tempoField.doubleValue = transport.tempo
         self.tempoStepper.doubleValue = transport.tempo
     }
@@ -51,15 +51,15 @@ class TransportViewController: NSViewController {
     }
     
     @IBAction func playButtonPressed(_ sender: Any) {
-        self.activeDocument?.transport.startInPlace()
+        self.activeDocument?.metronome.startInPlace()
     }
     
     @IBAction func stopButtonPressed(_ sender: Any) {
-        self.activeDocument?.transport.stop()
+        self.activeDocument?.metronome.stop()
     }
     
     @IBAction func tempoValueChanged(_ sender: NSControl) {
-        guard let transport = self.activeDocument?.transport else { return }
+        guard let transport = self.activeDocument?.metronome else { return }
         if sender.doubleValue != 0.0 {
             transport.tempo = sender.doubleValue
         }
