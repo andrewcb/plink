@@ -1,7 +1,7 @@
 import Foundation
 
 /** This handles the transport: the play position, tempo and such */
-public class Transport {
+public class Metronome {
     public var tempo: Double = 120.0 {
         didSet {
             // 1 beat = 60.0/tempo
@@ -131,7 +131,7 @@ public class Transport {
 }
 
 //MARK: asynchronous execution for scripting purposes and such
-extension Transport {
+extension Metronome {
     /**
      Executes code asynchronously within a tick time respective to the current tempo; this works whether or not the transport is running.
      */

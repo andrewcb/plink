@@ -9,34 +9,34 @@
 import Foundation
 import JavaScriptCore
 
-@objc protocol TransportExports: JSExport {
+@objc protocol MetronomeExports: JSExport {
     var tempo: Double { get set }
     
     func setTimeout(_ block: JSValue, _ beats: Double)
 }
 
 extension JSCoreCodeEngine {
-    @objc public class Transport: NSObject, TransportExports {
-        weak var transport: Plink.Transport!
+    @objc public class Metronome: NSObject, MetronomeExports {
+        weak var metronome: Plink.Metronome!
         
-        init(transport: Plink.Transport) {
-            self.transport = transport
+        init(metronome: Plink.Metronome) {
+            self.metronome = metronome
         }
         var tempo: Double {
             get {
-                return self.transport.tempo
+                return self.metronome.tempo
             }
             set(v) {
-                self.transport.tempo = v
+                self.metronome.tempo = v
             }
         }
         
         func setTimeout(_ block: JSValue, _ beats: Double) {
-            self.transport.async(inBeats: beats, execute: { block.call(withArguments:[]) })
+            self.metronome.async(inBeats: beats, execute: { block.call(withArguments:[]) })
         }
         
         public override var description: String {
-            return "<Transport: tempo = \(self.tempo)>"
+            return "<Metronome: tempo = \(self.tempo)>"
         }
     }
 }

@@ -17,13 +17,13 @@ import AudioToolbox
 class ActiveDocument: NSDocument {
     
     let audioSystem: AudioSystem? = try? AudioSystem()
-    let transport: Transport = Transport()
+    let transport: Metronome = Metronome()
     let codeSystem: CodeSystem
     let scheduler: Scheduler = Scheduler()
 
     override init() {
         
-        self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, transport: self.transport, scheduler: self.scheduler))
+        self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, metronome: self.transport, scheduler: self.scheduler))
         super.init()
         self.transport.onRunningTick.append( { self.scheduler.runFor(time: $0) })
         self.transport.onMasterTick.append( { self.scheduler.masterTick($0) })

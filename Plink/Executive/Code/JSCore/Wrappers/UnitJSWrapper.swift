@@ -38,7 +38,7 @@ extension JSCoreCodeEngine {
         
         @objc func playNote(_ note: JSCoreCodeEngine.MIDINote) {
             let note = note.note
-            try? self.instance.play(MIDINote: note, withTransport: self.engine.env.transport, scheduler: self.engine.env.scheduler)
+            try? self.instance.play(MIDINote: note, withMetronome: self.engine.env.metronome, scheduler: self.engine.env.scheduler)
         }
         
         func getParam(_ name: String) -> JSValue {

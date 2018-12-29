@@ -15,7 +15,7 @@ struct CodeEngineEnvironment {
     let audioSystem: AudioSystem?
     
     /// the transport: tempo, start/stop, and such, will go here
-    let transport: Transport
+    let metronome: Metronome
 
     /// the scheduler: trigger functions at intervals/times
     let scheduler: Scheduler

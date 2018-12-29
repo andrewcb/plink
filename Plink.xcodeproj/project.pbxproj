@@ -46,7 +46,7 @@
 		447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219AA216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift */; };
 		447219B1216A59BC00B15AC0 /* AudioUnitComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219AB216A59BC00B15AC0 /* AudioUnitComponent.swift */; };
 		447219B3216A5A2900B15AC0 /* AudioUnitPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219B2216A5A2900B15AC0 /* AudioUnitPreset.swift */; };
-		447219B7216A5ADB00B15AC0 /* Transport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219B6216A5ADB00B15AC0 /* Transport.swift */; };
+		447219B7216A5ADB00B15AC0 /* Metronome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219B6216A5ADB00B15AC0 /* Metronome.swift */; };
 		447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219B8216A5C2D00B15AC0 /* AudioSystem.swift */; };
 		447219BC216A5E5400B15AC0 /* ChannelJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BB216A5E5400B15AC0 /* ChannelJSWrapper.swift */; };
 		447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BD216A5E8F00B15AC0 /* UnitJSWrapper.swift */; };
@@ -133,7 +133,7 @@
 		447219AA216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AudioStreamBasicDescription+.swift"; sourceTree = "<group>"; };
 		447219AB216A59BC00B15AC0 /* AudioUnitComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitComponent.swift; sourceTree = "<group>"; };
 		447219B2216A5A2900B15AC0 /* AudioUnitPreset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitPreset.swift; sourceTree = "<group>"; };
-		447219B6216A5ADB00B15AC0 /* Transport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transport.swift; sourceTree = "<group>"; };
+		447219B6216A5ADB00B15AC0 /* Metronome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metronome.swift; sourceTree = "<group>"; };
 		447219B8216A5C2D00B15AC0 /* AudioSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSystem.swift; sourceTree = "<group>"; };
 		447219BB216A5E5400B15AC0 /* ChannelJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelJSWrapper.swift; sourceTree = "<group>"; };
 		447219BD216A5E8F00B15AC0 /* UnitJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitJSWrapper.swift; sourceTree = "<group>"; };
@@ -281,7 +281,7 @@
 				447219542169014800B15AC0 /* ActiveDocument.swift */,
 				4472199D216A55A000B15AC0 /* CodeSystem.swift */,
 				447219B8216A5C2D00B15AC0 /* AudioSystem.swift */,
-				447219B6216A5ADB00B15AC0 /* Transport.swift */,
+				447219B6216A5ADB00B15AC0 /* Metronome.swift */,
 				447219CA216AE2D800B15AC0 /* Scheduler.swift */,
 			);
 			path = World;
@@ -663,7 +663,7 @@
 				447219762169087200B15AC0 /* WorkspaceViewController.swift in Sources */,
 				447219CF216AE9F700B15AC0 /* AudioSystemModel.swift in Sources */,
 				447219A2216A593000B15AC0 /* TickTime.swift in Sources */,
-				447219B7216A5ADB00B15AC0 /* Transport.swift in Sources */,
+				447219B7216A5ADB00B15AC0 /* Metronome.swift in Sources */,
 				4472199A216A543E00B15AC0 /* CodeEngineEnvironment.swift in Sources */,
 				44ED397E218764E700CB15B4 /* Merge2.swift in Sources */,
 				44ED39792187590A00CB15B4 /* MIDIEvent.swift in Sources */,
