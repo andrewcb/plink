@@ -23,8 +23,8 @@ class TransportViewController: NSViewController {
         self.levelMeter.orientation = .horizontal
         self.transportTempoChanged()
         self.activeDocument?.metronome.onTempoChange = { self.transportTempoChanged() }
-        self.activeDocument?.metronome.onRunningStateChange = { self.transportRunningStateChanged() }
-        self.activeDocument?.metronome.onRunningTick.append( { self.runFor(time: $0) })
+        self.activeDocument?.transport.onRunningStateChange = { self.transportRunningStateChanged() }
+        self.activeDocument?.transport.onRunningTick.append( { self.runFor(time: $0) })
 
         self.levelUpdateTimer = Timer.scheduledTimer(timeInterval: 0.04, target: self, selector: #selector(self.updateLevels), userInfo: nil, repeats: true)
 
@@ -51,11 +51,11 @@ class TransportViewController: NSViewController {
     }
     
     @IBAction func playButtonPressed(_ sender: Any) {
-        self.activeDocument?.metronome.startInPlace()
+        self.activeDocument?.transport.startInPlace()
     }
     
     @IBAction func stopButtonPressed(_ sender: Any) {
-        self.activeDocument?.metronome.stop()
+        self.activeDocument?.transport.stop()
     }
     
     @IBAction func tempoValueChanged(_ sender: NSControl) {

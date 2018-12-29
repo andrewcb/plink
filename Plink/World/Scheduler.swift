@@ -68,17 +68,17 @@ class Scheduler {
         }
     }
     
-    /// master scheduling; this is more low-level, not being exposed to the executive API, and is just a mapping of times to closures, with each removed as it is executed
+    /// metronome scheduling; this is more low-level, not being exposed to the executive API, and is just a mapping of times to closures, with each removed as it is executed
     
     // TODO: make this an ordered linked list, for efficient lookup/removal
-    var masterAt: [TickTime: (()->Void)] = [:]
+    var metroAt: [TickTime: (()->Void)] = [:]
     
-    func schedule(atMasterTime time: TickTime, action: @escaping (()->())) {
+    func schedule(atMetronomeTime time: TickTime, action: @escaping (()->())) {
         // TODO: add locking here
-        if let prevAction = masterAt[time] {
-            masterAt[time] = { prevAction() ; action() }
+        if let prevAction = metroAt[time] {
+            metroAt[time] = { prevAction() ; action() }
         } else {
-            masterAt[time] = action
+            metroAt[time] = action
         }
     }
     
@@ -106,11 +106,11 @@ class Scheduler {
 //        }
     }
     
-    func masterTick(_ time: TickTime) {
-        if let action = masterAt[time] {
+    func metronomeTick(_ time: TickTime) {
+        if let action = metroAt[time] {
             action()
         }
-        masterAt[time] = nil
+        metroAt[time] = nil
     }
     
     /// MARK: blocking wait
@@ -118,7 +118,7 @@ class Scheduler {
     let sleepQueue = DispatchQueue(label: "Scheduler.sleep")
     func sleep(until time: TickTime) {
         let ds = DispatchSemaphore(value: 0)
-        self.schedule(atMasterTime: time) {
+        self.schedule(atMetronomeTime: time) {
             ds.signal()
         }
         sleepQueue.sync {

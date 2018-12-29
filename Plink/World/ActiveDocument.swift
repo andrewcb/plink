@@ -18,15 +18,20 @@ class ActiveDocument: NSDocument {
     
     let audioSystem: AudioSystem? = try? AudioSystem()
     let metronome: Metronome = Metronome()
+    let transport: Transport
     let codeSystem: CodeSystem
     let scheduler: Scheduler = Scheduler()
 
     override init() {
         
-        self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, metronome: self.metronome, scheduler: self.scheduler))
+        self.transport = Transport(metronome: self.metronome)
+        self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, metronome: self.metronome, transport: self.transport, scheduler: self.scheduler))
         super.init()
-        self.metronome.onRunningTick.append( { self.scheduler.runFor(time: $0) })
-        self.metronome.onMasterTick.append( { self.scheduler.masterTick($0) })
+        self.transport.onRunningTick.append( { self.scheduler.runFor(time: $0) })
+        self.metronome.onTick.append(contentsOf: [
+            { self.transport.metronomeTick($0) },
+            { self.scheduler.metronomeTick($0) }
+        ])
         self.hasUndoManager = false
     }
 
