@@ -13,6 +13,7 @@ struct WorkspaceModel: Codable {
     var audioSystem: AudioSystemModel
     var metronome: MetronomeModel
     var codeSystem: CodeSystemModel
+    var scoreModel: ScoreModel
     
     // AAAABBBBCCCC = A.B.C
     static let currentDocumentVersion: Int = 0x000100010000
@@ -21,13 +22,15 @@ struct WorkspaceModel: Codable {
         case audioSystem
         case metronome
         case codeSystem
+        case score
         case documentVersion
     }
     
-    init(audioSystem: AudioSystemModel, metronome: MetronomeModel, codeSystem: CodeSystemModel) {
+    init(audioSystem: AudioSystemModel, metronome: MetronomeModel, codeSystem: CodeSystemModel, scoreModel: ScoreModel) {
         self.audioSystem = audioSystem
         self.metronome = metronome
         self.codeSystem = codeSystem
+        self.scoreModel = scoreModel
     }
     
     init(from decoder: Decoder) throws {
@@ -36,7 +39,7 @@ struct WorkspaceModel: Codable {
         self.audioSystem = try container.decode(AudioSystemModel.self, forKey: .audioSystem)
         self.metronome = try container.decode(MetronomeModel.self, forKey: .metronome)
         self.codeSystem = try container.decode(CodeSystemModel.self, forKey: .codeSystem)
-
+        self.scoreModel = try container.decode(ScoreModel.self, forKey: .score)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -45,5 +48,6 @@ struct WorkspaceModel: Codable {
         try container.encode(self.audioSystem, forKey: .audioSystem)
         try container.encode(self.metronome, forKey: .metronome)
         try container.encode(self.codeSystem, forKey: .codeSystem)
+        try container.encode(self.scoreModel, forKey: .score)
     }
 }

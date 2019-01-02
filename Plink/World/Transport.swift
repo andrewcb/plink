@@ -8,7 +8,7 @@
 
 import Foundation
 
-/** This handles the transport: the play position, play state and such */
+/** This handles the transport: the play position, play state and such; it also owns the Score, and is responsible for playing it */
 public class Transport {
     /// The clock transmission state: i.e., how the clock gets converted to the program position, if at all
     enum TransmissionState {
@@ -26,8 +26,11 @@ public class Transport {
     /// the metronome
     var metronome: Metronome
     
+    var score: ScoreModel
+    
     init(metronome: Metronome) {
         self.metronome = metronome
+        self.score = ScoreModel()
     }
 
     //MARK: Transmission copntrol

@@ -50,7 +50,7 @@ class ActiveDocument: NSDocument {
 
     private func snapshot() throws -> WorkspaceModel {
         // FIXME: forced unwrap
-        return WorkspaceModel(audioSystem: try self.audioSystem!.snapshot(), metronome: self.metronome.snapshot(), codeSystem: self.codeSystem.snapshot())
+        return WorkspaceModel(audioSystem: try self.audioSystem!.snapshot(), metronome: self.metronome.snapshot(), codeSystem: self.codeSystem.snapshot(), scoreModel: self.transport.score)
     }
     
     private func set(from snapshot: WorkspaceModel) throws {
