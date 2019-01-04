@@ -68,6 +68,8 @@
 		447219E0216BBC6400B15AC0 /* AudioToolboxHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 447219DE216BBC6400B15AC0 /* AudioToolboxHelpers.m */; };
 		447219E3216CF46800B15AC0 /* test640x480.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 447219E2216CF46800B15AC0 /* test640x480.jpg */; };
 		449D697921DCB0DC0083DAE5 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D697821DCB0DC0083DAE5 /* ScoreModel.swift */; };
+		449D697C21DD66A50083DAE5 /* CueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D697B21DD66A50083DAE5 /* CueListViewController.swift */; };
+		449D697F21DD89E20083DAE5 /* TickTimeFormattingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D697E21DD89E20083DAE5 /* TickTimeFormattingService.swift */; };
 		44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */; };
 		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
@@ -159,6 +161,8 @@
 		447219DF216BBC6400B15AC0 /* AudioToolboxHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioToolboxHelpers.h; sourceTree = "<group>"; };
 		447219E2216CF46800B15AC0 /* test640x480.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test640x480.jpg; sourceTree = "<group>"; };
 		449D697821DCB0DC0083DAE5 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
+		449D697B21DD66A50083DAE5 /* CueListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CueListViewController.swift; sourceTree = "<group>"; };
+		449D697E21DD89E20083DAE5 /* TickTimeFormattingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickTimeFormattingService.swift; sourceTree = "<group>"; };
 		44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
 		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
@@ -265,12 +269,14 @@
 		447219712169049A00B15AC0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				449D697D21DD89C00083DAE5 /* Services */,
 				4455B35921D592CB002F0426 /* ModuleManagement */,
 				44721990216A50DD00B15AC0 /* Settings */,
 				44721974216906FB00B15AC0 /* WorkspaceView */,
 				4472197B21690B6700B15AC0 /* Transport */,
 				4472197A21690B5E00B15AC0 /* Mixer */,
 				4472197C21690B6E00B15AC0 /* Code */,
+				449D697A21DD666E0083DAE5 /* CueList */,
 				447219C1216AC86F00B15AC0 /* AudioUnitList */,
 				447219D6216BAC7800B15AC0 /* UnitInterface */,
 				4472198D216A509700B15AC0 /* components */,
@@ -487,6 +493,22 @@
 			path = diagnostics;
 			sourceTree = "<group>";
 		};
+		449D697A21DD666E0083DAE5 /* CueList */ = {
+			isa = PBXGroup;
+			children = (
+				449D697B21DD66A50083DAE5 /* CueListViewController.swift */,
+			);
+			path = CueList;
+			sourceTree = "<group>";
+		};
+		449D697D21DD89C00083DAE5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				449D697E21DD89E20083DAE5 /* TickTimeFormattingService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		44ED396F2184A60F00CB15B4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -680,6 +702,7 @@
 				447219DA216BB48100B15AC0 /* UnitParametersViewController.swift in Sources */,
 				445F6A9F2175627300E4419A /* AudioUnitParameterUnit+.swift in Sources */,
 				44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */,
+				449D697C21DD66A50083DAE5 /* CueListViewController.swift in Sources */,
 				445F6A9B21738F1500E4419A /* ManagedAudioUnitInstance.swift in Sources */,
 				447219AF216A59BC00B15AC0 /* AudioUnitGraph.swift in Sources */,
 				447219CB216AE2D800B15AC0 /* Scheduler.swift in Sources */,
@@ -688,6 +711,7 @@
 				447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */,
 				447219D5216AEA0B00B15AC0 /* WorkspaceModel.swift in Sources */,
 				447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */,
+				449D697F21DD89E20083DAE5 /* TickTimeFormattingService.swift in Sources */,
 				447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */,
 				44ED3974218755DC00CB15B4 /* WithTime.swift in Sources */,
 				4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */,

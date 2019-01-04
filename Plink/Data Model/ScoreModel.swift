@@ -20,10 +20,28 @@ struct ScoreModel {
         let action: Action
     }
     
-    var cueList: [Cue]
+    public private(set) var cueList: [Cue]
+    
+    var onCueListChanged: (()->())? = nil
     
     init(cueList: [Cue] = []) {
         self.cueList = cueList
+    }
+    
+    mutating func replaceCue(atIndex index: Int, with cue: Cue) {
+        var cues = self.cueList
+        cues[index] = cue
+        cueList = cues.sorted(by: { (c1, c2) -> Bool in
+            c1.time < c2.time
+        })
+        self.onCueListChanged?()
+    }
+    
+    mutating func add(cue: Cue) {
+        self.cueList = (self.cueList + [cue]).sorted(by: { (c1, c2) -> Bool in
+            c1.time < c2.time
+        })
+        self.onCueListChanged?()
     }
 }
 

@@ -19,7 +19,8 @@ class WorkspaceViewController: NSViewController {
         self.coordinator.stealingPolicy = .leaveBlank
         self.coordinator.specs = [
             ModuleCoordinator.Spec(name: "source", unique: true, shelveable: true, withStoryboardID: "Source"),
-            ModuleCoordinator.Spec(name: "repl", unique: true, shelveable: true, withStoryboardID: "REPL")
+            ModuleCoordinator.Spec(name: "repl", unique: true, shelveable: true, withStoryboardID: "REPL"),
+            ModuleCoordinator.Spec(name: "cueList", unique: true, shelveable: true, withStoryboardID: "CueList")
         ]
     }
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {

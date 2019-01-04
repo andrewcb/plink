@@ -57,6 +57,7 @@ class ActiveDocument: NSDocument {
         try self.audioSystem?.set(from: snapshot.audioSystem)
         self.metronome.set(from: snapshot.metronome)
         self.codeSystem.set(from: snapshot.codeSystem)
+        self.transport.score = snapshot.scoreModel
     }
     
     override func data(ofType typeName: String) throws -> Data {

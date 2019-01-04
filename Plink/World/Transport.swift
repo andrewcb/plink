@@ -28,9 +28,14 @@ public class Transport {
     
     var score: ScoreModel
     
+    static let cueListChanged = Notification.Name("Transport.CueListChanged")
+    
     init(metronome: Metronome) {
         self.metronome = metronome
-        self.score = ScoreModel()
+        self.score = ScoreModel(cueList: [])
+        self.score.onCueListChanged = {
+            NotificationCenter.default.post(name: Transport.cueListChanged, object: nil)
+        }
     }
 
     //MARK: Transmission copntrol
