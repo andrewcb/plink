@@ -11,6 +11,10 @@ public struct TickTime {
     public var beatValue: Int { return value / TickTime.ticksPerBeat }
     
     public init(_ value: Int) { self.value =  value }
+    
+    public init(beats: Int, ticks: Int) {
+        self.value = beats * TickTime.ticksPerBeat + ticks
+    }
 
     static public func +(lhs: TickTime, rhs: TickOffset) -> TickTime {
         return TickTime(lhs.value + rhs.value)
