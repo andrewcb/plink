@@ -116,9 +116,8 @@ class CueListViewController: NSViewController {
     }
     
     @IBAction func addPressed(_ sender: Any) {
-        print("Add")
         guard let transport = self.activeDocument?.transport else { return }
-        let newCueTime = transport.score.cueList.last.map { $0.time+1 } ?? 0
+        let newCueTime = transport.score.cueList.last.map { $0.time+TickTime(beats: 1, ticks: 0)} ?? 0
         let newCue = ScoreModel.Cue(time: newCueTime, action: .codeStatement(""))
         transport.score.add(cue: newCue)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(500)) { [weak self] in

@@ -22,7 +22,7 @@ struct TickTimeFormattingService {
         case barsBeatsAndTicks(Int)
     }
     /// the current mode
-    var mode: Mode = .ticksOnly
+    var mode: Mode = .beatsAndTicks
     
     /// format a TickTime
     func format(time: TickTime) -> String {
