@@ -73,6 +73,7 @@
 		449D698221E0274F0083DAE5 /* PlayContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D698121E0274F0083DAE5 /* PlayContext.swift */; };
 		449D698621E116410083DAE5 /* BidirectionalCollection+WithTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D698521E116410083DAE5 /* BidirectionalCollection+WithTime.swift */; };
 		449D698A21E16DF50083DAE5 /* BidirectionalCollectionWithTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D698921E16DF50083DAE5 /* BidirectionalCollectionWithTimeTests.swift */; };
+		449D698C21E2C0370083DAE5 /* PlinkIcon512.icns in Resources */ = {isa = PBXBuildFile; fileRef = 449D698B21E2C0370083DAE5 /* PlinkIcon512.icns */; };
 		44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */; };
 		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
@@ -169,6 +170,7 @@
 		449D698121E0274F0083DAE5 /* PlayContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayContext.swift; sourceTree = "<group>"; };
 		449D698521E116410083DAE5 /* BidirectionalCollection+WithTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BidirectionalCollection+WithTime.swift"; sourceTree = "<group>"; };
 		449D698921E16DF50083DAE5 /* BidirectionalCollectionWithTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidirectionalCollectionWithTimeTests.swift; sourceTree = "<group>"; };
+		449D698B21E2C0370083DAE5 /* PlinkIcon512.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = PlinkIcon512.icns; sourceTree = "<group>"; };
 		44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
 		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				447219502169014800B15AC0 /* AppDelegate.swift */,
 				447219522169014800B15AC0 /* ViewController.swift */,
 				447219562169014C00B15AC0 /* Assets.xcassets */,
+				449D698B21E2C0370083DAE5 /* PlinkIcon512.icns */,
 				447219582169014C00B15AC0 /* Main.storyboard */,
 				4472195B2169014C00B15AC0 /* Info.plist */,
 				4472195C2169014C00B15AC0 /* Plink.entitlements */,
@@ -666,6 +669,7 @@
 				4472198A21690F2A00B15AC0 /* MixerStripCollectionViewItem.xib in Resources */,
 				447219E3216CF46800B15AC0 /* test640x480.jpg in Resources */,
 				447219572169014C00B15AC0 /* Assets.xcassets in Resources */,
+				449D698C21E2C0370083DAE5 /* PlinkIcon512.icns in Resources */,
 				4472195A2169014C00B15AC0 /* Main.storyboard in Resources */,
 				4472198721690F2A00B15AC0 /* MixerAddStripCollectionViewItem.xib in Resources */,
 				447219C9216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib in Resources */,
