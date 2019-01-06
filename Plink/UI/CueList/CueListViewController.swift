@@ -9,6 +9,25 @@
 import Cocoa
 
 
+class CueListHeaderCell: NSTableHeaderCell {
+    override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
+        NSColor.codeBackground.setFill()
+        cellFrame.fill()
+        self.drawInterior(withFrame: cellFrame, in: controlView)
+    }
+    
+    override func drawInterior(withFrame cellFrame: NSRect, in controlView: NSView) {
+        let titleRect = self.titleRect(forBounds: cellFrame).insetBy(dx: 2, dy: 2)
+        self.stringValue.draw(in: titleRect, withAttributes: [ NSAttributedString.Key.foregroundColor: NSColor.lightGray])
+    }
+    
+    override func drawFocusRingMask(withFrame cellFrame: NSRect, in controlView: NSView) {}
+    
+    override func drawSortIndicator(withFrame cellFrame: NSRect, in controlView: NSView, ascending: Bool, priority: Int) {}
+    
+    override func highlight(_ flag: Bool, withFrame cellFrame: NSRect, in controlView: NSView) {}
+}
+
 class CueColumnCell: NSTableCellView {
     var index: Int = 0
     var cue: ScoreModel.Cue?
@@ -68,6 +87,14 @@ extension CueActionCell: NSTextFieldDelegate {
 class CueListViewController: NSViewController {
     @IBOutlet var tableView: NSTableView!
     
+    override func viewDidLoad() {
+        self.tableView.backgroundColor = NSColor.codeBackground
+        for col in self.tableView.tableColumns {
+            col.headerCell = CueListHeaderCell(textCell: col.headerCell.stringValue)
+            col.headerCell.focusRingType = .none
+        }
+    }
+
     override func viewWillAppear() {
         super.viewWillAppear()
         NotificationCenter.default.addObserver(self, selector: #selector(self.cueListChanged(_:)), name: Transport.cueListChanged, object: nil)

@@ -1442,7 +1442,7 @@
                                     <rect key="frame" x="1" y="0.0" width="232" height="299"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="3G2-gN-Ent" viewBased="YES" id="RE6-Ea-nND">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="3G2-gN-Ent" viewBased="YES" id="RE6-Ea-nND">
                                             <rect key="frame" x="0.0" y="0.0" width="232" height="276"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -1538,7 +1538,7 @@
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <tableHeaderView key="headerView" id="3G2-gN-Ent">
+                                <tableHeaderView key="headerView" focusRingType="none" id="3G2-gN-Ent">
                                     <rect key="frame" x="0.0" y="0.0" width="232" height="23"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
