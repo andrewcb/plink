@@ -11,7 +11,7 @@ import Foundation
 /** The model encapsulating the Score, i.e., all events (not defined in code) mapped to a transport time. */
 struct ScoreModel {
     // MARK: The Cue: a global list of timestamped actions (typically code statements to execute)
-    struct Cue {
+    struct Cue: WithTime {
         enum Action {
             case codeStatement(String)
         }
@@ -20,6 +20,7 @@ struct ScoreModel {
         let action: Action
     }
     
+    typealias CueList = [Cue]
     public private(set) var cueList: [Cue]
     
     var onCueListChanged: (()->())? = nil

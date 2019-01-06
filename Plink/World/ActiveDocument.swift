@@ -32,6 +32,15 @@ class ActiveDocument: NSDocument {
             { self.transport.metronomeTick($0) },
             { self.scheduler.metronomeTick($0) }
         ])
+        
+        // TODO: perhaps another object should handle this and route it appropriately?
+        self.transport.cuePlayCallback = { cue in
+            switch(cue.action) {
+            case .codeStatement(let code):
+                self.codeSystem.codeEngine?.eval(command: code)
+            }
+        }
+        
         self.hasUndoManager = false
     }
 

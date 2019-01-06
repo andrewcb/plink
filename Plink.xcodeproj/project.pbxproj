@@ -70,6 +70,9 @@
 		449D697921DCB0DC0083DAE5 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D697821DCB0DC0083DAE5 /* ScoreModel.swift */; };
 		449D697C21DD66A50083DAE5 /* CueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D697B21DD66A50083DAE5 /* CueListViewController.swift */; };
 		449D697F21DD89E20083DAE5 /* TickTimeFormattingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D697E21DD89E20083DAE5 /* TickTimeFormattingService.swift */; };
+		449D698221E0274F0083DAE5 /* PlayContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D698121E0274F0083DAE5 /* PlayContext.swift */; };
+		449D698621E116410083DAE5 /* BidirectionalCollection+WithTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D698521E116410083DAE5 /* BidirectionalCollection+WithTime.swift */; };
+		449D698A21E16DF50083DAE5 /* BidirectionalCollectionWithTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D698921E16DF50083DAE5 /* BidirectionalCollectionWithTimeTests.swift */; };
 		44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */; };
 		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
@@ -163,6 +166,9 @@
 		449D697821DCB0DC0083DAE5 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
 		449D697B21DD66A50083DAE5 /* CueListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CueListViewController.swift; sourceTree = "<group>"; };
 		449D697E21DD89E20083DAE5 /* TickTimeFormattingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickTimeFormattingService.swift; sourceTree = "<group>"; };
+		449D698121E0274F0083DAE5 /* PlayContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayContext.swift; sourceTree = "<group>"; };
+		449D698521E116410083DAE5 /* BidirectionalCollection+WithTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BidirectionalCollection+WithTime.swift"; sourceTree = "<group>"; };
+		449D698921E16DF50083DAE5 /* BidirectionalCollectionWithTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BidirectionalCollectionWithTimeTests.swift; sourceTree = "<group>"; };
 		44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
 		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
@@ -234,6 +240,7 @@
 				447219E1216CF42A00B15AC0 /* diagnostics */,
 				44721972216904BF00B15AC0 /* World */,
 				447219702169049000B15AC0 /* Executive */,
+				449D698021E027210083DAE5 /* Performance */,
 				447219732169055800B15AC0 /* Data Model */,
 				447219712169049A00B15AC0 /* UI */,
 				4472199F216A586800B15AC0 /* Library */,
@@ -250,8 +257,9 @@
 		447219642169014C00B15AC0 /* PlinkTests */ = {
 			isa = PBXGroup;
 			children = (
-				44ED396F2184A60F00CB15B4 /* UI */,
 				445F6AA02176AB5B00E4419A /* World */,
+				44ED396F2184A60F00CB15B4 /* UI */,
+				449D698721E16BDF0083DAE5 /* Library */,
 				447219652169014C00B15AC0 /* PlinkTests.swift */,
 				447219672169014C00B15AC0 /* Info.plist */,
 			);
@@ -414,6 +422,7 @@
 			children = (
 				447219A1216A593000B15AC0 /* TickTime.swift */,
 				44ED3973218755DB00CB15B4 /* WithTime.swift */,
+				449D698521E116410083DAE5 /* BidirectionalCollection+WithTime.swift */,
 			);
 			path = Time;
 			sourceTree = "<group>";
@@ -507,6 +516,30 @@
 				449D697E21DD89E20083DAE5 /* TickTimeFormattingService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		449D698021E027210083DAE5 /* Performance */ = {
+			isa = PBXGroup;
+			children = (
+				449D698121E0274F0083DAE5 /* PlayContext.swift */,
+			);
+			path = Performance;
+			sourceTree = "<group>";
+		};
+		449D698721E16BDF0083DAE5 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				449D698821E16BFD0083DAE5 /* Time */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		449D698821E16BFD0083DAE5 /* Time */ = {
+			isa = PBXGroup;
+			children = (
+				449D698921E16DF50083DAE5 /* BidirectionalCollectionWithTimeTests.swift */,
+			);
+			path = Time;
 			sourceTree = "<group>";
 		};
 		44ED396F2184A60F00CB15B4 /* UI */ = {
@@ -683,6 +716,7 @@
 				44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */,
 				447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */,
 				44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */,
+				449D698621E116410083DAE5 /* BidirectionalCollection+WithTime.swift in Sources */,
 				447219E0216BBC6400B15AC0 /* AudioToolboxHelpers.m in Sources */,
 				445F6A9D2174D67F00E4419A /* ConnectionRegistry.swift in Sources */,
 				447219BC216A5E5400B15AC0 /* ChannelJSWrapper.swift in Sources */,
@@ -693,6 +727,7 @@
 				447219CF216AE9F700B15AC0 /* AudioSystemModel.swift in Sources */,
 				447219A2216A593000B15AC0 /* TickTime.swift in Sources */,
 				449D697921DCB0DC0083DAE5 /* ScoreModel.swift in Sources */,
+				449D698221E0274F0083DAE5 /* PlayContext.swift in Sources */,
 				447219B7216A5ADB00B15AC0 /* Metronome.swift in Sources */,
 				4472199A216A543E00B15AC0 /* CodeEngineEnvironment.swift in Sources */,
 				44ED397E218764E700CB15B4 /* Merge2.swift in Sources */,
@@ -724,6 +759,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				449D698A21E16DF50083DAE5 /* BidirectionalCollectionWithTimeTests.swift in Sources */,
 				447219662169014C00B15AC0 /* PlinkTests.swift in Sources */,
 				445F6AA22176AB8300E4419A /* AudioSystemTests.swift in Sources */,
 				44ED39722184A6CE00CB15B4 /* NSRect+ComposableTests.swift in Sources */,

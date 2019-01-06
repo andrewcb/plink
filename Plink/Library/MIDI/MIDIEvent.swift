@@ -14,7 +14,7 @@ public struct MIDIEvent {
     public var data2: UInt8 { return UInt8((self.value >> 16) & 0xff) }
 }
 
-public typealias MIDIEventWithTime = ItemWithTime<MIDIEvent>
+public typealias MIDIEventWithTime = TimedBox<MIDIEvent>
 
 extension MIDIEvent: CustomStringConvertible {
     public var description: String {

@@ -14,7 +14,7 @@ public struct MIDINote {
         self.duration = duration
     }
 }
-public typealias MIDINoteWithTime = ItemWithTime<MIDINote>
+public typealias MIDINoteWithTime = TimedBox<MIDINote>
 
 extension MIDINote: CustomStringConvertible {
     public var description: String {
@@ -28,13 +28,13 @@ extension MIDINote: CustomStringConvertible {
     }
 }
 
-extension WithTime where Value == MIDINote {
-    public var noteOnEvent: ItemWithTime<MIDIEvent> {
-        return ItemWithTime(time: self.time, value: MIDIEvent(statusByte: 0x90 | (self.value.channel & 0x0f), data1: self.value.note & 0x7f, data2: self.value.velocity & 0x7f))
+extension TimedBox where T == MIDINote {
+    public var noteOnEvent: TimedBox<MIDIEvent> {
+        return TimedBox<MIDIEvent>(time: self.time, value: MIDIEvent(statusByte: 0x90 | (self.value.channel & 0x0f), data1: self.value.note & 0x7f, data2: self.value.velocity & 0x7f))
     }
 
-    public var noteOffEvent: ItemWithTime<MIDIEvent> {
-        return ItemWithTime(time: self.time+self.value.duration, value: MIDIEvent(statusByte: 0x80 | (self.value.channel & 0x0f), data1: self.value.note & 0x7f, data2: self.value.velocity & 0x7f))
+    public var noteOffEvent: TimedBox<MIDIEvent> {
+        return TimedBox<MIDIEvent>(time: self.time+self.value.duration, value: MIDIEvent(statusByte: 0x80 | (self.value.channel & 0x0f), data1: self.value.note & 0x7f, data2: self.value.velocity & 0x7f))
     }
 
 }

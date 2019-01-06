@@ -28,6 +28,11 @@ public class Transport {
     
     var score: ScoreModel
     
+    /// functions called to execute various score data in playback
+    var cuePlayCallback: ((ScoreModel.Cue)->())?
+    
+    private var playContext: PlayContext?
+    
     static let cueListChanged = Notification.Name("Transport.CueListChanged")
     
     init(metronome: Metronome) {
@@ -38,15 +43,21 @@ public class Transport {
         }
     }
 
-    //MARK: Transmission copntrol
+    //MARK: Transmission control
+    
+    private func start(at time: TickTime) {
+        self.playContext = PlayContext(score: self.score, time: time)
+        self.transmissionState = .starting(time)
+    }
+    
     public func startInPlace() {
         if case let .stopped(t) = self.transmissionState {
-            self.transmissionState = .starting(t)
+            self.start(at: t)
         }
     }
     
     public func rewindAndStart() {
-        self.transmissionState = .starting(0)
+        self.start(at: 0)
     }
     
     public func stop() {
@@ -71,14 +82,24 @@ public class Transport {
     /// callbacks to be notified of a tick if the state is currently running
     public var onRunningTick: [((TickTime)->())] = []
     
+    
+    private func runPlayContext(forPos pos: TickTime) {
+        guard let ctx = self.playContext else { return }
+        // cue list
+        while let cue = ctx.nextCue(forTime: pos) {
+            self.cuePlayCallback?(cue)
+        }
+        
+    }
 
     /// Handle a tick from the metronome
     func metronomeTick(_ time: TickTime) {
         if case let .starting(t) = self.transmissionState {
             self.transmissionState = .running(t-self.metronome.tickTime)
         }
-        if case let .running(offset) = self.transmissionState {
+        if case .running(_) = self.transmissionState {
             let pos = self.programPosition
+            self.runPlayContext(forPos: pos)
             for client in self.onRunningTick {
                 client(pos)
             }

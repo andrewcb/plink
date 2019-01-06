@@ -8,15 +8,14 @@
 
 import Foundation
 
+/// Anything that has a TickTime
 public protocol WithTime: Comparable {
-    associatedtype Value
     var time: TickTime { get }
-    var value: Value { get }
 }
 
 
 // a point event with a time
-public struct ItemWithTime<T>: WithTime {
+public struct TimedBox<T>: WithTime {
     public typealias Value = T
     public let time: TickTime
     public let value: T
@@ -28,8 +27,8 @@ public struct ItemWithTime<T>: WithTime {
 }
 
 // this doesn't appear to be legal
-//extension ItemWithTime: Equatable where ItemWithTime.Value: Equatable {
-//    public static func ==(lhs: ItemWithTime, rhs: ItemWithTime) -> Bool {
+//extension TimedBox: Equatable where TimedBox.Value: Equatable {
+//    public static func ==(lhs: TimedBox, rhs: TimedBox) -> Bool {
 //        return lhs.time == rhs.time && lhs.value == rhs.value
 //    }
 //}
@@ -44,13 +43,13 @@ public extension WithTime {
 }
 
 
-extension ItemWithTime: CustomStringConvertible where ItemWithTime.Value: CustomStringConvertible {
+extension TimedBox: CustomStringConvertible where TimedBox.Value: CustomStringConvertible {
     public var description: String {
         return "{\(self.time): \(self.value.description)}"
     }
 }
 
-extension ItemWithTime: CustomDebugStringConvertible where ItemWithTime.Value: CustomDebugStringConvertible {
+extension TimedBox: CustomDebugStringConvertible where TimedBox.Value: CustomDebugStringConvertible {
     public var debugDescription: String {
         return "{\(self.time): \(self.value.debugDescription)}"
     }
@@ -58,8 +57,8 @@ extension ItemWithTime: CustomDebugStringConvertible where ItemWithTime.Value: C
 
 // MARK: Functor
 
-extension WithTime {
-    public func map<U>(transform: ((Value)->(U))) -> ItemWithTime<U> {
-        return ItemWithTime<U>(time: self.time, value: transform(self.value))
+extension TimedBox {
+    public func map<U>(transform: ((T)->(U))) -> TimedBox<U> {
+        return TimedBox<U>(time: self.time, value: transform(self.value))
     }
 }
