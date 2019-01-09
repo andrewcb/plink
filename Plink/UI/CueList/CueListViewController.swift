@@ -10,6 +10,13 @@ import Cocoa
 
 fileprivate let colourCueList = false
 
+class CueListTableView: NSTableView {
+    // start editing on click
+    override func validateProposedFirstResponder(_ responder: NSResponder, for event: NSEvent?) -> Bool {
+        return true
+    }
+}
+
 class CueListHeaderCell: NSTableHeaderCell {
     override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
         if colourCueList {
@@ -45,26 +52,27 @@ class CueListHeaderCell: NSTableHeaderCell {
 
 class CueColumnCell: NSTableCellView {
     var index: Int = 0
-    var cue: ScoreModel.Cue?
+    func fill(from cue: ScoreModel.Cue) { }
     var onChange: ((Int, TickTime?, ScoreModel.Cue.Action?)->())?
 }
 
 class CueTimeCell: CueColumnCell {
-    override var cue: ScoreModel.Cue? {
-        didSet {
-            self.textField?.stringValue = (self.cue?.time).map { TickTimeFormattingService.sharedInstance.format(time: $0) } ?? ""
-        }
+    var time: TickTime = 0
+    override func fill(from cue: ScoreModel.Cue) {
+        self.textField?.stringValue = TickTimeFormattingService.sharedInstance.format(time: cue.time)
+        self.time = cue.time
+
     }
     
     @IBAction func valueChanged(_ sender: Any) {
         if sender as? NSTextField == self.textField {
-            guard let textField = self.textField, let cue = self.cue else { return }
+            guard let textField = self.textField else { return }
             guard let time = TickTimeFormattingService.sharedInstance.parse(string: textField.stringValue) else {
                 print("Badly formatted time: \(self.textField!.stringValue)")
-                textField.stringValue = TickTimeFormattingService.sharedInstance.format(time: cue.time)
+                textField.stringValue = TickTimeFormattingService.sharedInstance.format(time: self.time)
                 return
             }
-            self.cue = ScoreModel.Cue(time: time, action: cue.action)
+            self.time = time
             self.onChange?(self.index, time, nil)
         }
     }
@@ -72,20 +80,15 @@ class CueTimeCell: CueColumnCell {
 }
 
 class CueActionCell: CueColumnCell {
-    override var cue: ScoreModel.Cue? {
-        didSet {
-            guard let cue = self.cue else { self.textField?.stringValue = "" ; return }
-            switch(cue.action) {
-            case .codeStatement(let cs): self.textField?.stringValue = cs
-            }
-            
+    override func fill(from cue: ScoreModel.Cue) {
+        switch(cue.action) {
+        case .codeStatement(let cs): self.textField?.stringValue = cs
         }
     }
     @IBAction func valueChanged(_ sender: Any) {
         if sender as? NSTextField == self.textField {
-            guard let textField = self.textField, let cue = self.cue else { return }
+            guard let textField = self.textField else { return }
             let action = ScoreModel.Cue.Action.codeStatement(textField.stringValue)
-            self.cue = ScoreModel.Cue(time: cue.time, action: action)
             self.onChange?(self.index, nil, action)
         }
     }
@@ -103,6 +106,8 @@ extension CueActionCell: NSTextFieldDelegate {
 class CueListViewController: NSViewController {
     @IBOutlet var tableView: NSTableView!
     
+    var cueList: [ScoreModel.Cue] = []
+    
     override func viewDidLoad() {
         if colourCueList {
             self.tableView.backgroundColor = NSColor.codeBackground
@@ -111,10 +116,14 @@ class CueListViewController: NSViewController {
                 col.headerCell.focusRingType = .none
             }
         }
+        let doubleClick = NSClickGestureRecognizer(target: self, action: #selector(self.tableDoubleClicked))
+        doubleClick.numberOfClicksRequired = 2
+        self.tableView.addGestureRecognizer(doubleClick)
     }
 
     override func viewWillAppear() {
         super.viewWillAppear()
+        self.cueList = self.activeDocument?.transport.score.cueList ?? []
         NotificationCenter.default.addObserver(self, selector: #selector(self.cueListChanged(_:)), name: Transport.cueListChanged, object: nil)
     }
     
@@ -124,18 +133,34 @@ class CueListViewController: NSViewController {
     }
     
     @objc func cueListChanged(_ notification: Notification) {
+        guard let transport = self.activeDocument?.transport else { return }
         DispatchQueue.main.async {
+            let newCues = transport.score.cueList
+            if newCues == self.cueList { print("Cue list changed but no difference") ; return }
+            self.cueList = newCues
             self.tableView.reloadData()
         }
     }
     
     fileprivate func cellChanged(_ index: Int, _ time: TickTime?, _ action: ScoreModel.Cue.Action?) {
         guard let transport = self.activeDocument?.transport else { return }
-        let oldCue = transport.score.cueList[index]
-        transport.score.replaceCue(atIndex: index, with: ScoreModel.Cue(time: time ?? oldCue.time, action: action ?? oldCue.action))
+        let oldCue = self.cueList[index]
+        let newCue = ScoreModel.Cue(time: time ?? oldCue.time, action: action ?? oldCue.action)
+        self.cueList[index] = newCue
+        transport.score.replaceCue(atIndex: index, with: newCue)
+    }
+    
+    @objc func tableDoubleClicked(_ sender: NSClickGestureRecognizer) {
+        if self.tableView.row(at: sender.location(in: self.tableView)) == -1 {
+            self.addCue()
+        }
     }
     
     @IBAction func addPressed(_ sender: Any) {
+        self.addCue()
+    }
+    
+    private func addCue() {
         guard let transport = self.activeDocument?.transport else { return }
         let newCueTime = transport.score.cueList.last.map { $0.time+TickTime(beats: 1, ticks: 0)} ?? 0
         let newCue = ScoreModel.Cue(time: newCueTime, action: .codeStatement(""))
@@ -168,9 +193,13 @@ extension CueListViewController: NSTableViewDelegate {
             fatalError("no cell for \(tableColumn)")
         }
         cell.index = row
-        cell.cue = cue
+        cell.fill(from: cue)
         cell.onChange = self.cellChanged
         return cell
         
     }
+    
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        return false
+    }    
 }

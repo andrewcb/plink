@@ -46,6 +46,8 @@ struct ScoreModel {
     }
 }
 
+extension ScoreModel.Cue: Equatable {}
+
 extension ScoreModel.Cue: Codable {
     enum CodingKeys: String, CodingKey {
         case time
