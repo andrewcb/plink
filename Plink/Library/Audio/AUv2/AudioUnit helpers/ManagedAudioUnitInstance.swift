@@ -68,3 +68,10 @@ public class ManagedAudioUnitInstance: AudioUnitInstance {
         }
     }
 }
+
+extension ManagedAudioUnitInstance: CustomStringConvertible {
+    public var description: String {
+        guard let component = self.getAudioUnitComponent() else { return "<AudioUnit: ?>" }
+        return "<AudioUnit: \(component.componentName ?? "?") >"
+    }
+}

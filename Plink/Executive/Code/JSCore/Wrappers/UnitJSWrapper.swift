@@ -32,6 +32,10 @@ extension JSCoreCodeEngine {
             super.init()
         }
         
+        public override var description: String {
+            return self.instance.description
+        }
+        
         @objc func sendMIDIEvent(_ b1: Int, _ b2: Int, _ b3: Int) {
             try? self.instance.sendMIDIEvent(UInt8(b1 & 0xff), UInt8(b2 & 0x7f), UInt8(b2 & 0x7f), atSampleOffset: 0)
         }
