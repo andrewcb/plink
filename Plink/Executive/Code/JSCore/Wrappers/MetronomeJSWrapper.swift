@@ -11,6 +11,8 @@ import JavaScriptCore
 
 @objc protocol MetronomeExports: JSExport {
     var tempo: Double { get set }
+    var tickTime: Int { get }
+    var ticksPerBeat: Int { get }
     
     func setTimeout(_ block: JSValue, _ beats: Double)
 }
@@ -28,6 +30,18 @@ extension JSCoreCodeEngine {
             }
             set(v) {
                 self.metronome.tempo = v
+            }
+        }
+        
+        var tickTime: Int {
+            get {
+                return self.metronome.tickTime.value
+            }
+        }
+        
+        var ticksPerBeat: Int {
+            get {
+                return TickTime.ticksPerBeat
             }
         }
         
