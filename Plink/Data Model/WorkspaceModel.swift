@@ -39,7 +39,7 @@ struct WorkspaceModel: Codable {
         self.audioSystem = try container.decode(AudioSystemModel.self, forKey: .audioSystem)
         self.metronome = try container.decode(MetronomeModel.self, forKey: .metronome)
         self.codeSystem = try container.decode(CodeSystemModel.self, forKey: .codeSystem)
-        self.scoreModel = try container.decode(ScoreModel.self, forKey: .score)
+        self.scoreModel = try container.decodeIfPresent(ScoreModel.self, forKey: .score) ?? ScoreModel()
     }
     
     func encode(to encoder: Encoder) throws {

@@ -78,6 +78,10 @@ class ActiveDocument: NSDocument {
     
     override func read(from data: Data, ofType typeName: String) throws {
         
+        // Before we feed the data to our Decodable model, we check its version number and, if it's old, migrate it
+        
+        let data = try migratedData(from: data, toVersion: WorkspaceModel.currentDocumentVersion)
+        
         let decoder = PropertyListDecoder()
         let decoded = try decoder.decode(WorkspaceModel.self, from: data)
         Swift.print("Decoded: \(decoded)")
