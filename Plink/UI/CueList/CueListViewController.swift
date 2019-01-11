@@ -8,7 +8,7 @@
 
 import Cocoa
 
-fileprivate let colourCueList = false
+fileprivate let colourCueList = true
 
 class CueListTableView: NSTableView {
     // start editing on click
