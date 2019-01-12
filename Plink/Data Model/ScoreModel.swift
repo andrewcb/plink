@@ -65,9 +65,8 @@ extension ScoreModel.CuedAction: Equatable {}
 extension ScoreModel.Cue: Equatable {}
 extension ScoreModel.Cycle: Equatable {}
 
-extension ScoreModel.Cue: Codable {
+extension ScoreModel.CuedAction: Codable {
     enum CodingKeys: String, CodingKey {
-        case time
         case code
     }
     
@@ -76,21 +75,38 @@ extension ScoreModel.Cue: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.time = TickTime(try container.decode(Int.self, forKey: .time))
         if let code = try container.decodeIfPresent(String.self, forKey: .code) {
-            self.action = .codeStatement(code)
+            self = .codeStatement(code)
         } else {
             throw DecodingError()
         }
+        
+    }
 
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch(self) {
+        case .codeStatement(let code): try container.encode(code, forKey: .code)
+        }
+    }
+}
+
+extension ScoreModel.Cue: Codable {
+    enum CodingKeys: String, CodingKey {
+        case time
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.time = TickTime(try container.decode(Int.self, forKey: .time))
+        self.action = try ScoreModel.CuedAction(from: decoder)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.time.value, forKey: .time)
-        switch(self.action) {
-        case .codeStatement(let code): try container.encode(code, forKey: .code)
-        }
+        try self.action.encode(to: encoder)
     }
 }
 
@@ -100,9 +116,7 @@ extension ScoreModel.Cycle: Codable {
         case isActive
         case period
         case modulus
-        case code
     }
-    struct DecodingError: Swift.Error { }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -110,11 +124,7 @@ extension ScoreModel.Cycle: Codable {
         self.isActive = try container.decode(Bool.self, forKey: .isActive)
         self.period = TickTime(try container.decode(Int.self, forKey: .period))
         self.modulus = TickTime(try container.decodeIfPresent(Int.self, forKey: .modulus) ?? 0)
-        if let code = try container.decodeIfPresent(String.self, forKey: .code) {
-            self.action = .codeStatement(code)
-        } else {
-            throw DecodingError()
-        }
+        self.action = try ScoreModel.CuedAction(from: decoder)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -123,12 +133,8 @@ extension ScoreModel.Cycle: Codable {
         try container.encode(self.isActive, forKey: .isActive)
         try container.encode(self.period.value, forKey: .period)
         if self.modulus.value != 0 { try container.encode(self.modulus.value, forKey: .modulus) }
-        switch(self.action) {
-        case .codeStatement(let code): try container.encode(code, forKey: .code)
-        }
-
+        try self.action.encode(to: encoder)
     }
-    
 }
 
 extension ScoreModel: Codable {
