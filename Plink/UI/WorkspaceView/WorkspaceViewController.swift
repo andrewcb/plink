@@ -40,4 +40,19 @@ class WorkspaceViewController: NSViewController {
             site.backgroundColor = NSColor(white: 1.0, alpha: 0.2)
         }
     }
+    
+    @IBAction func renderAudioSelected(_ sender: Any) {
+        guard let window = self.view.window else { fatalError("No window?!")}
+        let panel = NSSavePanel()
+        panel.directoryURL = FileManager.default.homeDirectoryForCurrentUser // TODO: remember the last render directory, either on a per-document basis or in global defaults
+        let optsVC = self.storyboard!.instantiateController(withIdentifier: "RenderOptions") as! NSViewController
+        let optsView = optsVC.view
+        panel.accessoryView = optsView
+        
+        panel.beginSheetModal(for: window) { (response) in
+            if response == NSApplication.ModalResponse.OK, let url = panel.url {
+                print("Will render to \(url)")
+            }
+        }
+    }
 }
