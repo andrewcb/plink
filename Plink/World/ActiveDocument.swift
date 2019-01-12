@@ -34,8 +34,8 @@ class ActiveDocument: NSDocument {
         ])
         
         // TODO: perhaps another object should handle this and route it appropriately?
-        self.transport.cuePlayCallback = { cue in
-            switch(cue.action) {
+        self.transport.cuedActionCallback = { action in
+            switch(action) {
             case .codeStatement(let code):
                 self.codeSystem.codeEngine?.eval(command: code)
             }

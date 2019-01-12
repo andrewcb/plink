@@ -36,6 +36,14 @@ public struct TickTime {
     static public func *(lhs: TickTime, rhs: Int) -> TickTime {
         return TickTime(lhs.value * rhs)
     }
+    
+    static public func /(lhs: TickTime, rhs: TickTime) -> TickTime {
+        return TickTime(lhs.value / rhs.value)
+    }
+
+    static public func %(lhs: TickTime, rhs: TickTime) -> TickTime {
+        return TickTime(lhs.value % rhs.value)
+    }
 }
 
 extension TickTime : Equatable {

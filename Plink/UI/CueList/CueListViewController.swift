@@ -53,7 +53,7 @@ class CueListHeaderCell: NSTableHeaderCell {
 class CueColumnCell: NSTableCellView {
     var index: Int = 0
     func fill(from cue: ScoreModel.Cue) { }
-    var onChange: ((Int, TickTime?, ScoreModel.Cue.Action?)->())?
+    var onChange: ((Int, TickTime?, ScoreModel.CuedAction?)->())?
 }
 
 class CueTimeCell: CueColumnCell {
@@ -88,7 +88,7 @@ class CueActionCell: CueColumnCell {
     @IBAction func valueChanged(_ sender: Any) {
         if sender as? NSTextField == self.textField {
             guard let textField = self.textField else { return }
-            let action = ScoreModel.Cue.Action.codeStatement(textField.stringValue)
+            let action = ScoreModel.CuedAction.codeStatement(textField.stringValue)
             self.onChange?(self.index, nil, action)
         }
     }
@@ -142,7 +142,7 @@ class CueListViewController: NSViewController {
         }
     }
     
-    fileprivate func cellChanged(_ index: Int, _ time: TickTime?, _ action: ScoreModel.Cue.Action?) {
+    fileprivate func cellChanged(_ index: Int, _ time: TickTime?, _ action: ScoreModel.CuedAction?) {
         guard let transport = self.activeDocument?.transport else { return }
         let oldCue = self.cueList[index]
         let newCue = ScoreModel.Cue(time: time ?? oldCue.time, action: action ?? oldCue.action)

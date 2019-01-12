@@ -29,7 +29,7 @@ public class Transport {
     var score: ScoreModel
     
     /// functions called to execute various score data in playback
-    var cuePlayCallback: ((ScoreModel.Cue)->())?
+    var cuedActionCallback: ((ScoreModel.CuedAction)->())?
     
     private var playContext: PlayContext?
     
@@ -87,7 +87,7 @@ public class Transport {
         guard let ctx = self.playContext else { return }
         // cue list
         while let cue = ctx.nextCue(forTime: pos) {
-            self.cuePlayCallback?(cue)
+            self.cuedActionCallback?(cue.action)
         }
         
     }
@@ -100,6 +100,11 @@ public class Transport {
         if case .running(_) = self.transmissionState {
             let pos = self.programPosition
             self.runPlayContext(forPos: pos)
+            for cycle in self.score.cycles.values {
+                if cycle.isActive && (pos % cycle.period) == cycle.modulus {
+                    self.cuedActionCallback?(cycle.action)
+                }
+            }
             for client in self.onRunningTick {
                 client(pos)
             }
