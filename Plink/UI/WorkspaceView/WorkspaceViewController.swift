@@ -20,7 +20,8 @@ class WorkspaceViewController: NSViewController {
         self.coordinator.specs = [
             ModuleCoordinator.Spec(name: "source", unique: true, shelveable: true, withStoryboardID: "Source"),
             ModuleCoordinator.Spec(name: "repl", unique: true, shelveable: true, withStoryboardID: "REPL"),
-            ModuleCoordinator.Spec(name: "cueList", unique: true, shelveable: true, withStoryboardID: "CueList")
+            ModuleCoordinator.Spec(name: "cueList", unique: true, shelveable: true, withStoryboardID: "CueList"),
+            ModuleCoordinator.Spec(name: "cycleList", unique: true, shelveable: true, withStoryboardID: "CycleList")
         ]
     }
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {

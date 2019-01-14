@@ -34,12 +34,18 @@ public class Transport {
     private var playContext: PlayContext?
     
     static let cueListChanged = Notification.Name("Transport.CueListChanged")
-    
+    static let cyclesChanged = Notification.Name("Transport.CyclesChanged")
+
     init(metronome: Metronome) {
         self.metronome = metronome
-        self.score = ScoreModel(cueList: [])
+        self.score = ScoreModel(cueList: [], cycles: [
+            ScoreModel.Cycle(name: "test", isActive: true, period: 24, modulus: 0, action: .codeStatement("bang()"))
+        ])
         self.score.onCueListChanged = {
             NotificationCenter.default.post(name: Transport.cueListChanged, object: nil)
+        }
+        self.score.onCyclesChanged = {
+            NotificationCenter.default.post(name: Transport.cyclesChanged, object: nil)
         }
     }
 

@@ -76,6 +76,8 @@
 		449D698C21E2C0370083DAE5 /* PlinkIcon512.icns in Resources */ = {isa = PBXBuildFile; fileRef = 449D698B21E2C0370083DAE5 /* PlinkIcon512.icns */; };
 		449D698F21E7C7030083DAE5 /* DocumentFormatMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D698E21E7C7030083DAE5 /* DocumentFormatMigration.swift */; };
 		449D699221EA52890083DAE5 /* ScoreModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D699121EA52890083DAE5 /* ScoreModelTests.swift */; };
+		449D699521EB6AD70083DAE5 /* CycleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D699421EB6AD70083DAE5 /* CycleListViewController.swift */; };
+		449D699821EB74280083DAE5 /* ScoreItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D699721EB74280083DAE5 /* ScoreItemListViewController.swift */; };
 		44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */; };
 		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
@@ -175,6 +177,8 @@
 		449D698B21E2C0370083DAE5 /* PlinkIcon512.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = PlinkIcon512.icns; sourceTree = "<group>"; };
 		449D698E21E7C7030083DAE5 /* DocumentFormatMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentFormatMigration.swift; sourceTree = "<group>"; };
 		449D699121EA52890083DAE5 /* ScoreModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModelTests.swift; sourceTree = "<group>"; };
+		449D699421EB6AD70083DAE5 /* CycleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleListViewController.swift; sourceTree = "<group>"; };
+		449D699721EB74280083DAE5 /* ScoreItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreItemListViewController.swift; sourceTree = "<group>"; };
 		44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
 		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
@@ -292,7 +296,7 @@
 				4472197B21690B6700B15AC0 /* Transport */,
 				4472197A21690B5E00B15AC0 /* Mixer */,
 				4472197C21690B6E00B15AC0 /* Code */,
-				449D697A21DD666E0083DAE5 /* CueList */,
+				449D699621EB73930083DAE5 /* Score Item Lists */,
 				447219C1216AC86F00B15AC0 /* AudioUnitList */,
 				447219D6216BAC7800B15AC0 /* UnitInterface */,
 				4472198D216A509700B15AC0 /* components */,
@@ -567,6 +571,24 @@
 			path = "Data Model";
 			sourceTree = "<group>";
 		};
+		449D699321EB6AB60083DAE5 /* CycleList */ = {
+			isa = PBXGroup;
+			children = (
+				449D699421EB6AD70083DAE5 /* CycleListViewController.swift */,
+			);
+			path = CycleList;
+			sourceTree = "<group>";
+		};
+		449D699621EB73930083DAE5 /* Score Item Lists */ = {
+			isa = PBXGroup;
+			children = (
+				449D699721EB74280083DAE5 /* ScoreItemListViewController.swift */,
+				449D697A21DD666E0083DAE5 /* CueList */,
+				449D699321EB6AB60083DAE5 /* CycleList */,
+			);
+			path = "Score Item Lists";
+			sourceTree = "<group>";
+		};
 		44ED396F2184A60F00CB15B4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -727,6 +749,7 @@
 				44721997216A534B00B15AC0 /* CodeLanguageEngine.swift in Sources */,
 				4472198C216A4EA500B15AC0 /* REPLView.swift in Sources */,
 				4455B35D21D5932E002F0426 /* ModuleCoordinator.swift in Sources */,
+				449D699821EB74280083DAE5 /* ScoreItemListViewController.swift in Sources */,
 				4455B36121D599A6002F0426 /* REPLViewController.swift in Sources */,
 				447219D8216BB46E00B15AC0 /* UnitGUIViewController.swift in Sources */,
 				447219AE216A59BC00B15AC0 /* NSError+OSStatus.swift in Sources */,
@@ -772,6 +795,7 @@
 				447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */,
 				447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */,
 				447219D5216AEA0B00B15AC0 /* WorkspaceModel.swift in Sources */,
+				449D699521EB6AD70083DAE5 /* CycleListViewController.swift in Sources */,
 				447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */,
 				449D697F21DD89E20083DAE5 /* TickTimeFormattingService.swift in Sources */,
 				447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */,
