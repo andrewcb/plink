@@ -78,7 +78,7 @@ class CueListViewController: ScoreItemListViewController {
         guard let transport = self.activeDocument?.transport else { return }
         DispatchQueue.main.async {
             let newCues = transport.score.cueList
-            if newCues == self.cueList { print("Cue list changed but no difference") ; return }
+            if newCues == self.cueList { return }
             self.cueList = newCues
             self.tableView.reloadData()
         }

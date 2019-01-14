@@ -86,7 +86,6 @@ class CycleActionCell: CycleColumnCell {
 }
 
 class CycleListViewController: ScoreItemListViewController {
-//    @IBOutlet var tableView: NSTableView!
     
     var cycleList: [ScoreModel.Cycle] = []
     
@@ -94,11 +93,12 @@ class CycleListViewController: ScoreItemListViewController {
         guard let transport = self.activeDocument?.transport else { return }
         let oldCycle = self.cycleList[index]
         let newCycle = ScoreModel.Cycle(name: name ?? oldCycle.name, isActive: isActive ?? oldCycle.isActive, period: period ?? oldCycle.period, modulus: modulus ?? oldCycle.modulus, action: action ?? oldCycle.action)
-        print("Changed: \(oldCycle) => \(newCycle)")
+//        print("Changed: \(oldCycle) => \(newCycle)")
         self.cycleList[index] = newCycle
         if let newName = name {
-            // rename it
-            transport.score.renameCycle(from: oldCycle.name, to: newName)
+            if oldCycle.name != newName {
+                transport.score.renameCycle(from: oldCycle.name, to: newName)
+            }
         } else {
             transport.score.set(cycle: newCycle, forName: newCycle.name)
         }
@@ -114,13 +114,11 @@ class CycleListViewController: ScoreItemListViewController {
     }
 
     @objc func cycleListChanged(_ notification: Notification) {
-        print("* Cycle list changed")
         guard let transport = self.activeDocument?.transport else { return }
         DispatchQueue.main.async {
             let their = transport.score.cycles.values.sorted(by: { $0.name < $1.name })
             let our = self.cycleList.sorted(by: { $0.name < $1.name })
             if our != their {
-                print("replacing cycle list of length \(our.count) with one of \(their.count)")
                 self.cycleList = their
                 self.tableView.reloadData()
             }
