@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -487,7 +486,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                 <clipView key="contentView" drawsBackground="NO" id="2qz-6w-Nkv">
                                     <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <collectionView id="EPT-iT-xqt">
                                             <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
@@ -542,7 +541,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="232" height="268"/>
                                 <clipView key="contentView" id="Gef-tg-4CZ">
                                     <rect key="frame" x="0.0" y="0.0" width="232" height="268"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="t3c-Vd-rTE">
                                             <rect key="frame" x="0.0" y="0.0" width="232" height="268"/>
@@ -662,7 +661,7 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="qg9-bX-yXv">
                                     <rect key="frame" x="0.0" y="0.0" width="371" height="300"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="368-Or-GVp" id="8O7-uJ-Hyw">
                                             <rect key="frame" x="0.0" y="0.0" width="371" height="300"/>
@@ -836,7 +835,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                 <clipView key="contentView" id="GJi-TI-5it">
                                     <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ay-9n-o6x">
                                             <rect key="frame" x="0.0" y="0.0" width="435" height="285"/>
@@ -882,7 +881,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                 <clipView key="contentView" id="Doh-JQ-L60">
                                     <rect key="frame" x="1" y="0.0" width="448" height="299"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="at9-7p-bNM" viewBased="YES" id="dNn-pe-vbh">
                                             <rect key="frame" x="0.0" y="0.0" width="448" height="276"/>
@@ -1049,9 +1048,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="234" height="300"/>
                                 <clipView key="contentView" id="DYd-Pl-3e5">
                                     <rect key="frame" x="1" y="0.0" width="232" height="299"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="3G2-gN-Ent" viewBased="YES" id="RE6-Ea-nND" customClass="CueListTableView" customModule="Plink" customModuleProvider="target">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="3G2-gN-Ent" viewBased="YES" id="RE6-Ea-nND" customClass="ScoreItemListTableView" customModule="Plink" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="232" height="276"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -1198,9 +1197,9 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="yi5-mH-Hho">
                                     <rect key="frame" x="1" y="0.0" width="348" height="299"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="jOt-xt-exa" viewBased="YES" id="mOd-YF-VjC" customClass="CueListTableView" customModule="Plink" customModuleProvider="target">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="jOt-xt-exa" viewBased="YES" id="mOd-YF-VjC" customClass="ScoreItemListTableView" customModule="Plink" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="348" height="276"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>

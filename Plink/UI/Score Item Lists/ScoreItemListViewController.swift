@@ -12,14 +12,14 @@ import Cocoa
 
 fileprivate let colourCueList = true
 
-class CueListTableView: NSTableView {
+class ScoreItemListTableView: NSTableView {
     // start editing on click
     override func validateProposedFirstResponder(_ responder: NSResponder, for event: NSEvent?) -> Bool {
         return true
     }
 }
 
-class CueListHeaderCell: NSTableHeaderCell {
+class ColouredTableHeaderCell: NSTableHeaderCell {
     override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
         if colourCueList {
             NSColor.codeBackground.setFill()
@@ -59,7 +59,7 @@ class ScoreItemListViewController: NSViewController {
         if colourCueList {
             self.tableView.backgroundColor = NSColor.codeBackground
             for col in self.tableView.tableColumns {
-                col.headerCell = CueListHeaderCell(textCell: col.headerCell.stringValue)
+                col.headerCell = ColouredTableHeaderCell(textCell: col.headerCell.stringValue)
                 col.headerCell.focusRingType = .none
             }
         }
