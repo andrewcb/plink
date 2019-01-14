@@ -28,8 +28,9 @@ public class Transport {
     
     var score: ScoreModel
     
-    /// functions called to execute various score data in playback
-    var cuedActionCallback: ((ScoreModel.CuedAction)->())?
+    /// A callback provided to execute a CuedAction within whatever systems it affects
+    /// Called with: the CuedAction, and any arguments to pass if it is a procedure call
+    var cuedActionCallback: ((ScoreModel.CuedAction, [Any]?)->())?
     
     private var playContext: PlayContext?
     
@@ -38,9 +39,7 @@ public class Transport {
 
     init(metronome: Metronome) {
         self.metronome = metronome
-        self.score = ScoreModel(cueList: [], cycles: [
-            ScoreModel.Cycle(name: "test", isActive: true, period: 24, modulus: 0, action: .codeStatement("bang()"))
-        ])
+        self.score = ScoreModel(cueList: [], cycles: [])
         self.score.onCueListChanged = {
             NotificationCenter.default.post(name: Transport.cueListChanged, object: nil)
         }
@@ -93,7 +92,7 @@ public class Transport {
         guard let ctx = self.playContext else { return }
         // cue list
         while let cue = ctx.nextCue(forTime: pos) {
-            self.cuedActionCallback?(cue.action)
+            self.cuedActionCallback?(cue.action, nil)
         }
         
     }
@@ -108,7 +107,7 @@ public class Transport {
             self.runPlayContext(forPos: pos)
             for cycle in self.score.cycles.values {
                 if cycle.isActive && (pos % cycle.period) == cycle.modulus {
-                    self.cuedActionCallback?(cycle.action)
+                    self.cuedActionCallback?(cycle.action, [(pos / cycle.period).value])
                 }
             }
             for client in self.onRunningTick {

@@ -67,5 +67,11 @@ class JSCoreCodeEngine: CodeLanguageEngine {
         if r.isUndefined || r.isNull { return nil }
         return "\(r)"
     }
+    
+    func call(procedureNamed proc: String, withArguments args: [Any]) {
+        if let proc = self.ctx.objectForKeyedSubscript(proc) {
+            proc.call(withArguments: args)
+        }
+    }
 }
 

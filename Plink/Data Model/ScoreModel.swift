@@ -12,7 +12,10 @@ import Foundation
 struct ScoreModel {
     // A type of action that may be triggered once-off or repeatedly
     enum CuedAction {
+        /// Evaluate some code text exactly as is
         case codeStatement(String)
+        /// Call a named procedure, passing whichever arguments are sensible
+        case callProcedure(String)
     }
 
     // MARK: a Cue: is a timestamped action (typically code statements to execute)
@@ -74,6 +77,18 @@ struct ScoreModel {
     }
 }
 
+extension ScoreModel.CuedAction {
+    /// Construct a CuedAction given some code text; if it's just a symbol, it becomes a .callProcedure, otherwise it's a .codeStatement
+    init(codeText: String) {
+        let reSymbol = try! NSRegularExpression(pattern: "^[a-zA-Z$_][a-zA-Z0-9$_]*$", options: [])
+        if !reSymbol.matches(in: codeText, range: NSRange(location:0, length: codeText.count)).isEmpty {
+            self = .callProcedure(codeText)
+        } else {
+            self = .codeStatement(codeText)
+        }
+    }
+}
+
 extension ScoreModel.CuedAction: Equatable {}
 extension ScoreModel.Cue: Equatable {}
 extension ScoreModel.Cycle: Equatable {}
@@ -81,6 +96,7 @@ extension ScoreModel.Cycle: Equatable {}
 extension ScoreModel.CuedAction: Codable {
     enum CodingKeys: String, CodingKey {
         case code
+        case procedure
     }
     
     struct DecodingError: Swift.Error { }
@@ -90,6 +106,8 @@ extension ScoreModel.CuedAction: Codable {
         
         if let code = try container.decodeIfPresent(String.self, forKey: .code) {
             self = .codeStatement(code)
+        } else if let proc = try container.decodeIfPresent(String.self, forKey: .procedure) {
+            self = .callProcedure(proc)
         } else {
             throw DecodingError()
         }
@@ -100,6 +118,7 @@ extension ScoreModel.CuedAction: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch(self) {
         case .codeStatement(let code): try container.encode(code, forKey: .code)
+        case .callProcedure(let proc): try container.encode(proc, forKey: .procedure)
         }
     }
 }

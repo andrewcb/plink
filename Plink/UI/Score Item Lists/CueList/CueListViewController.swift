@@ -40,11 +40,12 @@ class CueActionCell: CueColumnCell {
     override func fill(from cue: ScoreModel.Cue) {
         switch(cue.action) {
         case .codeStatement(let cs): self.textField?.stringValue = cs
+        case .callProcedure(let proc): self.textField?.stringValue = proc
         }
     }
     @IBAction func valueChanged(_ sender: Any) {
         guard let textField = self.textField, sender as? NSTextField == textField else { return }
-        let action = ScoreModel.CuedAction.codeStatement(textField.stringValue)
+        let action = ScoreModel.CuedAction(codeText: textField.stringValue)
         self.onChange?(self.index, nil, action)
     }
 }

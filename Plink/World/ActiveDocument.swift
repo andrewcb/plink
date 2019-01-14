@@ -34,10 +34,14 @@ class ActiveDocument: NSDocument {
         ])
         
         // TODO: perhaps another object should handle this and route it appropriately?
-        self.transport.cuedActionCallback = { action in
+        self.transport.cuedActionCallback = { (action, args) in
             switch(action) {
             case .codeStatement(let code):
                 self.codeSystem.codeEngine?.eval(command: code)
+            case .callProcedure(let proc):
+                guard let codeEngine = self.codeSystem.codeEngine else { return }
+                Swift.print("calling \(proc)()")
+                codeEngine.call(procedureNamed: proc, withArguments: args ?? [])
             }
         }
         

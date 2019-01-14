@@ -10,6 +10,14 @@ import XCTest
 @testable import Plink
 
 class ScoreModelTests: XCTestCase {
+    
+    func testCuedActionFromCodeText() {
+        XCTAssertEqual(ScoreModel.CuedAction(codeText: "anIdentifier"), .callProcedure("anIdentifier"))
+        XCTAssertEqual(ScoreModel.CuedAction(codeText: "another_id"), .callProcedure("another_id"))
+        XCTAssertEqual(ScoreModel.CuedAction(codeText: "_another_id123"), .callProcedure("_another_id123"))
+        XCTAssertEqual(ScoreModel.CuedAction(codeText: "$foo"), .callProcedure("$foo"))
+        XCTAssertEqual(ScoreModel.CuedAction(codeText: "doSomething(1,2,3)"), .codeStatement("doSomething(1,2,3)"))
+    }
 
     func testDecodeCue() {
         // this is done using JSON, for simplicity; a Cue does not contain embedded binary data, and will serialise identically to plists and JSON
@@ -22,7 +30,7 @@ class ScoreModelTests: XCTestCase {
     
     func testDecodeCycle() {
         let data1 = "{\"name\":\"BD\", \"isActive\": false, \"period\":24, \"code\":\"playKick()\"}".data(using: .utf8)!
-        let data2 = "{\"name\":\"SD\", \"isActive\": true, \"period\":24, \"modulus\":12, \"code\":\"playSnare()\"}".data(using: .utf8)!
+        let data2 = "{\"name\":\"SD\", \"isActive\": true, \"period\":24, \"modulus\":12, \"procedure\":\"playSnare\"}".data(using: .utf8)!
         let decoder = JSONDecoder()
         let cycle1 = try! decoder.decode(ScoreModel.Cycle.self, from: data1)
         XCTAssertEqual(cycle1.name, "BD")
@@ -35,7 +43,7 @@ class ScoreModelTests: XCTestCase {
         XCTAssertTrue(cycle2.isActive)
         XCTAssertEqual(cycle2.period, 24)
         XCTAssertEqual(cycle2.modulus, 12)
-        XCTAssertEqual(cycle2.action, ScoreModel.CuedAction.codeStatement("playSnare()"))
+        XCTAssertEqual(cycle2.action, ScoreModel.CuedAction.callProcedure("playSnare"))
 
     }
     

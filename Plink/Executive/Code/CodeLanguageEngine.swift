@@ -22,4 +22,7 @@ protocol CodeLanguageEngine {
     
     /// evaluate a single command; returns output, if any
     func eval(command: String) -> String?
+    
+    /// call a named procedure, passing given arguments
+    func call(procedureNamed proc: String, withArguments args: [Any])
 }
