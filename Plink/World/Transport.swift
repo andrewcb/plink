@@ -19,7 +19,7 @@ public class Transport {
     
     var transmissionState: TransmissionState = .stopped(0) {
         didSet(old) {
-            print("transmissionState: \(old) -> \(self.transmissionState)")
+            self.onRunningStateChange?()
         }
     }
 
@@ -67,6 +67,10 @@ public class Transport {
     
     public func stop() {
         self.transmissionState = .stopped(self.programPosition)
+    }
+    
+    public func rewindStopped() {
+        self.transmissionState = .stopped(0)
     }
     
     //MARK:

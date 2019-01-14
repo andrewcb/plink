@@ -41,13 +41,22 @@ class TransportViewController: NSViewController {
         guard let master = audioSystem.masterLevel else { print("No level returned"); return }
         self.levelMeter.levelReading = master        
     }
+    
+    func setPos(to time: TickTime) {
+        DispatchQueue.main.async {
+            self.positionLabel.stringValue = "\(time.beatValue).\(time.tickValue)"
+        }
+    }
+    
     func transportTempoChanged() {
-        guard let transport = self.activeDocument?.metronome else { return }
-        self.tempoField.doubleValue = transport.tempo
-        self.tempoStepper.doubleValue = transport.tempo
+        guard let metronome = self.activeDocument?.metronome else { return }
+        self.tempoField.doubleValue = metronome.tempo
+        self.tempoStepper.doubleValue = metronome.tempo
     }
     
     func transportRunningStateChanged() {
+        guard let transport = self.activeDocument?.transport else { return }
+        self.setPos(to: transport.programPosition)
     }
     
     @IBAction func playButtonPressed(_ sender: Any) {
@@ -55,7 +64,11 @@ class TransportViewController: NSViewController {
     }
     
     @IBAction func stopButtonPressed(_ sender: Any) {
-        self.activeDocument?.transport.stop()
+        guard let transport = activeDocument?.transport else { return }
+        switch(transport.transmissionState) {
+        case .stopped(_): transport.rewindStopped()
+        default: transport.stop()
+        }
     }
     
     @IBAction func tempoValueChanged(_ sender: NSControl) {
@@ -67,9 +80,7 @@ class TransportViewController: NSViewController {
 
     /// Receive a running program time
     func runFor(time: TickTime) {
-        DispatchQueue.main.async {
-            self.positionLabel.stringValue = "\(time.beatValue).\(time.tickValue)"
-        }
+        self.setPos(to: time)
     }
 }
 
