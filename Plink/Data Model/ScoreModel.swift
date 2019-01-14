@@ -63,8 +63,8 @@ struct ScoreModel {
     mutating func renameCycle(from oldName: String, to newName: String) {
         // TODO: maybe refactor using lenses?
         guard let oldCycle = self.cycles[oldName] else { return }
-        self.cycles[newName] = ScoreModel.Cycle(name: newName, isActive: oldCycle.isActive, period: oldCycle.period, modulus: oldCycle.modulus, action: oldCycle.action)
         self.cycles[oldName] = nil
+        self.cycles[newName] = ScoreModel.Cycle(name: newName, isActive: oldCycle.isActive, period: oldCycle.period, modulus: oldCycle.modulus, action: oldCycle.action)
         self.onCyclesChanged?()
     }
     
