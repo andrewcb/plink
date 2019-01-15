@@ -43,9 +43,7 @@ class TransportViewController: NSViewController {
     }
     
     func setPos(to time: TickTime) {
-        DispatchQueue.main.async {
-            self.positionLabel.stringValue = "\(time.beatValue).\(time.tickValue)"
-        }
+        self.positionLabel.stringValue = "\(time.beatValue).\(time.tickValue)"
     }
     
     func transportTempoChanged() {
@@ -55,8 +53,10 @@ class TransportViewController: NSViewController {
     }
     
     func transportRunningStateChanged() {
-        guard let transport = self.activeDocument?.transport else { return }
-        self.setPos(to: transport.programPosition)
+        DispatchQueue.main.async {
+            guard let transport = self.activeDocument?.transport else { return }
+            self.setPos(to: transport.programPosition)
+        }
     }
     
     @IBAction func playButtonPressed(_ sender: Any) {
@@ -80,7 +80,9 @@ class TransportViewController: NSViewController {
 
     /// Receive a running program time
     func runFor(time: TickTime) {
-        self.setPos(to: time)
+        DispatchQueue.main.async {
+            self.setPos(to: time)
+        }
     }
 }
 
