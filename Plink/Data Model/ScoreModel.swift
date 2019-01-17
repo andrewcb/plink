@@ -37,14 +37,14 @@ struct ScoreModel {
     typealias CueList = [Cue]
     public private(set) var cueList: [Cue]
     
-    public private(set) var cycles: [String:Cycle]
-    
+    public private(set) var cycleList: [Cycle]
+
     var onCueListChanged: (()->())? = nil
-    var onCyclesChanged: (()->())? = nil
+    var onCycleListChanged: (()->())? = nil
 
     init(cueList: [Cue] = [], cycles: [Cycle] = []) {
         self.cueList = cueList
-        self.cycles = [String:Cycle](cycles.map { ($0.name, $0) }, uniquingKeysWith: { (a, b) in b })
+        self.cycleList = cycles
     }
     
     mutating func replaceCue(atIndex index: Int, with cue: Cue) {
@@ -63,18 +63,18 @@ struct ScoreModel {
         self.onCueListChanged?()
     }
     
-    mutating func renameCycle(from oldName: String, to newName: String) {
-        // TODO: maybe refactor using lenses?
-        guard let oldCycle = self.cycles[oldName] else { return }
-        self.cycles[oldName] = nil
-        self.cycles[newName] = ScoreModel.Cycle(name: newName, isActive: oldCycle.isActive, period: oldCycle.period, modulus: oldCycle.modulus, action: oldCycle.action)
-        self.onCyclesChanged?()
+    mutating func replaceCycle(atIndex index: Int, with cycle: Cycle) {
+        self.cycleList[index] = cycle
+        self.onCycleListChanged?()
     }
     
-    mutating func set(cycle: Cycle, forName name: String) {
-        self.cycles[name] = cycle
-        self.onCyclesChanged?()
+    mutating func add(cycle: Cycle) {
+        self.cycleList.append(cycle)
+        self.onCycleListChanged?()
     }
+
+    // TODO: add reordering of the cycle list, i.e., by dragging
+
 }
 
 extension ScoreModel.CuedAction {
@@ -178,13 +178,12 @@ extension ScoreModel: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.cueList = try container.decode([Cue].self, forKey: .cueList)
-        let cycles = try container.decodeIfPresent([Cycle].self, forKey: CodingKeys.cycles) ?? []
-        self.cycles = [String:Cycle](cycles.map { ($0.name, $0) }, uniquingKeysWith: { (a, b) in b })
+        self.cycleList = try container.decodeIfPresent([Cycle].self, forKey: CodingKeys.cycles) ?? []
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.cueList, forKey: .cueList)
-        try container.encode(self.cycles.values.map { $0 }, forKey: CodingKeys.cycles)
+        try container.encode(self.cycleList, forKey: .cycles)
     }
 }

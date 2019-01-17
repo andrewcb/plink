@@ -43,7 +43,7 @@ public class Transport {
         self.score.onCueListChanged = {
             NotificationCenter.default.post(name: Transport.cueListChanged, object: nil)
         }
-        self.score.onCyclesChanged = {
+        self.score.onCycleListChanged = {
             NotificationCenter.default.post(name: Transport.cyclesChanged, object: nil)
         }
     }
@@ -109,7 +109,7 @@ public class Transport {
         if case .running(_) = self.transmissionState {
             let pos = self.programPosition
             self.runPlayContext(forPos: pos)
-            for cycle in self.score.cycles.values {
+            for cycle in self.score.cycleList {
                 if cycle.isActive && (pos % cycle.period) == cycle.modulus {
                     self.cuedActionCallback?(cycle.action, [(pos / cycle.period).value])
                 }

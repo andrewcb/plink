@@ -96,19 +96,13 @@ class CycleListViewController: ScoreItemListViewController {
         let newCycle = ScoreModel.Cycle(name: name ?? oldCycle.name, isActive: isActive ?? oldCycle.isActive, period: period ?? oldCycle.period, modulus: modulus ?? oldCycle.modulus, action: action ?? oldCycle.action)
 //        print("Changed: \(oldCycle) => \(newCycle)")
         self.cycleList[index] = newCycle
-        if let newName = name {
-            if oldCycle.name != newName {
-                transport.score.renameCycle(from: oldCycle.name, to: newName)
-            }
-        } else {
-            transport.score.set(cycle: newCycle, forName: newCycle.name)
-        }
+        transport.score.replaceCycle(atIndex: index, with: newCycle)
     }
     
 
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.cycleList = self.activeDocument?.transport.score.cycles.values.sorted(by: { $0.name < $1.name }) ?? []
+        self.cycleList = self.activeDocument?.transport.score.cycleList ?? []
         self.tableView.reloadData()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.cycleListChanged(_:)), name: Transport.cyclesChanged, object: nil)
@@ -117,8 +111,8 @@ class CycleListViewController: ScoreItemListViewController {
     @objc func cycleListChanged(_ notification: Notification) {
         guard let transport = self.activeDocument?.transport else { return }
         DispatchQueue.main.async {
-            let their = transport.score.cycles.values.sorted(by: { $0.name < $1.name })
-            let our = self.cycleList.sorted(by: { $0.name < $1.name })
+            let their = transport.score.cycleList
+            let our = self.cycleList
             if our != their {
                 self.cycleList = their
                 self.tableView.reloadData()
@@ -131,7 +125,7 @@ class CycleListViewController: ScoreItemListViewController {
         let newName = "cycle\(self.cycleList.count + 1)"
         let newCycle = ScoreModel.Cycle(name: newName, isActive: true, period: TickTime(beats: 1, ticks: 0), modulus: TickTime(0), action: .codeStatement(""))
         self.cycleList.append(newCycle)
-        transport.score.set(cycle: newCycle, forName: newName)
+        transport.score.add(cycle: newCycle)
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
