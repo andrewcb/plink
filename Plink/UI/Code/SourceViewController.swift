@@ -32,7 +32,6 @@ class SourceViewController: NSViewController {
         self.sourceTextView.backgroundColor = .codeBackground
         self.sourceTextView.textColor = .codeRegularText
         self.sourceTextView.insertionPointColor = .codeRegularText
-        self.sourceTextView.string = self.activeDocument?.codeSystem.script ?? ""
         
         self.sourceTextView.isAutomaticQuoteSubstitutionEnabled = false
         self.sourceTextView.isGrammarCheckingEnabled = false
@@ -42,6 +41,10 @@ class SourceViewController: NSViewController {
         self.sourceTextView.isAutomaticTextReplacementEnabled = false
         self.sourceTextView.isAutomaticSpellingCorrectionEnabled = false
         self.sourceTextView.isRichText = false
+    }
+    
+    override func viewDidAppear() {
+        self.sourceTextView.string = self.activeDocument?.codeSystem.script ?? ""
     }
     
     @IBAction func doReload(_ sender: Any) {

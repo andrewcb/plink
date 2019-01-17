@@ -46,6 +46,10 @@ class REPLViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
         self.activeDocument?.codeSystem.codeEngine?.delegate = self
     }
 }
