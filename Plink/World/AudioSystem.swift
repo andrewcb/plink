@@ -9,17 +9,6 @@
 import Foundation
 import AudioToolbox
 
-struct StereoPair<T> {
-    let left: T
-    let right: T
-    
-    func map<U>(_ f: ((T) throws -> (U))) rethrows -> StereoPair<U> {
-        return StereoPair<U>(left: try f(self.left), right: try f(self.right))
-    }
-    
-    func asArray() -> [T] { return [self.left, self.right] }
-}
-
 class AudioSystem {
     let graph: AudioUnitGraph<ManagedAudioUnitInstance>
     let mixerNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node
