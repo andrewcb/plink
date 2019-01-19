@@ -88,6 +88,8 @@ class CycleActionCell: CycleColumnCell {
 
 class CycleListViewController: ScoreItemListViewController {
     
+    fileprivate let rowPasteboardType = NSPasteboard.PasteboardType("private.row")
+    
     var cycleList: [ScoreModel.Cycle] = []
     
     fileprivate func cellChanged(_ index: Int, _ name: String?, _ isActive: Bool?, _ period: TickDuration?, _ modulus: TickTime?, _ action: ScoreModel.CuedAction?) {
@@ -99,6 +101,10 @@ class CycleListViewController: ScoreItemListViewController {
         transport.score.replaceCycle(atIndex: index, with: newCycle)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.tableView.registerForDraggedTypes([rowPasteboardType])
+    }
 
     override func viewDidAppear() {
         super.viewDidAppear()
@@ -138,9 +144,42 @@ class CycleListViewController: ScoreItemListViewController {
     }
 }
 
+
 extension CycleListViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return self.cycleList.count
+    }
+
+    //MARK: drag and drop for reordering
+    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+        let item = NSPasteboardItem()
+        item.setString("\(row)", forType: rowPasteboardType)
+        return item
+    }
+    
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+        return dropOperation == .above ? .move : []
+    }
+    
+    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        
+        let oldIndices = info.enumeratedPasteboardItemData(for: tableView, forType: self.rowPasteboardType) { Int($0) }
+        
+        guard
+            let oldIndex = oldIndices.first,
+            let transport = self.activeDocument?.transport
+        else { return false }
+        
+        let dest = (oldIndex>row) ? row : row-1
+        tableView.moveRow(at: oldIndex, to: dest)
+        
+        let temp = self.cycleList[dest]
+        self.cycleList[dest] = self.cycleList[oldIndex]
+        self.cycleList[oldIndex] = temp
+        
+        transport.score.moveCycle(at: oldIndex, to: dest)
+        
+        return true
     }
 }
 
@@ -150,11 +189,17 @@ extension CycleListViewController: NSTableViewDelegate {
         let cycle = self.cycleList[row]
         guard
             let id = tableColumn?.identifier,
-            let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: id.rawValue+"Cell"), owner: nil) as? CycleColumnCell
+            let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: id.rawValue+"Cell"), owner: nil)
         else { fatalError("Unable to make cycle column cell")}
-        cell.index = row
-        cell.fill(from: cycle)
-        cell.onChange = self.cellChanged
-        return cell
+        guard let ccell = cell as? CycleColumnCell else { return cell }
+        ccell.index = row
+        ccell.fill(from: cycle)
+        ccell.onChange = self.cellChanged
+        return ccell
+    }
+    
+    func tableView(_ tableView: NSTableView, shouldReorderColumn columnIndex: Int, toColumn newColumnIndex: Int) -> Bool {
+        print("reorder: ")
+        return false
     }
 }

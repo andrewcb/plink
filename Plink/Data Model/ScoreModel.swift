@@ -73,7 +73,12 @@ struct ScoreModel {
         self.onCycleListChanged?()
     }
 
-    // TODO: add reordering of the cycle list, i.e., by dragging
+    mutating func moveCycle(at srcIndex: Int, to destIndex: Int) {
+        let temp = self.cycleList[destIndex]
+        self.cycleList[destIndex] = self.cycleList[srcIndex]
+        self.cycleList[srcIndex] = temp
+        self.onCycleListChanged?()
+    }
 
 }
 
