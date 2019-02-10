@@ -6,18 +6,18 @@ public class Metronome {
         didSet {
             // 1 beat = 60.0/tempo
             self.tickDuration = (60.0/tempo) / Double(TickTime.ticksPerBeat)
-            self.tickUsec = useconds_t(self.tickDuration*1000000)
+            self.ticksPerSecond = 1/self.tickDuration
             self.onTempoChange?()
         }
     }
     public private(set) var tickDuration: TimeInterval = (60.0/120.0) / Double (TickTime.ticksPerBeat)
-    var tickUsec: useconds_t = useconds_t(((60.0/120.0) / Double (TickTime.ticksPerBeat)) * 1000000)
+    private var ticksPerSecond: Double = 1 / ((60.0/120.0) / Double (TickTime.ticksPerBeat))
     
     /** The master tick time; in normal circumstances, this will be running constantly. This is not to be confused with the position in any current sequence/arrangement/program, which would be calculated from this and the running state. */
     public private(set) var tickTime: TickTime = 0
     
-    
-    private let dqueue = DispatchQueue(label: "metronome")
+    /// the continuous tick time, calculated from the incoming frame time and the current tempo
+    private var continuousTickTime: Double = 0
     
     //#MARK: notifications
     
@@ -27,47 +27,28 @@ public class Metronome {
     /// callbacks to be called every tick when the master transport is running
     public var onTick: [((TickTime)->())] = []
     
-    // Mach timing
-    var timebaseInfo = mach_timebase_info()
-    
-    public init() {
-        guard mach_timebase_info(&self.timebaseInfo) == KERN_SUCCESS else { fatalError("Cannot get Mach timebase info?!")}
-        self.isRunning = true
-        self.start()
-    }
-
-    /** Is the master transport running? */
-    public var isRunning: Bool = false {
-        didSet(prev) {
-            guard self.isRunning != prev else { return }
-            if self.isRunning {
-                self.start()
-            } else {
-            }
-            self.onGlobalRunningStateChange?()
-        }
-    }
-    
-    private func start() {
-        self.dqueue.async {
-            
-            while(self.isRunning) {
-                let start_time = mach_absolute_time()
-                
-                for client in self.onTick {
-                    client(self.tickTime)
-                }
-                
-                let elapsed_nsec = (mach_absolute_time() - start_time) * UInt64(self.timebaseInfo.numer) / UInt64(self.timebaseInfo.denom)
-                let elapsed_usec = UInt32(elapsed_nsec / 1000)
-                if elapsed_usec < self.tickUsec {
-                    usleep(self.tickUsec - elapsed_usec)
-                }
-                self.tickTime += 1
+    func advanceByFrames(_ frames: Int, _ rate: Int) {
+        let elapsed = Double(frames)/Double(rate)
+        let ticks = self.ticksPerSecond * elapsed
+        let endTime = self.continuousTickTime + ticks
+        if floor(endTime) > floor(self.continuousTickTime) {
+            for t in (Int(ceil(self.continuousTickTime))..<Int(ceil(endTime))) {
+                self.tickTime = TickTime(t)
+                self.runForCurrentTick()
             }
         }
+        self.continuousTickTime = endTime
     }
 
+    
+    /// Run for the current discrete tick
+    private func runForCurrentTick() {
+        for client in self.onTick {
+            client(self.tickTime)
+        }
+
+    }
+    
     func snapshot() -> MetronomeModel {
         return MetronomeModel(tempo: self.tempo)
     }
@@ -79,6 +60,7 @@ public class Metronome {
 
 //MARK: asynchronous execution for scripting purposes and such
 extension Metronome {
+    // TODO: make this a scheduler within the metronome mechanism, rather than using Timer
     /**
      Executes code asynchronously within a tick time respective to the current tempo; this works whether or not the transport is running.
      */

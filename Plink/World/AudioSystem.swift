@@ -14,6 +14,9 @@ class AudioSystem {
     let mixerNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node
     let outNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node
     
+    // TODO someday: make this configurable
+    let sampleRate = 44100
+    
     struct ChannelLevelReading {
         let average: AudioUnitParameterValue
         let peak: AudioUnitParameterValue
@@ -155,6 +158,11 @@ class AudioSystem {
     
     var channels: [Channel] = []
     
+    /// The callback, called from the pre-render method, to advance the time by a number of frames and cause any pending actions from the currently playing sequence and/or immediate queue to be executed, with effect on the audio system
+    /// arguments: number of frames, number of frames per second (sample rate)
+    typealias FramePullCallback = ((Int, Int)->())
+    var framePullCallback: FramePullCallback?
+    
     init() throws {
         self.graph = try AudioUnitGraph()
         self.mixerNode = try self.graph.addNode(withDescription: .multiChannelMixer)
@@ -162,10 +170,34 @@ class AudioSystem {
         try self.mixerNode.connect(to: self.outNode)
         try graph.open()
         let inst = try self.mixerNode.getInstance()
+        let outinst = try self.outNode.getInstance()
         try inst.setParameterValue(kMultiChannelMixerParam_Volume, scope: kAudioUnitScope_Output, element: 0, to: 1.0)
         try self.mixerNode.getInstance().setProperty(withID: kAudioUnitProperty_MeteringMode, scope: kAudioUnitScope_Output, element: 0, to: UInt32(1))
         try graph.initialize()
+        
+        // Add the render notify function here
+        
+        let audioRenderCallback: AURenderCallback = { (inRefCon, ioActionFlags, inTimeStamp, inBusNumber, inNumFrames, ioData) -> OSStatus in
+            
+            let instance = unsafeBitCast(inRefCon, to: AudioSystem.self)
+
+            let actionFlags = ioActionFlags.pointee
+            if actionFlags.contains(.unitRenderAction_PreRender) {
+                // instance.preRender(inTimeStamp.pointee.mSampleTime)
+                // NOTE: the timestamp is reset every time the graph is stopped/started
+//                print("pre-render: timestamp = \(inTimeStamp.pointee.mSampleTime); numFrames = \(inNumFrames)")
+                instance.framePullCallback?(Int(inNumFrames), instance.sampleRate)
+            }
+            
+            return noErr
+        }
+        
+        AudioUnitAddRenderNotify(outinst.auRef, audioRenderCallback, unsafeBitCast(self, to: UnsafeMutableRawPointer.self))
 //        try graph.start()
+    }
+    
+    deinit {
+//        AudioRemove
     }
     
     private func modifyingGraph(_ actions: (() throws ->())) throws {
