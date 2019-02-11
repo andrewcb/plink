@@ -57,24 +57,3 @@ public class Metronome {
         self.tempo = model.tempo
     }
 }
-
-//MARK: asynchronous execution for scripting purposes and such
-extension Metronome {
-    // TODO: make this a scheduler within the metronome mechanism, rather than using Timer
-    /**
-     Executes code asynchronously within a tick time respective to the current tempo; this works whether or not the transport is running.
-     */
-    func async(inTicks ticks: TickDuration, execute closure: @escaping ()->Void) {
-        Timer.scheduledTimer(withTimeInterval: self.tickDuration * Double(ticks.value), repeats: false, block: { _ in closure() })
-    }
-    
-    /**
-     Executes code asynchronously within a time in (possibly fractional) beats respective to the current tempo; this works whether or not the transport is running.
-     */
-    func async(inBeats beats: Double, execute closure: @escaping ()->Void) {
-        let interval = beats * Double(TickDuration.ticksPerBeat) * self.tickDuration
-        DispatchQueue.main.async {
-            Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: { _ in closure() })
-        }
-    }
-}

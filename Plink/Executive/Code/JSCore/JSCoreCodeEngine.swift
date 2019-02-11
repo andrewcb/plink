@@ -41,7 +41,7 @@ class JSCoreCodeEngine: CodeLanguageEngine {
 
         self.ctx.setObject(unsafeBitCast(logFunc, to: AnyObject.self), forKeyedSubscript: "log" as NSCopying & NSObjectProtocol)
         self.ctx.setObject(unsafeBitCast(getChannelFunc, to: AnyObject.self), forKeyedSubscript: "getChannel" as NSCopying & NSObjectProtocol)
-        self.ctx.setObject(Metronome(metronome: env.metronome), forKeyedSubscript: "metronome" as NSCopying & NSObjectProtocol)
+        self.ctx.setObject(Metronome(metronome: env.metronome, scheduler: env.scheduler), forKeyedSubscript: "metronome" as NSCopying & NSObjectProtocol)
         self.ctx.setObject(Scheduler(scheduler: env.scheduler, engine: self), forKeyedSubscript: "scheduler" as NSCopying & NSObjectProtocol)
 
         self.setupMIDINote()

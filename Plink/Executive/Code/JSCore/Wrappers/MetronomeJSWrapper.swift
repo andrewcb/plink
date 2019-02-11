@@ -20,9 +20,11 @@ import JavaScriptCore
 extension JSCoreCodeEngine {
     @objc public class Metronome: NSObject, MetronomeExports {
         weak var metronome: Plink.Metronome!
+        weak var scheduler: Plink.Scheduler!
         
-        init(metronome: Plink.Metronome) {
+        init(metronome: Plink.Metronome, scheduler: Plink.Scheduler) {
             self.metronome = metronome
+            self.scheduler = scheduler
         }
         var tempo: Double {
             get {
@@ -46,7 +48,10 @@ extension JSCoreCodeEngine {
         }
         
         func setTimeout(_ block: JSValue, _ beats: Double) {
-            self.metronome.async(inBeats: beats, execute: { block.call(withArguments:[]) })
+            guard beats.isFinite else { return }
+            let ticks = Int(beats*Double(TickTime.ticksPerBeat))
+            let time = self.metronome.tickTime + TickDuration(ticks)
+            self.scheduler.metroAt[time] = { block.call(withArguments: []) }
         }
         
         public override var description: String {
