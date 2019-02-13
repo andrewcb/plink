@@ -51,7 +51,7 @@ extension JSCoreCodeEngine {
             guard beats.isFinite else { return }
             let ticks = Int(beats*Double(TickTime.ticksPerBeat))
             let time = self.metronome.tickTime + TickDuration(ticks)
-            self.scheduler.metroAt[time] = { block.call(withArguments: []) }
+            self.scheduler.schedule(atMetronomeTime: time, action:{ block.call(withArguments: []) })
         }
         
         public override var description: String {

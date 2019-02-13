@@ -62,10 +62,10 @@ public class ManagedAudioUnitInstance: AudioUnitInstance {
         let offTime = onTime + note.duration
         try self.sendMIDIEvent(0x90 | note.channel, note.note, note.velocity, atSampleOffset: 0)
         // Should scheduler have a hold on the Metronome?
-        scheduler.schedule(atMetronomeTime: offTime) { [weak self] () in
+        scheduler.schedule(atMetronomeTime: offTime, action: { [weak self] () in
             // if Note On didn't throw, this probably won't
             try? self?.sendMIDIEvent(0x80 | note.channel, note.note, note.velocity, atSampleOffset: 0)
-        }
+        }, executeOnClear: false)
     }
 }
 

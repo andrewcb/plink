@@ -45,7 +45,8 @@ class ActiveDocument: NSDocument {
             }
         }
         
-        self.audioSystem?.framePullCallback = metronome.advanceByFrames
+        self.audioSystem?.onPreRender = metronome.advanceByFrames
+        self.audioSystem?.onAudioInterruption = scheduler.clearPendingMetroActions
         
         self.hasUndoManager = false
     }

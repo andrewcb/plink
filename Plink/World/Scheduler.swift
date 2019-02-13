@@ -71,15 +71,17 @@ class Scheduler {
     /// metronome scheduling; this is more low-level, not being exposed to the executive API, and is just a mapping of times to closures, with each removed as it is executed
     
     // TODO: make this an ordered linked list, for efficient lookup/removal
-    var metroAt: [TickTime: (()->Void)] = [:]
+    struct MetronomeScheduled {
+        /// The action to execute
+        let action: (()->())
+        /// When all future actions are cleared (i.e., if the audio setup is changed), do we execute this action before removing it?
+        let executeOnClear: Bool
+    }
+    var metroAt: [TickTime: [MetronomeScheduled]] = [:]
     
-    func schedule(atMetronomeTime time: TickTime, action: @escaping (()->())) {
-        // TODO: add locking here
-        if let prevAction = metroAt[time] {
-            metroAt[time] = { prevAction() ; action() }
-        } else {
-            metroAt[time] = action
-        }
+    func schedule(atMetronomeTime time: TickTime, action: @escaping (()->()), executeOnClear: Bool = false) {
+        // TODO: add locking here?
+        metroAt[time] = (metroAt[time] ?? []) + [MetronomeScheduled(action: action, executeOnClear: executeOnClear)]
     }
     
     
@@ -107,10 +109,22 @@ class Scheduler {
     }
     
     func metronomeTick(_ time: TickTime) {
-        if let action = metroAt[time] {
-            action()
+        for action in (metroAt[time] ?? []) {
+            action.action()
         }
         metroAt[time] = nil
+    }
+    
+    /// Clear all pending actions, executing the ones flagged as executeOnClear
+    func clearPendingMetroActions() {
+        for actions in metroAt.values {
+            for action in actions {
+                if action.executeOnClear {
+                    action.action()
+                }
+            }
+        }
+        metroAt = [:]
     }
     
     /// MARK: blocking wait
@@ -118,9 +132,9 @@ class Scheduler {
     let sleepQueue = DispatchQueue(label: "Scheduler.sleep")
     func sleep(until time: TickTime) {
         let ds = DispatchSemaphore(value: 0)
-        self.schedule(atMetronomeTime: time) {
+        self.schedule(atMetronomeTime: time, action: {
             ds.signal()
-        }
+        }, executeOnClear: true)
         sleepQueue.sync {
             ds.wait()
         }

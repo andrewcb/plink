@@ -56,14 +56,14 @@ class AudioSystem {
             didSet(prev) {
                 guard prev != self.instrument else { return }
                 do {
-                    try self.audioSystem?.graph.stop()
+                    try self.audioSystem?.stopGraph()
                     try prev?.disconnectAll()
                     try prev?.removeFromGraph()
                     if let firstInsert = inserts.first {
                         try self.instrument?.connect(to: firstInsert)
                     }
                     self._headNode = self.findHeadNode()
-                    try self.audioSystem?.graph.start()
+                    try self.audioSystem?.startGraph()
                 } catch {
                     fatalError("failed to disconnect/connect nodes: \(error)")
                 }
@@ -77,11 +77,11 @@ class AudioSystem {
         func add(insert: AudioUnitGraph<ManagedAudioUnitInstance>.Node) throws {
             let lastHead = self.headNode
             self._inserts.append(insert)
-            try self.audioSystem?.graph.stop()
+            try self.audioSystem?.stopGraph()
             try lastHead?.disconnectOutput()
             try lastHead?.connect(to: insert)
             self._headNode = self.findHeadNode()
-            try self.audioSystem?.graph.start()
+            try self.audioSystem?.startGraph()
             
         }
         
@@ -131,13 +131,13 @@ class AudioSystem {
         }
         
         func addInsert(fromDescription description: AudioComponentDescription) throws {
-            try self.audioSystem?.graph.stop()
+            try self.audioSystem?.stopGraph()
             
             guard let insert = try self.audioSystem?.graph.addNode(withDescription: description) else { return }
             try self.add(insert: insert)
             //            print("Insert loaded")
             //            audioSystem!.graph.dump()
-            try self.audioSystem?.graph.start()
+            try self.audioSystem?.startGraph()
             
         }
         
@@ -160,8 +160,21 @@ class AudioSystem {
     
     /// The callback, called from the pre-render method, to advance the time by a number of frames and cause any pending actions from the currently playing sequence and/or immediate queue to be executed, with effect on the audio system
     /// arguments: number of frames, number of frames per second (sample rate)
-    typealias FramePullCallback = ((Int, Int)->())
-    var framePullCallback: FramePullCallback?
+    typealias PreRenderCallback = ((Int, Int)->())
+    var onPreRender: PreRenderCallback?
+    
+    /// called when the audio processing graph is stopped; used to cancel any pending operations, &c.
+    var onAudioInterruption: (()->())?
+    
+    
+    fileprivate func startGraph() throws {
+        try self.graph.start()
+    }
+    
+    fileprivate func stopGraph() throws {
+        try self.graph.stop()
+        self.onAudioInterruption?()
+    }
     
     init() throws {
         self.graph = try AudioUnitGraph()
@@ -186,7 +199,7 @@ class AudioSystem {
                 // instance.preRender(inTimeStamp.pointee.mSampleTime)
                 // NOTE: the timestamp is reset every time the graph is stopped/started
 //                print("pre-render: timestamp = \(inTimeStamp.pointee.mSampleTime); numFrames = \(inNumFrames)")
-                instance.framePullCallback?(Int(inNumFrames), instance.sampleRate)
+                instance.onPreRender?(Int(inNumFrames), instance.sampleRate)
             }
             
             return noErr
@@ -201,11 +214,11 @@ class AudioSystem {
     }
     
     private func modifyingGraph(_ actions: (() throws ->())) throws {
-        try graph.stop()
+        try stopGraph()
         try graph.uninitialize()
         try actions()
         try graph.initialize()
-        try graph.start()
+        try startGraph()
     }
     
     func clear() throws {
