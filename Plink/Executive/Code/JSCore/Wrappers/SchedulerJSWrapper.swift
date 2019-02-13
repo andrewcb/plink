@@ -14,7 +14,6 @@ import JavaScriptCore
     func everyBeatFraction(_ num: Int, _ denom: Int, _ block: JSValue)  -> JSValue
     func atBeatTime(_ beat: Double, _ block: JSValue)  -> JSValue
     func atTickTime(_ tick: Int, _ block: JSValue)  -> JSValue
-    func sleep(_ ticks: Int)
 }
 
 extension JSCoreCodeEngine {
@@ -49,12 +48,6 @@ extension JSCoreCodeEngine {
         
         func atTickTime(_ tick: Int, _ block: JSValue)  -> JSValue {
             return JSValue(int32: Int32(self.scheduler.createSingleAction(time: TickTime(tick), action: {block.call(withArguments: [])})), in: block.context)
-        }
-        
-        func sleep(_ ticks: Int) {
-            let transport = self.engine.env.metronome
-            let now = transport.tickTime
-            self.scheduler.sleep(until: now+TickOffset(ticks))
         }
         
     }

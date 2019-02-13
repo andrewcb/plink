@@ -15,6 +15,7 @@ import JavaScriptCore
     var ticksPerBeat: Int { get }
     
     func setTimeout(_ block: JSValue, _ beats: Double)
+    func sleep(_ ticks: Int)
 }
 
 extension JSCoreCodeEngine {
@@ -53,6 +54,13 @@ extension JSCoreCodeEngine {
             let time = self.metronome.tickTime + TickDuration(ticks)
             self.scheduler.schedule(atMetronomeTime: time, action:{ block.call(withArguments: []) })
         }
+        
+        func sleep(_ ticks: Int) {
+            let now = self.metronome.tickTime
+            self.scheduler.sleep(until: now+TickOffset(ticks))
+        }
+        
+
         
         public override var description: String {
             return "<Metronome: tempo = \(self.tempo)>"
