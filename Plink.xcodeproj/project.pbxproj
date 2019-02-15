@@ -80,6 +80,8 @@
 		449D699821EB74280083DAE5 /* ScoreItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D699721EB74280083DAE5 /* ScoreItemListViewController.swift */; };
 		449D699A21F2A9CE0083DAE5 /* NSDraggingInfo+modernisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D699921F2A9CE0083DAE5 /* NSDraggingInfo+modernisation.swift */; };
 		449D699D21F3785A0083DAE5 /* StereoPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D699C21F3785A0083DAE5 /* StereoPair.swift */; };
+		449D69A021F6459C0083DAE5 /* AudioBufferConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D699F21F6459C0083DAE5 /* AudioBufferConsumer.swift */; };
+		449D69A221F6490B0083DAE5 /* AudioBufferFileRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D69A121F6490B0083DAE5 /* AudioBufferFileRecorder.swift */; };
 		44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */; };
 		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
@@ -183,6 +185,8 @@
 		449D699721EB74280083DAE5 /* ScoreItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreItemListViewController.swift; sourceTree = "<group>"; };
 		449D699921F2A9CE0083DAE5 /* NSDraggingInfo+modernisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDraggingInfo+modernisation.swift"; sourceTree = "<group>"; };
 		449D699C21F3785A0083DAE5 /* StereoPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StereoPair.swift; sourceTree = "<group>"; };
+		449D699F21F6459C0083DAE5 /* AudioBufferConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBufferConsumer.swift; sourceTree = "<group>"; };
+		449D69A121F6490B0083DAE5 /* AudioBufferFileRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBufferFileRecorder.swift; sourceTree = "<group>"; };
 		44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
 		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
@@ -449,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				449D699B21F378430083DAE5 /* utility */,
+				449D699E21F63FEB0083DAE5 /* Recording */,
 				447219A4216A599C00B15AC0 /* AUv2 */,
 			);
 			path = Audio;
@@ -603,6 +608,15 @@
 			path = utility;
 			sourceTree = "<group>";
 		};
+		449D699E21F63FEB0083DAE5 /* Recording */ = {
+			isa = PBXGroup;
+			children = (
+				449D699F21F6459C0083DAE5 /* AudioBufferConsumer.swift */,
+				449D69A121F6490B0083DAE5 /* AudioBufferFileRecorder.swift */,
+			);
+			path = Recording;
+			sourceTree = "<group>";
+		};
 		44ED396F2184A60F00CB15B4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -751,6 +765,7 @@
 			files = (
 				44ED39782187590A00CB15B4 /* MIDINote.swift in Sources */,
 				4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */,
+				449D69A221F6490B0083DAE5 /* AudioBufferFileRecorder.swift in Sources */,
 				447219AC216A59BC00B15AC0 /* BasicAudioUnitInstance.swift in Sources */,
 				4455B35B21D59308002F0426 /* ModuleSiteViewController.swift in Sources */,
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
@@ -781,6 +796,7 @@
 				44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */,
 				447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */,
 				44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */,
+				449D69A021F6459C0083DAE5 /* AudioBufferConsumer.swift in Sources */,
 				449D698621E116410083DAE5 /* BidirectionalCollection+WithTime.swift in Sources */,
 				447219E0216BBC6400B15AC0 /* AudioToolboxHelpers.m in Sources */,
 				445F6A9D2174D67F00E4419A /* ConnectionRegistry.swift in Sources */,
