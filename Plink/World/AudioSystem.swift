@@ -44,6 +44,7 @@ class AudioSystem {
         didSet(prev) {
             if let outNode = self.outNode {
                 try! self.mixerNode.connect(to: outNode)
+                try! self.setUpAudioRenderCallback()
             }
         }
     }
@@ -60,6 +61,41 @@ class AudioSystem {
     }
 
     typealias StereoLevelReading = StereoPair<ChannelLevelReading>
+    
+    // Add the render notify function here
+
+    private func setUpAudioRenderCallback() throws {
+        guard let outinst = try self.outNode?.getInstance() else {
+            return
+        }
+
+        let audioRenderCallback: AURenderCallback = { (inRefCon, ioActionFlags, inTimeStamp, inBusNumber, inNumFrames, ioData) -> OSStatus in
+            
+            let instance = unsafeBitCast(inRefCon, to: AudioSystem.self)
+            
+            let actionFlags = ioActionFlags.pointee
+            if actionFlags.contains(.unitRenderAction_PreRender) {
+                // instance.preRender(inTimeStamp.pointee.mSampleTime)
+                // NOTE: the timestamp is reset every time the graph is stopped/started
+                instance.onPreRender?(Int(inNumFrames), instance.sampleRate)
+            }
+            if ioActionFlags.pointee.contains(.unitRenderAction_PostRender) && instance.outputMode == OutputMode.offlineRender {
+                //                print("post-render; buffers = \(ioData), tap = \(instance.postRenderTap)")
+            }
+            if ioActionFlags.pointee.contains(.unitRenderAction_PostRender),
+                let buffers = ioData,
+                let tap = instance.postRenderTap
+            {
+                //                print("- calling post-render tap")
+                tap(buffers, inNumFrames)
+            }
+            
+            return noErr
+        }
+        
+        AudioUnitAddRenderNotify(outinst.auRef, audioRenderCallback, unsafeBitCast(self, to: UnsafeMutableRawPointer.self))
+
+    }
     
     private func getMeterLevel(forScope scope: AudioUnitScope, element: AudioUnitElement) -> StereoLevelReading? {
         guard
@@ -223,39 +259,13 @@ class AudioSystem {
         self.outNode = try self.graph.addNode(withDescription: .defaultOutput)
         try self.mixerNode.connect(to: self.outNode!)
         try graph.open()
-        let outinst = try self.outNode!.getInstance()
         let mixerinst = try self.mixerNode.getInstance()
         try mixerinst.setParameterValue(kMultiChannelMixerParam_Volume, scope: kAudioUnitScope_Output, element: 0, to: 1.0)
         try mixerinst.setProperty(withID: kAudioUnitProperty_MeteringMode, scope: kAudioUnitScope_Output, element: 0, to: UInt32(1))
         try graph.initialize()
         
-        // Add the render notify function here
+        try self.setUpAudioRenderCallback()
         
-        let audioRenderCallback: AURenderCallback = { (inRefCon, ioActionFlags, inTimeStamp, inBusNumber, inNumFrames, ioData) -> OSStatus in
-            
-            let instance = unsafeBitCast(inRefCon, to: AudioSystem.self)
-
-            let actionFlags = ioActionFlags.pointee
-            if actionFlags.contains(.unitRenderAction_PreRender) {
-                // instance.preRender(inTimeStamp.pointee.mSampleTime)
-                // NOTE: the timestamp is reset every time the graph is stopped/started
-                instance.onPreRender?(Int(inNumFrames), instance.sampleRate)
-            }
-            if ioActionFlags.pointee.contains(.unitRenderAction_PostRender) && instance.outputMode == OutputMode.offlineRender {
-//                print("post-render; buffers = \(ioData), tap = \(instance.postRenderTap)")
-            }
-            if ioActionFlags.pointee.contains(.unitRenderAction_PostRender),
-                let buffers = ioData,
-                let tap = instance.postRenderTap
-            {
-//                print("- calling post-render tap")
-                tap(buffers, inNumFrames)
-            }
-            
-            return noErr
-        }
-        
-        AudioUnitAddRenderNotify(outinst.auRef, audioRenderCallback, unsafeBitCast(self, to: UnsafeMutableRawPointer.self))
 //        try graph.start()
     }
     
@@ -416,5 +426,5 @@ class AudioSystem {
 
 /*
  record("/tmp/foo03040002.aif", 1.0, function(){getChannel("ch1").instrument.playNote(MIDINote(60, 90, 1))})
- record("/tmp/foo03080007.aif", 1.0, function(){getChannel("ch1").instrument.sendMIDIEvent(0x90, 60, 80)})
+ record("/tmp/foo03080008.aif", 2.0, function(){getChannel("ch1").instrument.sendMIDIEvent(0x90, 60, 80)})
  */
