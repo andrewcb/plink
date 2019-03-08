@@ -10,12 +10,49 @@ import Foundation
 import AudioToolbox
 
 class AudioSystem {
+    public enum OutputMode: CaseIterable {
+        /// Play the output to the hardware output in real time
+        case play
+        /// Render the output offline, for the benefit of anything recording the buffers
+        case offlineRender
+    }
+    
+    /// The current output mode
+    var outputMode: OutputMode = .play {
+        didSet(prev) {
+            guard self.outputMode != prev else { return }
+            // TODO: rewire the graph here
+            
+            self.outNode = nil // remove the old output node
+            let outputDescriptionForMode: [OutputMode: AudioComponentDescription] = [
+                .play: .defaultOutput,
+                .offlineRender: .genericOutput
+            ]
+            self.outNode = try! self.graph.addNode(withDescription: outputDescriptionForMode[self.outputMode]!)
+        }
+    }
+
     let graph: AudioUnitGraph<ManagedAudioUnitInstance>
     let mixerNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node
-    let outNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node
+    var outNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node? {
+        willSet(v) {
+            if v == nil && self.outNode != nil {
+                try! self.mixerNode.disconnectOutput()
+                try! self.outNode!.removeFromGraph()
+            }
+        }
+        didSet(prev) {
+            if let outNode = self.outNode {
+                try! self.mixerNode.connect(to: outNode)
+            }
+        }
+    }
     
+    // TODO: what is the provenance of this?
+    let numSamplesPerBuffer: UInt32 = 512
     // TODO someday: make this configurable
     let sampleRate = 44100
+    var bufferDuration: Float64 { return Float64(numSamplesPerBuffer)/Float64(sampleRate) }
     
     struct ChannelLevelReading {
         let average: AudioUnitParameterValue
@@ -163,6 +200,9 @@ class AudioSystem {
     typealias PreRenderCallback = ((Int, Int)->())
     var onPreRender: PreRenderCallback?
     
+    /// If present, this function is called with the freshly rendered buffers immediately after rendering.
+    public var postRenderTap: ((UnsafeMutablePointer<AudioBufferList>, UInt32) -> ())? = nil
+    
     /// called when the audio processing graph is stopped; used to cancel any pending operations, &c.
     var onAudioInterruption: (()->())?
     
@@ -177,15 +217,16 @@ class AudioSystem {
     }
     
     init() throws {
-        self.graph = try AudioUnitGraph()
+        let graph = try AudioUnitGraph<ManagedAudioUnitInstance>()
+        self.graph = graph
         self.mixerNode = try self.graph.addNode(withDescription: .multiChannelMixer)
         self.outNode = try self.graph.addNode(withDescription: .defaultOutput)
-        try self.mixerNode.connect(to: self.outNode)
+        try self.mixerNode.connect(to: self.outNode!)
         try graph.open()
-        let inst = try self.mixerNode.getInstance()
-        let outinst = try self.outNode.getInstance()
-        try inst.setParameterValue(kMultiChannelMixerParam_Volume, scope: kAudioUnitScope_Output, element: 0, to: 1.0)
-        try self.mixerNode.getInstance().setProperty(withID: kAudioUnitProperty_MeteringMode, scope: kAudioUnitScope_Output, element: 0, to: UInt32(1))
+        let outinst = try self.outNode!.getInstance()
+        let mixerinst = try self.mixerNode.getInstance()
+        try mixerinst.setParameterValue(kMultiChannelMixerParam_Volume, scope: kAudioUnitScope_Output, element: 0, to: 1.0)
+        try mixerinst.setProperty(withID: kAudioUnitProperty_MeteringMode, scope: kAudioUnitScope_Output, element: 0, to: UInt32(1))
         try graph.initialize()
         
         // Add the render notify function here
@@ -198,8 +239,17 @@ class AudioSystem {
             if actionFlags.contains(.unitRenderAction_PreRender) {
                 // instance.preRender(inTimeStamp.pointee.mSampleTime)
                 // NOTE: the timestamp is reset every time the graph is stopped/started
-//                print("pre-render: timestamp = \(inTimeStamp.pointee.mSampleTime); numFrames = \(inNumFrames)")
                 instance.onPreRender?(Int(inNumFrames), instance.sampleRate)
+            }
+            if ioActionFlags.pointee.contains(.unitRenderAction_PostRender) && instance.outputMode == OutputMode.offlineRender {
+//                print("post-render; buffers = \(ioData), tap = \(instance.postRenderTap)")
+            }
+            if ioActionFlags.pointee.contains(.unitRenderAction_PostRender),
+                let buffers = ioData,
+                let tap = instance.postRenderTap
+            {
+//                print("- calling post-render tap")
+                tap(buffers, inNumFrames)
             }
             
             return noErr
@@ -298,4 +348,73 @@ class AudioSystem {
         }
     }
     
+    //MARK: Recording
+    
+    typealias RecordingRenderCallback = (()->())
+    
+    /// a recording context, holding data through a recording process
+    struct RecordingContext {
+        let bufferListPtr: UnsafeMutableAudioBufferListPointer
+        let recordingUnit: ManagedAudioUnitInstance
+        var time: AudioTimeStamp = AudioTimeStamp()
+        
+        init(recordingUnit: ManagedAudioUnitInstance) {
+            let numChannels = 2
+            self.bufferListPtr = AudioBufferList.allocate(maximumBuffers: numChannels)
+            self.recordingUnit = recordingUnit
+            self.time.mFlags = AudioTimeStampFlags.sampleTimeValid
+        }
+    }
+    
+    private var recordingContext: RecordingContext? = nil
+    
+    /// Cause one frame to be rendered from within the recording function; this is kept private, and passed in a callback to the function.
+    private func renderFrame() {
+        guard var ctx = self.recordingContext else { fatalError("renderFrame() called with nil recordingContext") }
+        do {
+            try ctx.recordingUnit.render(timeStamp: ctx.time, numberOfFrames: numSamplesPerBuffer, data: &(ctx.bufferListPtr.unsafeMutablePointer.pointee))
+            self.fileRecorder?.feed(ctx.bufferListPtr.unsafeMutablePointer, numSamplesPerBuffer)
+            self.recordingContext!.time.mSampleTime += Double(numSamplesPerBuffer)
+        } catch {
+            print("Error rendering frame: \(error)")
+        }
+    }
+    
+    // HACK: recorder
+    var fileRecorder: AudioBufferFileRecorder? = nil
+    
+    func record(to file: String, running function: (RecordingRenderCallback)->()) throws {
+        try self.stopGraph()
+        try self.graph.uninitialize()
+        
+        self.outputMode = .offlineRender
+
+        try self.graph.initialize()
+
+        // do the actual recording here
+        
+        let sourceNode = self.outNode!
+        let outInst = try sourceNode.getInstance()
+        
+        let typeID: AudioFileTypeID = kAudioFileAIFFType // FIXME
+        let asbd: AudioStreamBasicDescription = try outInst.getProperty(withID: kAudioUnitProperty_StreamFormat, scope: kAudioUnitScope_Global, element: 0)
+        let recorder = try AudioBufferFileRecorder(to: file, ofType: typeID, forStreamDescription: asbd)
+        self.fileRecorder = recorder
+//        self.postRenderTap = recorder.feed
+        self.recordingContext = RecordingContext(recordingUnit: outInst)
+        
+        function(self.renderFrame)
+
+//        self.postRenderTap = nil
+        self.fileRecorder = nil
+        try! self.graph.uninitialize()
+        self.outputMode = .play
+        try! self.graph.initialize()
+        try! self.startGraph()
+    }
 }
+
+/*
+ record("/tmp/foo03040002.aif", 1.0, function(){getChannel("ch1").instrument.playNote(MIDINote(60, 90, 1))})
+ record("/tmp/foo03080007.aif", 1.0, function(){getChannel("ch1").instrument.sendMIDIEvent(0x90, 60, 80)})
+ */

@@ -36,11 +36,29 @@ class JSCoreCodeEngine: CodeLanguageEngine {
             return self.env.audioSystem?.channelNamed(name as String).map { JSCoreCodeEngine.Channel(channel: $0, engine: self) }
         }
 
+        let recordFunc: @convention(block) (NSString, Float32, JSValue) -> () = { [weak self] (outpath, dur, fn) in
+            guard let self = self else { return }
+            do {
+                guard let audioSystem = self.env.audioSystem else { return }
+                let frameDuration = Float32(1.0/((Float64(audioSystem.sampleRate) / Float64(audioSystem.numSamplesPerBuffer))))
+                let frameCount = Int(ceilf(dur/frameDuration))
+                try audioSystem.record(to: outpath as String, running: { (renderCallback) in
+                    fn.call(withArguments: [])
+                    // run some frames here
+                    for _ in (0..<frameCount) {
+                        renderCallback()
+                    }
+                })
+            } catch {
+                self.delegate?.logToConsole("error in recording: \(error)")
+            }
+        }
         
         /// API objects/functions set up here
 
         self.ctx.setObject(unsafeBitCast(logFunc, to: AnyObject.self), forKeyedSubscript: "log" as NSCopying & NSObjectProtocol)
         self.ctx.setObject(unsafeBitCast(getChannelFunc, to: AnyObject.self), forKeyedSubscript: "getChannel" as NSCopying & NSObjectProtocol)
+        self.ctx.setObject(unsafeBitCast(recordFunc, to: AnyObject.self), forKeyedSubscript: "record" as NSCopying & NSObjectProtocol)
         self.ctx.setObject(Metronome(metronome: env.metronome, scheduler: env.scheduler), forKeyedSubscript: "metronome" as NSCopying & NSObjectProtocol)
         self.ctx.setObject(Scheduler(scheduler: env.scheduler, engine: self), forKeyedSubscript: "scheduler" as NSCopying & NSObjectProtocol)
 

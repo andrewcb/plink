@@ -16,7 +16,7 @@ class AudioSystemTests: XCTestCase {
         // nodes should be: mixer node and output node
         XCTAssertEqual(try! s.graph.getNodeCount(), 2)
         let mixer = s.mixerNode
-        XCTAssertTrue(try! mixer.isConnected(to: s.outNode))
+        XCTAssertTrue(try! mixer.isConnected(to: s.outNode!))
     }
     
     func testCreateAndDestroyInstrument() {
@@ -71,7 +71,7 @@ class AudioSystemTests: XCTestCase {
         s.graph.dump()
         XCTAssertEqual(try! s.graph.getNodeCount(), 2)
         XCTAssertEqual(s.channels.count, 0)
-        XCTAssertTrue(try! s.mixerNode.isConnected(to: s.outNode))
+        XCTAssertTrue(try! s.mixerNode.isConnected(to: s.outNode!))
 
         let ch2 = try! s.createChannel()
         try! ch2.loadInstrument(fromDescription: AudioComponentDescription.init(type: kAudioUnitType_MusicDevice, subType: kAudioUnitSubType_DLSSynth, manufacturer: kAudioUnitManufacturer_Apple))
@@ -80,4 +80,17 @@ class AudioSystemTests: XCTestCase {
         s.graph.dump()
     }
 
+    ///MARK: Recording
+    
+    func testRecordToFile() {
+        let s = try! AudioSystem()
+        
+        let outputName = "/tmp/testRecordToFile-\(Int.random(in: (0...999)))"
+        try! s.record(to: outputName, running: { (callback) in
+            callback()
+        })
+        let contents = FileManager.default.contents(atPath: outputName)
+        XCTAssertNotNil(contents)
+        XCTAssert(contents!.count >= 512)
+    }
 }
