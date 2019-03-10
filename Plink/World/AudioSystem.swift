@@ -424,7 +424,4 @@ class AudioSystem {
     }
 }
 
-/*
- record("/tmp/foo03040002.aif", 1.0, function(){getChannel("ch1").instrument.playNote(MIDINote(60, 90, 1))})
- record("/tmp/foo03080008.aif", 2.0, function(){getChannel("ch1").instrument.sendMIDIEvent(0x90, 60, 80)})
- */
+

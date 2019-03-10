@@ -29,8 +29,8 @@ class AudioBufferFileRecorder: AudioBufferConsumer {
     }
     
     func feed(_ buffers: UnsafeMutablePointer<AudioBufferList>, _ numFrames: UInt32) {
-        print(" + recorder.feed(\(buffers), \(numFrames))")
-        print("   buf[:10] = \(UnsafeBufferPointer<Float32>(buffers.pointee.mBuffers).map { $0 }[0..<10])")
+//        print(" + recorder.feed(\(buffers), \(numFrames))")
+//        print("   buf[:10] = \(UnsafeBufferPointer<Float32>(buffers.pointee.mBuffers).map { $0 }[0..<10])")
         ExtAudioFileWrite(ref, numFrames, buffers)
     }
     
