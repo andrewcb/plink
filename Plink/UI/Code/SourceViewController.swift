@@ -44,11 +44,25 @@ class SourceViewController: NSViewController {
     }
     
     override func viewDidAppear() {
+        super.viewDidAppear()
         self.sourceTextView.string = self.activeDocument?.codeSystem.script ?? ""
+        NotificationCenter.default.addObserver(self, selector: #selector(self.codeStatusChanged(_:)), name: CodeSystem.scriptStateChanged, object: nil)
+        self.reloadButton.isEnabled = self.activeDocument?.codeSystem.scriptIsUnevaluated ?? true
+
+    }
+    
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func codeStatusChanged(_ notification: Notification) {
+        guard let codeSystem = self.activeDocument?.codeSystem else { return }
+        self.reloadButton.isEnabled = codeSystem.scriptIsUnevaluated
     }
     
     @IBAction func doReload(_ sender: Any) {
-        self.codeEngine?.eval(script: self.sourceTextView.string)
+        self.activeDocument?.codeSystem.evalScript()
     }
 }
 
