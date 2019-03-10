@@ -113,6 +113,10 @@ class CycleListViewController: ScoreItemListViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.cycleListChanged(_:)), name: Transport.cyclesChanged, object: nil)
     }
+    
+    override func viewWillDisappear() {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     @objc func cycleListChanged(_ notification: Notification) {
         guard let transport = self.activeDocument?.transport else { return }
