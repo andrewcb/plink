@@ -21,7 +21,19 @@ class JSCoreCodeEngine: CodeLanguageEngine {
         self.env = env
         self.ctx = JSContext()!
         self.setupContext()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.setUpChannels(_:)), name: AudioSystem.channelsChangedNotification, object: nil)
     }
+    
+    //MARK: making the channel map
+    @objc func setUpChannels(_ notification: Notification) {
+        let channels = self.env.audioSystem?.channels ?? []
+        
+        let chmap = [String:JSCoreCodeEngine.Channel](channels.map { ($0.name, JSCoreCodeEngine.Channel(channel: $0, engine: self)) }, uniquingKeysWith: { (a,b) in a })
+        
+        self.ctx.setObject(chmap, forKeyedSubscript: "$ch" as NSCopying & NSObjectProtocol)
+    }
+    
+
     
     private func setupContext() {
         

@@ -122,7 +122,11 @@ class AudioSystem {
     
     /// A Channel, currently consisting of an instrument and some inserts
     class Channel {
-        var name: String
+        var name: String {
+            didSet {
+                self.audioSystem?.channelsChanged()
+            }
+        }
         var audioSystem: AudioSystem? = nil
         var index: Int = -1
         var instrument: AudioUnitGraph<ManagedAudioUnitInstance>.Node? = nil {
@@ -231,6 +235,14 @@ class AudioSystem {
     
     var channels: [Channel] = []
     
+    /// posted when the script text changes or the script is eval'd
+    static let channelsChangedNotification = Notification.Name("AudioSystem.ChannelsChanged")
+
+    
+    private func channelsChanged() {
+        NotificationCenter.default.post(name: AudioSystem.channelsChangedNotification, object: nil)
+    }
+    
     /// The callback, called from the pre-render method, to advance the time by a number of frames and cause any pending actions from the currently playing sequence and/or immediate queue to be executed, with effect on the audio system
     /// arguments: number of frames, number of frames per second (sample rate)
     typealias PreRenderCallback = ((Int, Int)->())
@@ -292,6 +304,7 @@ class AudioSystem {
                 try ch.instrument?.removeFromGraph()
             }
             self.channels = []
+            self.channelsChanged()
         }
     }
     
@@ -315,6 +328,7 @@ class AudioSystem {
             channel.audioSystem = self
             channel.index = index
             try self.mixerNode.getInstance().setParameterValue(kMultiChannelMixerParam_Volume, scope: kAudioUnitScope_Input, element: AudioUnitElement(index), to: 1.0)
+            self.channelsChanged()
         }
         
     }
