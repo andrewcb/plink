@@ -26,11 +26,14 @@ class JSCoreCodeEngine: CodeLanguageEngine {
     
     //MARK: making the channel map
     @objc func setUpChannels(_ notification: Notification) {
-        let channels = self.env.audioSystem?.channels ?? []
+        let channels = (self.env.audioSystem?.channels ?? []).map { ($0.name, JSCoreCodeEngine.Channel(channel: $0, engine: self)) }
         
-        let chmap = [String:JSCoreCodeEngine.Channel](channels.map { ($0.name, JSCoreCodeEngine.Channel(channel: $0, engine: self)) }, uniquingKeysWith: { (a,b) in a })
+        let charray = JSValue(object: channels.map { $0.1 }, in: self.ctx)!
+        for (key, val) in channels {
+            charray.setObject(val, forKeyedSubscript: key as (NSCopying & NSObjectProtocol))
+        }
         
-        self.ctx.setObject(chmap, forKeyedSubscript: "$ch" as NSCopying & NSObjectProtocol)
+        self.ctx.setObject(charray, forKeyedSubscript: "$ch" as NSCopying & NSObjectProtocol)
     }
     
 
