@@ -33,16 +33,23 @@ struct ScoreModel {
         let action: CuedAction
     }
     
-    // A sorted list of Cues, to be executed as the Score plays
     typealias CueList = [Cue]
+    
+    // MARK: data
+    
+    /// The base tempo; this is set on start of playback/rendering (though may be mutated through user or code actions)
+    public var baseTempo: Double
+    
+    // A sorted list of Cues, to be executed as the Score plays
     public private(set) var cueList: [Cue]
     
     public private(set) var cycleList: [Cycle]
-
+    
     var onCueListChanged: (()->())? = nil
     var onCycleListChanged: (()->())? = nil
-
-    init(cueList: [Cue] = [], cycles: [Cycle] = []) {
+    
+    init(baseTempo: Double = 120.0, cueList: [Cue] = [], cycles: [Cycle] = []) {
+        self.baseTempo = baseTempo
         self.cueList = cueList
         self.cycleList = cycles
     }
@@ -178,17 +185,20 @@ extension ScoreModel: Codable {
     enum CodingKeys: String, CodingKey {
         case cueList
         case cycles
+        case baseTempo
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.cueList = try container.decode([Cue].self, forKey: .cueList)
         self.cycleList = try container.decodeIfPresent([Cycle].self, forKey: CodingKeys.cycles) ?? []
+        self.baseTempo = try container.decodeIfPresent(Double.self, forKey: CodingKeys.baseTempo) ?? 120.0
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.cueList, forKey: .cueList)
         try container.encode(self.cycleList, forKey: .cycles)
+        try container.encode(self.baseTempo, forKey: .baseTempo)
     }
 }
