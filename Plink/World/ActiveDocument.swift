@@ -45,6 +45,12 @@ class ActiveDocument: NSDocument {
             }
         }
         
+        self.transport.onRunningStateChange = {
+            if case let .starting(_) = self.transport.transmissionState {
+                self.metronome.tempo = self.transport.score.baseTempo
+            }
+        }
+        
         self.audioSystem?.onPreRender = metronome.advanceByFrames
         self.audioSystem?.onAudioInterruption = scheduler.clearPendingMetroActions
         

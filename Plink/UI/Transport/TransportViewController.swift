@@ -72,9 +72,12 @@ class TransportViewController: NSViewController {
     }
     
     @IBAction func tempoValueChanged(_ sender: NSControl) {
-        guard let transport = self.activeDocument?.metronome else { return }
+        guard let activeDocument = self.activeDocument else { return }
         if sender.doubleValue != 0.0 {
-            transport.tempo = sender.doubleValue
+            activeDocument.metronome.tempo = sender.doubleValue
+            // currently setting the tempo on the transport controls will set the tempo of the score; perhaps this should change at some point?
+            activeDocument.transport.score.baseTempo = sender.doubleValue
+            
         }
     }
 
