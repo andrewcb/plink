@@ -407,7 +407,7 @@ class AudioSystem {
     // HACK: recorder
     var fileRecorder: AudioBufferFileRecorder? = nil
     
-    func record(to file: String, running function: (RecordingRenderCallback)->()) throws {
+    func record(toURL url: URL, running function: (RecordingRenderCallback)->()) throws {
         try self.stopGraph()
         try self.graph.uninitialize()
         
@@ -422,7 +422,7 @@ class AudioSystem {
         
         let typeID: AudioFileTypeID = kAudioFileAIFFType // FIXME
         let asbd: AudioStreamBasicDescription = try outInst.getProperty(withID: kAudioUnitProperty_StreamFormat, scope: kAudioUnitScope_Global, element: 0)
-        let recorder = try AudioBufferFileRecorder(to: file, ofType: typeID, forStreamDescription: asbd)
+        let recorder = try AudioBufferFileRecorder(to: url, ofType: typeID, forStreamDescription: asbd)
         self.fileRecorder = recorder
 //        self.postRenderTap = recorder.feed
         self.recordingContext = RecordingContext(recordingUnit: outInst)
@@ -435,6 +435,10 @@ class AudioSystem {
         self.outputMode = .play
         try! self.graph.initialize()
         try! self.startGraph()
+    }
+    
+    func record(to file: String, running function: (RecordingRenderCallback)->()) throws {
+        try self.record(toURL: URL(fileURLWithPath: file), running: function)
     }
 }
 

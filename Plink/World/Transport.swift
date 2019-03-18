@@ -50,7 +50,7 @@ public class Transport {
 
     //MARK: Transmission control
     
-    private func start(at time: TickTime) {
+    public func start(at time: TickTime) {
         self.playContext = PlayContext(score: self.score, time: time)
         self.transmissionState = .starting(time)
     }

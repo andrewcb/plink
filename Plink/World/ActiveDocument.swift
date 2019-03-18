@@ -104,6 +104,74 @@ class ActiveDocument: NSDocument {
         
         try self.set(from: decoded)
     }
-
+    
+    /// MARK: the rendering of various things within this environment
+    
+    /// A request to render something (a segment of score, the result of running some code) to an output
+    struct RenderRequest {
+        enum Subject {
+            /// render the current score, from a start time, for a duration
+            case score(TickTime, TickDuration)
+            /// execute a command in the code system
+            case command(String, Double)
+        }
+        
+        enum Destination {
+            case file(URL)
+        }
+        
+        struct Options {
+            /// maximum time in seconds to keep rendering after ceasing the  until the sound fades to DC
+            let maxDecay: Double
+            
+            static let `default` = Options(maxDecay: 0)
+        }
+        
+        let subject: Subject
+        let destination: Destination
+        let options: Options
+    }
+    
+    /// a status sent to the status callback
+    enum RenderStatus {
+        case started
+        case progress(Double)
+        case completed
+    }
+    typealias RenderStatusCallback = ((RenderStatus)->())
+    
+    
+    func render(_ request: RenderRequest, statusCallback: RenderStatusCallback) throws {
+        guard let audioSystem = self.audioSystem else { fatalError("No audioSystem :-/") }
+        // stop transport if needed
+        self.transport.stop()
+        
+        let recordingFunc: ((() -> ()) -> ()) throws -> ()
+        switch(request.destination) {
+        case .file(let url): recordingFunc = { fn in try audioSystem.record(toURL: url, running: fn) }
+        }
+        
+        switch(request.subject) {
+            
+        case .score(let startPos, let duration):
+            try recordingFunc { [weak self] (pullFrame) in
+                guard let self = self else { return }
+                self.transport.start(at: startPos)
+                while self.transport.programPosition < startPos+duration {
+                    pullFrame()
+                    if duration>0 {
+                        statusCallback(RenderStatus.progress(Double((self.transport.programPosition-startPos).value)/Double(duration.value)))
+                    }
+//                    Swift.print("* pos = \(self.transport.programPosition)")
+//                    usleep(5000)
+                }
+                self.transport.stop()
+            }
+            
+        case .command(let cmd, let time):
+            fatalError("Not implemented yet :-(")
+        }
+        
+    }
 }
 

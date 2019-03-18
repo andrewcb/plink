@@ -99,14 +99,14 @@
                                                 <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="mDf-zr-I0C"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Revert to Saved" keyEquivalent="r" id="KaW-ft-85H">
+                                        <menuItem title="Revert to Saved" id="KaW-ft-85H">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="revertDocumentToSaved:" target="Ady-hI-5gd" id="iJ3-Pv-kwq"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
-                                        <menuItem title="Render audio…" id="8al-8u-XxN">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Render audio…" keyEquivalent="r" id="8al-8u-XxN">
                                             <connections>
                                                 <action selector="renderAudioSelected:" target="Ady-hI-5gd" id="gDJ-Ld-0kV"/>
                                             </connections>
@@ -601,10 +601,10 @@
             </objects>
             <point key="canvasLocation" x="-49" y="1621"/>
         </scene>
-        <!--View Controller-->
+        <!--Render Options-->
         <scene sceneID="X4J-RE-Eoy">
             <objects>
-                <viewController storyboardIdentifier="RenderOptions" id="hCR-0y-vw4" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RenderOptions" id="hCR-0y-vw4" userLabel="Render Options" customClass="RenderOptionsViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="K4C-xW-gVK">
                         <rect key="frame" x="0.0" y="0.0" width="456" height="62"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -635,8 +635,11 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="hCR-0y-vw4" id="wHG-vh-evT"/>
+                                </connections>
                             </textField>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2jB-8w-wDz">
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="2jB-8w-wDz">
                                 <rect key="frame" x="340" y="20" width="96" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="3Mv-lX-uwd">
@@ -644,13 +647,78 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="delegate" destination="hCR-0y-vw4" id="gYs-Ua-mcU"/>
+                                </connections>
                             </textField>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="duration" destination="2jB-8w-wDz" id="wbe-Nm-AZ2"/>
+                        <outlet property="startTime" destination="TIV-71-Ykn" id="isx-75-qD7"/>
+                    </connections>
                 </viewController>
                 <customObject id="09i-LU-ify" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1441" y="119"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="UgY-C2-t00">
+            <objects>
+                <windowController storyboardIdentifier="RenderProgress" id="2Sn-jx-29c" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titleVisibility="hidden" id="ntr-QS-9Hs">
+                        <windowStyleMask key="styleMask" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="294" y="362" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
+                        <connections>
+                            <outlet property="delegate" destination="2Sn-jx-29c" id="m3n-iO-ulS"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="Q3d-C0-PJN" kind="relationship" relationship="window.shadowedContentViewController" id="xMC-rC-M5f"/>
+                    </connections>
+                </windowController>
+                <customObject id="X5I-cb-X9G" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1953" y="250"/>
+        </scene>
+        <!--Render Progress View Controller-->
+        <scene sceneID="cg2-bJ-iz9">
+            <objects>
+                <viewController id="Q3d-C0-PJN" customClass="RenderProgressViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="UL5-tf-2v0">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="120"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zyZ-yj-Yqu">
+                                <rect key="frame" x="201" y="77" width="78" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Rendering..." id="ceA-bV-6CE">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <progressIndicator wantsLayer="YES" maxValue="1" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="SJ5-a9-0l4">
+                                <rect key="frame" x="20" y="50" width="440" height="20"/>
+                            </progressIndicator>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="SJ5-a9-0l4" secondAttribute="trailing" constant="20" id="CN6-gR-XjE"/>
+                            <constraint firstItem="zyZ-yj-Yqu" firstAttribute="centerX" secondItem="UL5-tf-2v0" secondAttribute="centerX" id="DzR-Ms-G5D"/>
+                            <constraint firstItem="SJ5-a9-0l4" firstAttribute="leading" secondItem="UL5-tf-2v0" secondAttribute="leading" constant="20" id="I1x-eb-9Lt"/>
+                            <constraint firstItem="SJ5-a9-0l4" firstAttribute="centerY" secondItem="UL5-tf-2v0" secondAttribute="centerY" id="m31-FY-b6r"/>
+                            <constraint firstItem="SJ5-a9-0l4" firstAttribute="top" secondItem="zyZ-yj-Yqu" secondAttribute="bottom" constant="8" id="xF7-nP-fJ0"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="progress" destination="SJ5-a9-0l4" id="A8T-fe-osI"/>
+                        <outlet property="text" destination="zyZ-yj-Yqu" id="Vfo-Ek-c2h"/>
+                    </connections>
+                </viewController>
+                <customObject id="96Z-E2-Bua" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1953" y="648"/>
         </scene>
         <!--Audio Unit List View Controller-->
         <scene sceneID="enu-22-ff6">

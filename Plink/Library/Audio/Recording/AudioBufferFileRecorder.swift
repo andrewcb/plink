@@ -10,7 +10,7 @@ import CoreAudio
 
 class AudioBufferFileRecorder: AudioBufferConsumer {
     let ref: ExtAudioFileRef
-    init(to path: String, ofType type: AudioFileTypeID, forStreamDescription asbd: AudioStreamBasicDescription) throws {
+    init(to url: URL, ofType type: AudioFileTypeID, forStreamDescription asbd: AudioStreamBasicDescription) throws {
         let formatFlags: AudioFormatFlags = (type == kAudioFileAIFFType) ? kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsBigEndian : kAudioFormatFlagIsSignedInteger
         var asbdOutput = AudioStreamBasicDescription(
             mSampleRate: asbd.mSampleRate,
@@ -19,7 +19,7 @@ class AudioBufferFileRecorder: AudioBufferConsumer {
             mBytesPerPacket: 4, mFramesPerPacket: 1, mBytesPerFrame: 4, mChannelsPerFrame: 2, mBitsPerChannel: 16, mReserved: 0)
         
         var maybeAudioFile: ExtAudioFileRef? = nil
-        let result = ExtAudioFileCreateWithURL(URL(fileURLWithPath: path) as CFURL, type, &asbdOutput, nil, AudioFileFlags.eraseFile.rawValue, &maybeAudioFile)
+        let result = ExtAudioFileCreateWithURL(url as CFURL, type, &asbdOutput, nil, AudioFileFlags.eraseFile.rawValue, &maybeAudioFile)
         guard let audioFile = maybeAudioFile else {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }

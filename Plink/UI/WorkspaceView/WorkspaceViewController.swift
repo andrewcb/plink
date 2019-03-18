@@ -43,16 +43,39 @@ class WorkspaceViewController: NSViewController {
     }
     
     @IBAction func renderAudioSelected(_ sender: Any) {
-        guard let window = self.view.window else { fatalError("No window?!")}
+        guard let window = self.view.window, let activeDocument = self.activeDocument else { fatalError("No window or activeDocument?!")}
         let panel = NSSavePanel()
+        panel.prompt = "Render"
+        panel.isExtensionHidden = false
+        panel.nameFieldStringValue = "output.aif"
         panel.directoryURL = FileManager.default.homeDirectoryForCurrentUser // TODO: remember the last render directory, either on a per-document basis or in global defaults
-        let optsVC = self.storyboard!.instantiateController(withIdentifier: "RenderOptions") as! NSViewController
+        let optsVC = self.storyboard!.instantiateController(withIdentifier: "RenderOptions") as! RenderOptionsViewController
         let optsView = optsVC.view
         panel.accessoryView = optsView
         
         panel.beginSheetModal(for: window) { (response) in
             if response == NSApplication.ModalResponse.OK, let url = panel.url {
-                print("Will render to \(url)")
+                let request = ActiveDocument.RenderRequest(subject: optsVC.requestSubject, destination: .file(url), options: optsVC.requestOptions)
+//                print("RenderRequest: \(request)")
+                
+                let progressWC = self.storyboard!.instantiateController(withIdentifier: "RenderProgress") as! NSWindowController
+                let progressVC = progressWC.contentViewController! as! RenderProgressViewController
+                window.beginSheet(progressWC.window!, completionHandler: nil)
+                DispatchQueue.global().async {
+                    do {
+                    try activeDocument.render(request, statusCallback: progressVC.display(status:))
+                        DispatchQueue.main.async {
+                            window.endSheet(progressWC.window!)
+                        }
+                    } catch {
+                        DispatchQueue.main.async {
+                            window.endSheet(progressWC.window!)
+                            let alert = NSAlert(error: error)
+                            alert.messageText = "Rendering failed: \(error)"
+                            alert.runModal()
+                        }
+                    }
+                }
             }
         }
     }

@@ -17,6 +17,8 @@
 		445F6A9F2175627300E4419A /* AudioUnitParameterUnit+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6A9E2175627300E4419A /* AudioUnitParameterUnit+.swift */; };
 		445F6AA22176AB8300E4419A /* AudioSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6AA12176AB8300E4419A /* AudioSystemTests.swift */; };
 		445F6AA4218146E200E4419A /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6AA3218146E200E4419A /* LevelMeterView.swift */; };
+		446730F72237102D0032CD18 /* RenderOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446730F62237102D0032CD18 /* RenderOptionsViewController.swift */; };
+		446730FA223E9D200032CD18 /* RenderProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446730F9223E9D200032CD18 /* RenderProgressViewController.swift */; };
 		447219512169014800B15AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219502169014800B15AC0 /* AppDelegate.swift */; };
 		447219532169014800B15AC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219522169014800B15AC0 /* ViewController.swift */; };
 		447219552169014800B15AC0 /* ActiveDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* ActiveDocument.swift */; };
@@ -114,6 +116,8 @@
 		445F6A9E2175627300E4419A /* AudioUnitParameterUnit+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioUnitParameterUnit+.swift"; sourceTree = "<group>"; };
 		445F6AA12176AB8300E4419A /* AudioSystemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSystemTests.swift; sourceTree = "<group>"; };
 		445F6AA3218146E200E4419A /* LevelMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMeterView.swift; sourceTree = "<group>"; };
+		446730F62237102D0032CD18 /* RenderOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderOptionsViewController.swift; sourceTree = "<group>"; };
+		446730F9223E9D200032CD18 /* RenderProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderProgressViewController.swift; sourceTree = "<group>"; };
 		4472194D2169014700B15AC0 /* Plink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447219502169014800B15AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447219522169014800B15AC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -232,6 +236,15 @@
 			path = World;
 			sourceTree = "<group>";
 		};
+		446730F8223E9CF00032CD18 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				446730F62237102D0032CD18 /* RenderOptionsViewController.swift */,
+				446730F9223E9D200032CD18 /* RenderProgressViewController.swift */,
+			);
+			path = Rendering;
+			sourceTree = "<group>";
+		};
 		447219442169014700B15AC0 = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +311,7 @@
 				4455B35921D592CB002F0426 /* ModuleManagement */,
 				44721990216A50DD00B15AC0 /* Settings */,
 				44721974216906FB00B15AC0 /* WorkspaceView */,
+				446730F8223E9CF00032CD18 /* Rendering */,
 				4472197B21690B6700B15AC0 /* Transport */,
 				4472197A21690B5E00B15AC0 /* Mixer */,
 				4472197C21690B6E00B15AC0 /* Code */,
@@ -762,6 +776,7 @@
 				44ED39782187590A00CB15B4 /* MIDINote.swift in Sources */,
 				4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */,
 				449D69A221F6490B0083DAE5 /* AudioBufferFileRecorder.swift in Sources */,
+				446730FA223E9D200032CD18 /* RenderProgressViewController.swift in Sources */,
 				447219AC216A59BC00B15AC0 /* BasicAudioUnitInstance.swift in Sources */,
 				4455B35B21D59308002F0426 /* ModuleSiteViewController.swift in Sources */,
 				447219532169014800B15AC0 /* ViewController.swift in Sources */,
@@ -828,6 +843,7 @@
 				449D697F21DD89E20083DAE5 /* TickTimeFormattingService.swift in Sources */,
 				447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */,
 				44ED3974218755DC00CB15B4 /* WithTime.swift in Sources */,
+				446730F72237102D0032CD18 /* RenderOptionsViewController.swift in Sources */,
 				4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */,
 				4472199C216A546A00B15AC0 /* JSCoreCodeEngine.swift in Sources */,
 				447219552169014800B15AC0 /* ActiveDocument.swift in Sources */,
