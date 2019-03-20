@@ -19,6 +19,8 @@
 		445F6AA4218146E200E4419A /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F6AA3218146E200E4419A /* LevelMeterView.swift */; };
 		446730F72237102D0032CD18 /* RenderOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446730F62237102D0032CD18 /* RenderOptionsViewController.swift */; };
 		446730FA223E9D200032CD18 /* RenderProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446730F9223E9D200032CD18 /* RenderProgressViewController.swift */; };
+		446730FC22429AE40032CD18 /* AudioBufferExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446730FB22429AE40032CD18 /* AudioBufferExtensions.swift */; };
+		4467310022429C060032CD18 /* AudioBufferExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446730FF22429C060032CD18 /* AudioBufferExtensionTests.swift */; };
 		447219512169014800B15AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219502169014800B15AC0 /* AppDelegate.swift */; };
 		447219532169014800B15AC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219522169014800B15AC0 /* ViewController.swift */; };
 		447219552169014800B15AC0 /* ActiveDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* ActiveDocument.swift */; };
@@ -118,6 +120,8 @@
 		445F6AA3218146E200E4419A /* LevelMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMeterView.swift; sourceTree = "<group>"; };
 		446730F62237102D0032CD18 /* RenderOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderOptionsViewController.swift; sourceTree = "<group>"; };
 		446730F9223E9D200032CD18 /* RenderProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderProgressViewController.swift; sourceTree = "<group>"; };
+		446730FB22429AE40032CD18 /* AudioBufferExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBufferExtensions.swift; sourceTree = "<group>"; };
+		446730FF22429C060032CD18 /* AudioBufferExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBufferExtensionTests.swift; sourceTree = "<group>"; };
 		4472194D2169014700B15AC0 /* Plink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447219502169014800B15AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447219522169014800B15AC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +247,22 @@
 				446730F9223E9D200032CD18 /* RenderProgressViewController.swift */,
 			);
 			path = Rendering;
+			sourceTree = "<group>";
+		};
+		446730FD22429BDF0032CD18 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				446730FE22429BEA0032CD18 /* utility */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		446730FE22429BEA0032CD18 /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				446730FF22429C060032CD18 /* AudioBufferExtensionTests.swift */,
+			);
+			path = utility;
 			sourceTree = "<group>";
 		};
 		447219442169014700B15AC0 = {
@@ -564,6 +584,7 @@
 		449D698721E16BDF0083DAE5 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				446730FD22429BDF0032CD18 /* Audio */,
 				449D698821E16BFD0083DAE5 /* Time */,
 			);
 			path = Library;
@@ -615,6 +636,7 @@
 			isa = PBXGroup;
 			children = (
 				449D699C21F3785A0083DAE5 /* StereoPair.swift */,
+				446730FB22429AE40032CD18 /* AudioBufferExtensions.swift */,
 			);
 			path = utility;
 			sourceTree = "<group>";
@@ -786,6 +808,7 @@
 				447219D3216AEA0B00B15AC0 /* CodeSystemModel.swift in Sources */,
 				449D699D21F3785A0083DAE5 /* StereoPair.swift in Sources */,
 				4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */,
+				446730FC22429AE40032CD18 /* AudioBufferExtensions.swift in Sources */,
 				447219C7216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift in Sources */,
 				44721997216A534B00B15AC0 /* CodeLanguageEngine.swift in Sources */,
 				4472198C216A4EA500B15AC0 /* REPLView.swift in Sources */,
@@ -858,6 +881,7 @@
 				447219662169014C00B15AC0 /* PlinkTests.swift in Sources */,
 				449D699221EA52890083DAE5 /* ScoreModelTests.swift in Sources */,
 				445F6AA22176AB8300E4419A /* AudioSystemTests.swift in Sources */,
+				4467310022429C060032CD18 /* AudioBufferExtensionTests.swift in Sources */,
 				44ED39722184A6CE00CB15B4 /* NSRect+ComposableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
