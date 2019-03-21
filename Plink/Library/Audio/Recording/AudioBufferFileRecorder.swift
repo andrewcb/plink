@@ -28,10 +28,10 @@ class AudioBufferFileRecorder: AudioBufferConsumer {
         self.ref = audioFile
     }
     
-    func feed(_ buffers: UnsafeMutablePointer<AudioBufferList>, _ numFrames: UInt32) {
+    func feed(_ buffers: UnsafeMutableAudioBufferListPointer, _ numFrames: UInt32) {
 //        print(" + recorder.feed(\(buffers), \(numFrames))")
-//        print("   buf[:10] = \(UnsafeBufferPointer<Float32>(buffers.pointee.mBuffers).map { $0 }[0..<10])")
-        ExtAudioFileWrite(ref, numFrames, buffers)
+//        print("   buf[:10] = \(UnsafeBufferPointer<Float32>(buffers.unsafeMutablePointer.pointee.mBuffers).map { $0 }[0..<10])")
+        ExtAudioFileWrite(ref, numFrames, buffers.unsafeMutablePointer)
     }
     
     deinit {

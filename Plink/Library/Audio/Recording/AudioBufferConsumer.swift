@@ -9,5 +9,5 @@
 import CoreAudio
 
 protocol AudioBufferConsumer {
-    func feed(_ buffers: UnsafeMutablePointer<AudioBufferList>, _ numFrames: UInt32)
+    func feed(_ buffers: UnsafeMutableAudioBufferListPointer, _ numFrames: UInt32)
 }

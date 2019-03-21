@@ -381,6 +381,7 @@ class AudioSystem {
         let bufferListPtr: UnsafeMutableAudioBufferListPointer
         let recordingUnit: ManagedAudioUnitInstance
         var time: AudioTimeStamp = AudioTimeStamp()
+        var trailingSilenceCounter: TrailingSilenceCounter = TrailingSilenceCounter(count: 0, threshold: 0.00003) /* <1/32768 */
         
         init(recordingUnit: ManagedAudioUnitInstance) {
             let numChannels = 2
@@ -397,7 +398,8 @@ class AudioSystem {
         guard var ctx = self.recordingContext else { fatalError("renderFrame() called with nil recordingContext") }
         do {
             try ctx.recordingUnit.render(timeStamp: ctx.time, numberOfFrames: numSamplesPerBuffer, data: &(ctx.bufferListPtr.unsafeMutablePointer.pointee))
-            self.fileRecorder?.feed(ctx.bufferListPtr.unsafeMutablePointer, numSamplesPerBuffer)
+            self.fileRecorder?.feed(ctx.bufferListPtr, numSamplesPerBuffer)
+            self.recordingContext!.trailingSilenceCounter.feed(bufferList: ctx.bufferListPtr)
             self.recordingContext!.time.mSampleTime += Double(numSamplesPerBuffer)
         } catch {
             print("Error rendering frame: \(error)")
@@ -405,9 +407,17 @@ class AudioSystem {
     }
     
     // HACK: recorder
-    var fileRecorder: AudioBufferFileRecorder? = nil
+    var fileRecorder: AudioBufferConsumer? = nil
     
-    func record(toURL url: URL, running function: (RecordingRenderCallback)->()) throws {
+    /// The runout mode; what to do after the function running the recording process has completed.
+    enum RecordingRunoutMode {
+        /// No runout; cut off the recording immediately upon completion
+        case none
+        /// keep running until we get silence (S samples below the threshold) for a maximum number of buffers
+        case toSilence(Int, Int)
+    }
+    
+    func record(toConsumer consumer: AudioBufferConsumer, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
         try self.stopGraph()
         try self.graph.uninitialize()
         
@@ -420,15 +430,22 @@ class AudioSystem {
         let sourceNode = self.outNode!
         let outInst = try sourceNode.getInstance()
         
-        let typeID: AudioFileTypeID = kAudioFileAIFFType // FIXME
-        let asbd: AudioStreamBasicDescription = try outInst.getProperty(withID: kAudioUnitProperty_StreamFormat, scope: kAudioUnitScope_Global, element: 0)
-        let recorder = try AudioBufferFileRecorder(to: url, ofType: typeID, forStreamDescription: asbd)
-        self.fileRecorder = recorder
+        self.fileRecorder = consumer
 //        self.postRenderTap = recorder.feed
         self.recordingContext = RecordingContext(recordingUnit: outInst)
         
         function(self.renderFrame)
 
+        switch(runoutMode) {
+        case .none: break
+        case .toSilence(let samples, let maxFrames):
+            var trailingFrames: Int = 0
+            while self.recordingContext?.trailingSilenceCounter.count ?? 0 < samples && trailingFrames < maxFrames {
+                self.renderFrame()
+                trailingFrames += 1
+            }
+            break
+        }
 //        self.postRenderTap = nil
         self.fileRecorder = nil
         try! self.graph.uninitialize()
@@ -437,9 +454,17 @@ class AudioSystem {
         try! self.startGraph()
     }
     
+    func record(toURL url: URL, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
+        let sourceNode = self.outNode!
+        let outInst = try sourceNode.getInstance()
+        let typeID: AudioFileTypeID = kAudioFileAIFFType // FIXME
+        let asbd: AudioStreamBasicDescription = try outInst.getProperty(withID: kAudioUnitProperty_StreamFormat, scope: kAudioUnitScope_Global, element: 0)
+        let recorder = try AudioBufferFileRecorder(to: url, ofType: typeID, forStreamDescription: asbd)
+        try self.record(toConsumer: recorder, running: function)
+    }
+    
     func record(to file: String, running function: (RecordingRenderCallback)->()) throws {
         try self.record(toURL: URL(fileURLWithPath: file), running: function)
     }
 }
-
 

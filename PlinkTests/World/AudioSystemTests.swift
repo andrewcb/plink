@@ -82,6 +82,53 @@ class AudioSystemTests: XCTestCase {
 
     ///MARK: Recording
     
+    class TestConsumer: AudioBufferConsumer {
+        var bufCount: Int = 0
+        var peaks: [Float32] = []
+        
+        func feed(_ buffers: UnsafeMutableAudioBufferListPointer, _ numFrames: UInt32) {
+            bufCount += 1
+            let bufPeaks = buffers.map { $0.samples().reduce(Float32(0)) { (a,b) in max(a, fabsf(b))  } }
+            self.peaks.append(bufPeaks.max() ?? 0)
+        }
+    }
+
+    func testRender() {
+        let s = try! AudioSystem()
+        let ch = try! s.createChannel()
+        try! ch.loadInstrument(fromDescription: AudioComponentDescription.init(type: kAudioUnitType_MusicDevice, subType: kAudioUnitSubType_DLSSynth, manufacturer: kAudioUnitManufacturer_Apple))
+        let inst = try! ch.instrument!.getInstance()
+        
+
+
+        let consumer = TestConsumer()
+        try! s.record(toConsumer: consumer, running: { (callback) in
+            callback()
+        })
+        XCTAssertEqual(consumer.bufCount, 1)
+        XCTAssertEqual(consumer.peaks, [0])
+    }
+    
+    func testRenderWithRunoutToSilence() {
+        let s = try! AudioSystem()
+        let ch = try! s.createChannel()
+        try! ch.loadInstrument(fromDescription: AudioComponentDescription.init(type: kAudioUnitType_MusicDevice, subType: kAudioUnitSubType_DLSSynth, manufacturer: kAudioUnitManufacturer_Apple))
+        let inst = try! ch.instrument!.getInstance()
+        
+        
+        
+        let consumer = TestConsumer()
+        try! s.record(toConsumer: consumer, runoutMode: .toSilence(256, 1000), running: { (callback) in
+            try! inst.sendMIDIEvent(0x99, 36, 90, atSampleOffset: 0)
+            callback()
+        })
+        XCTAssertGreaterThan(consumer.bufCount, 1)
+        XCTAssertLessThan(consumer.bufCount, 1002)
+        XCTAssertEqual(consumer.bufCount, 258) // dependent on DLSAudioSynth's default config
+//        XCTAssertEqual(consumer.bufCount, 1)
+//        XCTAssertNotEqual(consumer.peaks, [0])
+    }
+    
     func testRecordToFile() {
         let s = try! AudioSystem()
         
@@ -93,4 +140,5 @@ class AudioSystemTests: XCTestCase {
         XCTAssertNotNil(contents)
         XCTAssert(contents!.count >= 512)
     }
+
 }
