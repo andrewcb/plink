@@ -27,11 +27,10 @@ class AudioBufferExtensionTests: XCTestCase {
         XCTAssertEqual(buf[10], Float32(0.1))
     }
 
-    func testLast() {
-        let buf = AudioBuffer([Float32(3.0), 0.1, 0.5, 0.01, 0.0, 0.02, 0.0, 0.0])
-        XCTAssertEqual(buf.last(thatMatches: { $0 > Float32(0.01) }), 5)
-        XCTAssertEqual(buf.last(thatMatches: { $0 >= Float32(0.5) }), 2)
-        XCTAssertEqual(buf.last(thatMatches: { $0 > Float32(1.0) }), 0)
-        XCTAssertEqual(buf.last(thatMatches: { $0 > Float32(5.0) }), nil)
+    func testAudioBufferSamples() {
+        let buf = AudioBuffer([Float32(3.0), -1.0, 0.5, 0.0, -23.4])
+        let s: AudioBuffer.Samples<Float32> = buf.samples()
+        XCTAssertEqual(s.map { $0 }, [3.0, -1.0, 0.5, 0, -23.4])
+        XCTAssertEqual(s.last(where: { $0 > 0 }), 0.5)
     }
 }

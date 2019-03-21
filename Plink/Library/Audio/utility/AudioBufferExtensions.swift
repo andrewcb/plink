@@ -29,12 +29,52 @@ extension AudioBuffer {
         return UnsafeBufferPointer<T>(self)[index]
     }
     
-    /// Return the index of the last item in the buffer matching a predicate
-    func last<T>(thatMatches predicate: (T)->Bool) -> Int? {
-        let count = Int(self.mDataByteSize / UInt32(MemoryLayout<T>.stride))
-        for i in (0..<count).reversed() {
-            if predicate(self[i]) { return i }
+    // A typed Sequence/Collection adapter
+    struct Samples<T>: Sequence, IteratorProtocol, BidirectionalCollection {
+        typealias Element = T
+        typealias Index = Int
+        
+        let buffer: AudioBuffer
+        var index: Int = 0
+        
+        mutating func next() -> T? {
+            defer { self.index += 1 }
+            if index < Int(buffer.mDataByteSize) / MemoryLayout<T>.stride {
+                // we need the "as T" or else it may get the type inference wrong
+                return buffer[index] as T
+            } else {
+                return nil
+            }
         }
-        return nil
+        
+        var startIndex: Int { return 0 }
+        var endIndex: Int { return Int(buffer.mDataByteSize) / MemoryLayout<Element>.stride }
+        
+        subscript<T>(index: Int) -> T {
+            return UnsafeBufferPointer<T>(buffer)[index]
+        }
+        
+        func index(after i: Int) -> Int {
+            return i+1
+        }
+        
+        func index(before i: Int) -> Int {
+            return i-1
+        }
+    }
+    
+    func samples<T>() -> Samples<T> {
+        return Samples(buffer: self, index: 0)
+    }
+}
+
+extension AudioBufferList {
+    /// Utility function to construct an AudioBufferList from AudioBuffers
+    static func allocate(with buffers: [AudioBuffer]) -> UnsafeMutableAudioBufferListPointer {
+        let result = AudioBufferList.allocate(maximumBuffers: buffers.count)
+        for (i,buf) in buffers.enumerated() {
+            result[i] = buf
+        }
+        return result
     }
 }
