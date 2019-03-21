@@ -12,6 +12,12 @@ class RenderOptionsViewController: NSViewController {
     
     @IBOutlet var startTime: NSTextField!
     @IBOutlet var duration: NSTextField!
+    @IBOutlet var codeLine: NSTextField!
+    @IBOutlet var commandTime: NSTextField!
+    @IBOutlet var subjectScoreRadioButton: NSButton!
+    @IBOutlet var subjectCommandRadioButton: NSButton!
+    @IBOutlet var runOutEnable: NSButton!
+    @IBOutlet var runOutMaxTime: NSTextField!
     
     /// The default time value, if no valid one exists, for a time input TextField, indexed by its Tag value.
     fileprivate let defaultTimeValue: [Int:TickTime] = [
@@ -33,6 +39,17 @@ class RenderOptionsViewController: NSViewController {
     }
     var requestOptions: ActiveDocument.RenderRequest.Options {
         return .default // TODO
+    }
+    
+    @IBAction func runOutCheckBoxChanged(_ sender: NSButton) {
+        self.runOutMaxTime.isEnabled = self.runOutEnable.state == .on
+    }
+    
+    @IBAction func renderSubjectCheckBoxChanged(_ sender: NSButton) {
+        self.startTime.isEnabled = (self.subjectScoreRadioButton.state == .on)
+        self.duration.isEnabled = (self.subjectScoreRadioButton.state == .on)
+        self.codeLine.isEnabled = (self.subjectCommandRadioButton.state == .on)
+        self.commandTime.isEnabled = (self.subjectCommandRadioButton.state == .on)
     }
 }
 

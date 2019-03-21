@@ -606,29 +606,29 @@
             <objects>
                 <viewController storyboardIdentifier="RenderOptions" id="hCR-0y-vw4" userLabel="Render Options" customClass="RenderOptionsViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="K4C-xW-gVK">
-                        <rect key="frame" x="0.0" y="0.0" width="456" height="62"/>
+                        <rect key="frame" x="0.0" y="0.0" width="664" height="90"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YM9-KO-NjO">
-                                <rect key="frame" x="18" y="25" width="83" height="17"/>
+                                <rect key="frame" x="148" y="53" width="38" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Render start:" id="MbH-DF-veS">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Start:" id="MbH-DF-veS">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hM3-Ig-62r">
-                                <rect key="frame" x="223" y="23" width="105" height="17"/>
+                                <rect key="frame" x="294" y="51" width="60" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Render duration:" id="7Xm-iC-Fxy">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Duration:" id="7Xm-iC-Fxy">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TIV-71-Ykn">
-                                <rect key="frame" x="107" y="20" width="96" height="22"/>
+                                <rect key="frame" x="200" y="48" width="80" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="DDN-LJ-Byq">
                                     <font key="font" metaFont="system"/>
@@ -640,7 +640,7 @@
                                 </connections>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="2jB-8w-wDz">
-                                <rect key="frame" x="340" y="20" width="96" height="22"/>
+                                <rect key="frame" x="366" y="48" width="80" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="3Mv-lX-uwd">
                                     <font key="font" metaFont="system"/>
@@ -651,16 +651,100 @@
                                     <outlet property="delegate" destination="hCR-0y-vw4" id="gYs-Ua-mcU"/>
                                 </connections>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OnD-ge-UKr">
+                                <rect key="frame" x="19" y="53" width="58" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Score" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="W3a-jw-yeA">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="renderSubjectCheckBoxChanged:" target="hCR-0y-vw4" id="3YP-q2-tP4"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2ag-T4-UiO">
+                                <rect key="frame" x="19" y="19" width="84" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Command" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ybp-hu-kOT">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="renderSubjectCheckBoxChanged:" target="hCR-0y-vw4" id="MfJ-Sv-wwG"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gko-y4-lSP">
+                                <rect key="frame" x="136" y="14" width="180" height="22"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="not implemented yet" drawsBackground="YES" id="puR-m3-5as">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rRb-w2-Fi7">
+                                <rect key="frame" x="391" y="14" width="55" height="22"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="oxZ-Zf-LBq">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fin-I2-lH6">
+                                <rect key="frame" x="531" y="54" width="69" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Run out" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Lth-jC-uaa">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="runOutCheckBoxChanged:" target="hCR-0y-vw4" id="TKQ-uc-dDG"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1p4-ss-6qf">
+                                <rect key="frame" x="600" y="15" width="44" height="22"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="Zte-PC-gmy">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MCZ-gc-zJn">
+                                <rect key="frame" x="531" y="18" width="63" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Max time:" id="MGh-JL-un9">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J87-Wa-JMw">
+                                <rect key="frame" x="324" y="19" width="61" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Seconds:" id="7x9-dt-LhW">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="codeLine" destination="Gko-y4-lSP" id="1K3-Nz-hrd"/>
+                        <outlet property="commandTime" destination="rRb-w2-Fi7" id="LX9-Zr-dFq"/>
                         <outlet property="duration" destination="2jB-8w-wDz" id="wbe-Nm-AZ2"/>
+                        <outlet property="runOutEnable" destination="fin-I2-lH6" id="qOa-jY-2Wd"/>
+                        <outlet property="runOutMaxTime" destination="1p4-ss-6qf" id="xIv-1o-bS4"/>
                         <outlet property="startTime" destination="TIV-71-Ykn" id="isx-75-qD7"/>
+                        <outlet property="subjectCommandRadioButton" destination="2ag-T4-UiO" id="3fr-B0-o2O"/>
+                        <outlet property="subjectScoreRadioButton" destination="OnD-ge-UKr" id="TM6-Qe-ZZ7"/>
                     </connections>
                 </viewController>
                 <customObject id="09i-LU-ify" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1441" y="119"/>
+            <point key="canvasLocation" x="1367" y="160"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="UgY-C2-t00">
