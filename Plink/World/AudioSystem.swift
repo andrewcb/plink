@@ -417,7 +417,7 @@ class AudioSystem {
         case toSilence(Int, Int)
     }
     
-    func record(toConsumer consumer: AudioBufferConsumer, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
+    func record(toConsumer consumer: (() throws -> AudioBufferConsumer), runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
         try self.stopGraph()
         try self.graph.uninitialize()
         
@@ -430,7 +430,7 @@ class AudioSystem {
         let sourceNode = self.outNode!
         let outInst = try sourceNode.getInstance()
         
-        self.fileRecorder = consumer
+        self.fileRecorder = try consumer()
 //        self.postRenderTap = recorder.feed
         self.recordingContext = RecordingContext(recordingUnit: outInst)
         
@@ -455,12 +455,15 @@ class AudioSystem {
     }
     
     func record(toURL url: URL, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
-        let sourceNode = self.outNode!
-        let outInst = try sourceNode.getInstance()
-        let typeID: AudioFileTypeID = kAudioFileAIFFType // FIXME
-        let asbd: AudioStreamBasicDescription = try outInst.getProperty(withID: kAudioUnitProperty_StreamFormat, scope: kAudioUnitScope_Global, element: 0)
-        let recorder = try AudioBufferFileRecorder(to: url, ofType: typeID, forStreamDescription: asbd)
-        try self.record(toConsumer: recorder, running: function)
+        let makeRecorder = { () throws -> AudioBufferConsumer in
+            let sourceNode = self.outNode!
+            let outInst = try sourceNode.getInstance()
+            let typeID: AudioFileTypeID = kAudioFileAIFFType // FIXME
+            let asbd: AudioStreamBasicDescription = try outInst.getProperty(withID: kAudioUnitProperty_StreamFormat, scope: kAudioUnitScope_Global, element: 0)
+    //        print("ASBD for default output: \(asbd)")
+            return try AudioBufferFileRecorder(to: url, ofType: typeID, forStreamDescription: asbd)
+        }
+        try self.record(toConsumer: makeRecorder, running: function)
     }
     
     func record(to file: String, running function: (RecordingRenderCallback)->()) throws {
