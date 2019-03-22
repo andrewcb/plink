@@ -19,26 +19,50 @@ class RenderOptionsViewController: NSViewController {
     @IBOutlet var runOutEnable: NSButton!
     @IBOutlet var runOutMaxTime: NSTextField!
     
-    /// The default time value, if no valid one exists, for a time input TextField, indexed by its Tag value.
-    fileprivate let defaultTimeValue: [Int:TickTime] = [
-        0: 0,
-        1: TickTime(beats: 1, ticks: 0)
+    enum TextInputTag: Int {
+        case scoreStartTime = 1
+        case scoreDuration = 2
+        case commandLine = 3
+        case commandTime = 4
+        case runOutMaxTime = 5
+    }
+    
+    // tag -> (default value, validator)
+    fileprivate let textFieldSpecs: [TextInputTag: (String, ((String)->Bool))] = [
+        .scoreStartTime : ("0",  { TickTimeFormattingService.sharedInstance.parse(string:$0) != nil }),
+        .scoreDuration  : ("1",  { TickTimeFormattingService.sharedInstance.parse(string:$0) != nil }),
+        .commandLine    : ("", {_ in true}),
+        .commandTime    : ("1", { Float($0) != nil} ),
+        .runOutMaxTime  : ("1", { Float($0) != nil} )
     ]
+    
+    // the last-known-good value of a text field, by tag
+    fileprivate var lastGoodValue: [TextInputTag: String] = [:]
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        for textField in [self.startTime, self.duration] {
-            textField!.stringValue = TickTimeFormattingService.sharedInstance.format(time: self.defaultTimeValue[textField!.tag] ?? 0)
+        for (tag, spec) in self.textFieldSpecs {
+            guard let textField = self.view.viewWithTag(tag.rawValue) as? NSTextField else { continue }
+            textField.stringValue = spec.0
         }
     }
     
     var requestSubject: ActiveDocument.RenderRequest.Subject {
-        let start = TickTimeFormattingService.sharedInstance.parse(string: self.startTime.stringValue) ?? 0
-        let duration = TickTimeFormattingService.sharedInstance.parse(string: self.duration.stringValue) ?? 0
-        return .score(start,duration)
+        if self.subjectScoreRadioButton.state == .on {
+            let start = TickTimeFormattingService.sharedInstance.parse(string: self.startTime.stringValue) ?? 0
+            let duration = TickTimeFormattingService.sharedInstance.parse(string: self.duration.stringValue) ?? 0
+            return .score(start,duration)
+        } else {
+            assert(self.subjectCommandRadioButton.state == .on)
+            return .command(self.codeLine.stringValue, self.commandTime.doubleValue)
+        }
     }
     var requestOptions: ActiveDocument.RenderRequest.Options {
-        return .default // TODO
+        if self.runOutEnable.state == .on {
+            return ActiveDocument.RenderRequest.Options(maxDecay: self.runOutMaxTime.doubleValue)
+        } else {
+            return .default
+        }
     }
     
     @IBAction func runOutCheckBoxChanged(_ sender: NSButton) {
@@ -58,8 +82,13 @@ extension RenderOptionsViewController: NSTextFieldDelegate {
     func controlTextDidEndEditing(_ obj: Notification) {
         guard
             let textField = obj.object as? NSTextField,
-            let defaultTime = self.defaultTimeValue[textField.tag]
+            let tagValue = TextInputTag(rawValue: textField.tag),
+            let spec = self.textFieldSpecs[tagValue]
         else { return }
-        textField.stringValue = TickTimeFormattingService.sharedInstance.format(time: TickTimeFormattingService.sharedInstance.parse(string: textField.stringValue) ?? defaultTime)
+        if spec.1(textField.stringValue) {
+            self.lastGoodValue[tagValue] = textField.stringValue
+        } else {
+            textField.stringValue = self.lastGoodValue[tagValue] ?? spec.0
+        }
     }
 }
