@@ -39,12 +39,38 @@ class RenderOptionsViewController: NSViewController {
     // the last-known-good value of a text field, by tag
     fileprivate var lastGoodValue: [TextInputTag: String] = [:]
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        for textField in [self.startTime, self.duration, self.codeLine, self.commandTime] {
+            textField!.addGestureRecognizer(NSClickGestureRecognizer(target: self, action: #selector(self.textClicked(_:))))
+        }
+    }
+    
     override func viewWillAppear() {
         super.viewWillAppear()
         for (tag, spec) in self.textFieldSpecs {
             guard let textField = self.view.viewWithTag(tag.rawValue) as? NSTextField else { continue }
             textField.stringValue = spec.0
         }
+    }
+    
+    @objc func textClicked(_ sender: NSClickGestureRecognizer) {
+        guard
+            let textField = sender.view as? NSTextField,
+            let tagValue = TextInputTag(rawValue: textField.tag)
+        else { return }
+        switch(tagValue) {
+        case .commandLine, .commandTime:
+            self.subjectCommandRadioButton.state = .on
+            self.renderSubjectCheckBoxChanged(self.subjectCommandRadioButton)
+            textField.becomeFirstResponder()
+        case .scoreStartTime, .scoreDuration:
+            self.subjectScoreRadioButton.state = .on
+            self.renderSubjectCheckBoxChanged(self.subjectScoreRadioButton)
+            textField.becomeFirstResponder()
+        default: break
+        }
+
     }
     
     var requestSubject: ActiveDocument.RenderRequest.Subject {
@@ -78,6 +104,17 @@ class RenderOptionsViewController: NSViewController {
 }
 
 extension RenderOptionsViewController: NSTextFieldDelegate {
+        
+    func controlTextDidChange(_ obj: Notification) {
+        guard
+            let textField = obj.object as? NSTextField,
+            let tagValue = TextInputTag(rawValue: textField.tag),
+            let spec = self.textFieldSpecs[tagValue]
+        else { return }
+        if spec.1(textField.stringValue) {
+            self.lastGoodValue[tagValue] = textField.stringValue
+        }
+    }
     
     func controlTextDidEndEditing(_ obj: Notification) {
         guard
