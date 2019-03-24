@@ -97,12 +97,12 @@ class AudioSystemTests: XCTestCase {
         let s = try! AudioSystem()
         let ch = try! s.createChannel()
         try! ch.loadInstrument(fromDescription: AudioComponentDescription.init(type: kAudioUnitType_MusicDevice, subType: kAudioUnitSubType_DLSSynth, manufacturer: kAudioUnitManufacturer_Apple))
-        let inst = try! ch.instrument!.getInstance()
+//        let inst = try! ch.instrument!.getInstance()
         
 
 
         let consumer = TestConsumer()
-        try! s.record(toConsumer: { () throws -> AudioBufferConsumer in consumer}, running: { (callback) in
+        try! s.render(toConsumer: { () throws -> AudioBufferConsumer in consumer}, running: { (callback) in
             callback()
         })
         XCTAssertEqual(consumer.bufCount, 1)
@@ -117,7 +117,7 @@ class AudioSystemTests: XCTestCase {
         
         let consumer = TestConsumer()
 
-        try! s.record(toConsumer: { () throws -> AudioBufferConsumer in consumer}, runoutMode: .toSilence(256, 1000), running: { (callback) in
+        try! s.render(toConsumer: { () throws -> AudioBufferConsumer in consumer}, runoutMode: .toSilence(256, 1000), running: { (callback) in
             try! inst.sendMIDIEvent(0x99, 36, 90, atSampleOffset: 0)
             callback()
         })
@@ -132,7 +132,7 @@ class AudioSystemTests: XCTestCase {
         let s = try! AudioSystem()
         
         let outputName = "/tmp/testRecordToFile-\(Int.random(in: (0...999)))"
-        try! s.record(to: outputName, running: { (callback) in
+        try! s.render(to: outputName, running: { (callback) in
             callback()
         })
         let contents = FileManager.default.contents(atPath: outputName)

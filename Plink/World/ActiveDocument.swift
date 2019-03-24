@@ -149,7 +149,7 @@ class ActiveDocument: NSDocument {
         let runoutMode: AudioSystem.RecordingRunoutMode = request.options.maxDecay > 0 ? AudioSystem.RecordingRunoutMode.toSilence(512, Int(ceil(request.options.maxDecay/audioSystem.bufferDuration))) : .none
         let recordingFunc: ((() -> ()) -> ()) throws -> ()
         switch(request.destination) {
-        case .file(let url): recordingFunc = { fn in try audioSystem.record(toURL: url, runoutMode: runoutMode, running: fn) }
+        case .file(let url): recordingFunc = { fn in try audioSystem.render(toURL: url, runoutMode: runoutMode, running: fn) }
         }
         
         switch(request.subject) {

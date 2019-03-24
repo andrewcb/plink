@@ -57,7 +57,7 @@ class JSCoreCodeEngine: CodeLanguageEngine {
                 guard let audioSystem = self.env.audioSystem else { return }
                 let frameDuration = Float32(1.0/((Float64(audioSystem.sampleRate) / Float64(audioSystem.numSamplesPerBuffer))))
                 let frameCount = Int(ceilf(dur/frameDuration))
-                try audioSystem.record(to: outpath as String, running: { (renderCallback) in
+                try audioSystem.render(to: outpath as String, running: { (renderCallback) in
                     fn.call(withArguments: [])
                     // run some frames here
                     for _ in (0..<frameCount) {

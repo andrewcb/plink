@@ -424,7 +424,7 @@ class AudioSystem {
         case toSilence(Int, Int)
     }
     
-    func record(toConsumer consumer: (() throws -> AudioBufferConsumer), runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
+    func render(toConsumer consumer: (() throws -> AudioBufferConsumer), runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
         try self.stopGraph()
         try self.graph.uninitialize()
         
@@ -459,7 +459,7 @@ class AudioSystem {
         try! self.startGraph()
     }
     
-    func record(toURL url: URL, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
+    func render(toURL url: URL, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
         let makeRecorder = { () throws -> AudioBufferConsumer in
             let sourceNode = self.outNode!
             let outInst = try sourceNode.getInstance()
@@ -468,11 +468,11 @@ class AudioSystem {
     //        print("ASBD for default output: \(asbd)")
             return try AudioBufferFileRecorder(to: url, ofType: typeID, forStreamDescription: asbd)
         }
-        try self.record(toConsumer: makeRecorder, runoutMode: runoutMode, running: function)
+        try self.render(toConsumer: makeRecorder, runoutMode: runoutMode, running: function)
     }
     
-    func record(to file: String, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
-        try self.record(toURL: URL(fileURLWithPath: file), runoutMode: runoutMode, running: function)
+    func render(to file: String, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
+        try self.render(toURL: URL(fileURLWithPath: file), runoutMode: runoutMode, running: function)
     }
 }
 
