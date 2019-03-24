@@ -380,14 +380,32 @@ class AudioSystem {
     struct RecordingContext {
         let bufferListPtr: UnsafeMutableAudioBufferListPointer
         let recordingUnit: ManagedAudioUnitInstance
+        let numSamplesPerBuffer: UInt32
+        var consumer: AudioBufferConsumer
         var time: AudioTimeStamp = AudioTimeStamp()
         var trailingSilenceCounter: TrailingSilenceCounter = TrailingSilenceCounter(count: 0, threshold: 0.00003) /* <1/32768 */
+        var isRunOut: Bool
         
-        init(recordingUnit: ManagedAudioUnitInstance) {
+        init(recordingUnit: ManagedAudioUnitInstance, consumer: AudioBufferConsumer, numSamplesPerBuffer: UInt32) {
             let numChannels = 2
             self.bufferListPtr = AudioBufferList.allocate(maximumBuffers: numChannels)
             self.recordingUnit = recordingUnit
+            self.consumer = consumer
             self.time.mFlags = AudioTimeStampFlags.sampleTimeValid
+            self.isRunOut = false
+            self.numSamplesPerBuffer = numSamplesPerBuffer
+        }
+        
+        mutating func renderFrame() {
+            do {
+                try self.recordingUnit.render(timeStamp: self.time, numberOfFrames: numSamplesPerBuffer, data: &(self.bufferListPtr.unsafeMutablePointer.pointee))
+                self.consumer.feed(self.bufferListPtr, self.numSamplesPerBuffer)
+                self.trailingSilenceCounter.feed(bufferList: self.bufferListPtr)
+                self.time.mSampleTime += Double(self.numSamplesPerBuffer)
+            } catch {
+                print("Error rendering frame: \(error)")
+            }
+
         }
     }
     
@@ -395,19 +413,8 @@ class AudioSystem {
     
     /// Cause one frame to be rendered from within the recording function; this is kept private, and passed in a callback to the function.
     private func renderFrame() {
-        guard var ctx = self.recordingContext else { fatalError("renderFrame() called with nil recordingContext") }
-        do {
-            try ctx.recordingUnit.render(timeStamp: ctx.time, numberOfFrames: numSamplesPerBuffer, data: &(ctx.bufferListPtr.unsafeMutablePointer.pointee))
-            self.fileRecorder?.feed(ctx.bufferListPtr, numSamplesPerBuffer)
-            self.recordingContext!.trailingSilenceCounter.feed(bufferList: ctx.bufferListPtr)
-            self.recordingContext!.time.mSampleTime += Double(numSamplesPerBuffer)
-        } catch {
-            print("Error rendering frame: \(error)")
-        }
+        self.recordingContext?.renderFrame()
     }
-    
-    // HACK: recorder
-    var fileRecorder: AudioBufferConsumer? = nil
     
     /// The runout mode; what to do after the function running the recording process has completed.
     enum RecordingRunoutMode {
@@ -430,15 +437,14 @@ class AudioSystem {
         let sourceNode = self.outNode!
         let outInst = try sourceNode.getInstance()
         
-        self.fileRecorder = try consumer()
-//        self.postRenderTap = recorder.feed
-        self.recordingContext = RecordingContext(recordingUnit: outInst)
+        self.recordingContext = RecordingContext(recordingUnit: outInst, consumer: try consumer(), numSamplesPerBuffer: self.numSamplesPerBuffer)
         
         function(self.renderFrame)
 
         switch(runoutMode) {
         case .none: break
         case .toSilence(let samples, let maxFrames):
+            self.recordingContext!.isRunOut = true
             var trailingFrames: Int = 0
             while self.recordingContext?.trailingSilenceCounter.count ?? 0 < samples && trailingFrames < maxFrames {
                 self.renderFrame()
@@ -446,8 +452,7 @@ class AudioSystem {
             }
             break
         }
-//        self.postRenderTap = nil
-        self.fileRecorder = nil
+        self.recordingContext = nil
         try! self.graph.uninitialize()
         self.outputMode = .play
         try! self.graph.initialize()
@@ -463,11 +468,11 @@ class AudioSystem {
     //        print("ASBD for default output: \(asbd)")
             return try AudioBufferFileRecorder(to: url, ofType: typeID, forStreamDescription: asbd)
         }
-        try self.record(toConsumer: makeRecorder, running: function)
+        try self.record(toConsumer: makeRecorder, runoutMode: runoutMode, running: function)
     }
     
-    func record(to file: String, running function: (RecordingRenderCallback)->()) throws {
-        try self.record(toURL: URL(fileURLWithPath: file), running: function)
+    func record(to file: String, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
+        try self.record(toURL: URL(fileURLWithPath: file), runoutMode: runoutMode, running: function)
     }
 }
 

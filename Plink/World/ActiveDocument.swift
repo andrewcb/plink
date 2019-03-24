@@ -146,9 +146,10 @@ class ActiveDocument: NSDocument {
         // stop transport if needed
         self.transport.stop()
         
+        let runoutMode: AudioSystem.RecordingRunoutMode = request.options.maxDecay > 0 ? AudioSystem.RecordingRunoutMode.toSilence(512, Int(ceil(request.options.maxDecay/audioSystem.bufferDuration))) : .none
         let recordingFunc: ((() -> ()) -> ()) throws -> ()
         switch(request.destination) {
-        case .file(let url): recordingFunc = { fn in try audioSystem.record(toURL: url, running: fn) }
+        case .file(let url): recordingFunc = { fn in try audioSystem.record(toURL: url, runoutMode: runoutMode, running: fn) }
         }
         
         switch(request.subject) {
@@ -169,7 +170,14 @@ class ActiveDocument: NSDocument {
             }
             
         case .command(let cmd, let time):
-            fatalError("Not implemented yet :-(")
+            let numFrames = Int(ceil(time/audioSystem.bufferDuration))
+            try recordingFunc { [weak self] (pullFrame) in
+                guard let self = self else { return }
+                self.codeSystem.codeEngine?.eval(command: cmd)
+                for _ in 0..<numFrames {
+                    pullFrame()
+                }
+            }
         }
         
     }
