@@ -61,7 +61,6 @@ extension JSCoreCodeEngine {
         }
         
 
-        
         public override var description: String {
             return "<Metronome: tempo = \(self.tempo)>"
         }

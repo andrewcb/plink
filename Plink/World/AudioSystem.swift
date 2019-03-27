@@ -10,6 +10,12 @@ import Foundation
 import AudioToolbox
 
 class AudioSystem {
+    // TODO: what is the provenance of this?
+    let numSamplesPerBuffer: UInt32 = 512
+    // TODO someday: make this configurable
+    let sampleRate = 44100
+    var bufferDuration: Float64 { return Float64(numSamplesPerBuffer)/Float64(sampleRate) }
+    
     public enum OutputMode: CaseIterable {
         /// Play the output to the hardware output in real time
         case play
@@ -48,12 +54,6 @@ class AudioSystem {
             }
         }
     }
-    
-    // TODO: what is the provenance of this?
-    let numSamplesPerBuffer: UInt32 = 512
-    // TODO someday: make this configurable
-    let sampleRate = 44100
-    var bufferDuration: Float64 { return Float64(numSamplesPerBuffer)/Float64(sampleRate) }
     
     struct ChannelLevelReading {
         let average: AudioUnitParameterValue
@@ -203,8 +203,6 @@ class AudioSystem {
         
         func loadInstrument(fromDescription description: AudioComponentDescription) throws {
             self.instrument = try self.audioSystem?.graph.addNode(withDescription: description)
-            //            print("Instrument loaded")
-            audioSystem!.graph.dump()
         }
         
         func addInsert(fromDescription description: AudioComponentDescription) throws {
@@ -212,8 +210,6 @@ class AudioSystem {
             
             guard let insert = try self.audioSystem?.graph.addNode(withDescription: description) else { return }
             try self.add(insert: insert)
-            //            print("Insert loaded")
-            //            audioSystem!.graph.dump()
             try self.audioSystem?.startGraph()
             
         }
@@ -238,7 +234,6 @@ class AudioSystem {
     /// posted when the script text changes or the script is eval'd
     static let channelsChangedNotification = Notification.Name("AudioSystem.ChannelsChanged")
 
-    
     private func channelsChanged() {
         NotificationCenter.default.post(name: AudioSystem.channelsChangedNotification, object: nil)
     }
@@ -254,7 +249,6 @@ class AudioSystem {
     /// called when the audio processing graph is stopped; used to cancel any pending operations, &c.
     var onAudioInterruption: (()->())?
     
-    
     fileprivate func startGraph() throws {
         try self.graph.start()
     }
@@ -263,6 +257,16 @@ class AudioSystem {
         try self.graph.stop()
         self.onAudioInterruption?()
     }
+    
+    private func modifyingGraph(_ actions: (() throws ->())) throws {
+        try stopGraph()
+        try graph.uninitialize()
+        try actions()
+        try graph.initialize()
+        try startGraph()
+    }
+
+    //MARK: ---
     
     init() throws {
         let graph = try AudioUnitGraph<ManagedAudioUnitInstance>()
@@ -277,20 +281,6 @@ class AudioSystem {
         try graph.initialize()
         
         try self.setUpAudioRenderCallback()
-        
-//        try graph.start()
-    }
-    
-    deinit {
-//        AudioRemove
-    }
-    
-    private func modifyingGraph(_ actions: (() throws ->())) throws {
-        try stopGraph()
-        try graph.uninitialize()
-        try actions()
-        try graph.initialize()
-        try startGraph()
     }
     
     func clear() throws {
@@ -372,17 +362,17 @@ class AudioSystem {
         }
     }
     
-    //MARK: Recording
+    //MARK: Rendering
     
-    typealias RecordingRenderCallback = (()->())
+    typealias RenderFrameCallback = (()->())
     
     /// a recording context, holding data through a recording process
-    struct RecordingContext {
+    struct RenderContext {
         let bufferListPtr: UnsafeMutableAudioBufferListPointer
         let recordingUnit: ManagedAudioUnitInstance
         let numSamplesPerBuffer: UInt32
         var consumer: AudioBufferConsumer
-        var time: AudioTimeStamp = AudioTimeStamp()
+        var time = AudioTimeStamp()
         var trailingSilenceCounter: TrailingSilenceCounter = TrailingSilenceCounter(count: 0, threshold: 0.00003) /* <1/32768 */
         var isRunOut: Bool
         
@@ -409,22 +399,22 @@ class AudioSystem {
         }
     }
     
-    private var recordingContext: RecordingContext? = nil
+    private var renderContext: RenderContext? = nil
     
     /// Cause one frame to be rendered from within the recording function; this is kept private, and passed in a callback to the function.
     private func renderFrame() {
-        self.recordingContext?.renderFrame()
+        self.renderContext?.renderFrame()
     }
     
-    /// The runout mode; what to do after the function running the recording process has completed.
-    enum RecordingRunoutMode {
+    /// The runout mode; what to do after the function running the rendering process has completed.
+    enum RenderRunoutMode {
         /// No runout; cut off the recording immediately upon completion
         case none
         /// keep running until we get silence (S samples below the threshold) for a maximum number of buffers
         case toSilence(Int, Int)
     }
     
-    func render(toConsumer consumer: (() throws -> AudioBufferConsumer), runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
+    func render(toConsumer consumer: (() throws -> AudioBufferConsumer), runoutMode: RenderRunoutMode = .none, running action: (RenderFrameCallback)->()) throws {
         try self.stopGraph()
         try self.graph.uninitialize()
         
@@ -437,42 +427,41 @@ class AudioSystem {
         let sourceNode = self.outNode!
         let outInst = try sourceNode.getInstance()
         
-        self.recordingContext = RecordingContext(recordingUnit: outInst, consumer: try consumer(), numSamplesPerBuffer: self.numSamplesPerBuffer)
+        self.renderContext = RenderContext(recordingUnit: outInst, consumer: try consumer(), numSamplesPerBuffer: self.numSamplesPerBuffer)
         
-        function(self.renderFrame)
+        action(self.renderFrame)
 
         switch(runoutMode) {
         case .none: break
         case .toSilence(let samples, let maxFrames):
-            self.recordingContext!.isRunOut = true
+            self.renderContext!.isRunOut = true
             var trailingFrames: Int = 0
-            while self.recordingContext?.trailingSilenceCounter.count ?? 0 < samples && trailingFrames < maxFrames {
+            while self.renderContext?.trailingSilenceCounter.count ?? 0 < samples && trailingFrames < maxFrames {
                 self.renderFrame()
                 trailingFrames += 1
             }
             break
         }
-        self.recordingContext = nil
+        self.renderContext = nil
         try! self.graph.uninitialize()
         self.outputMode = .play
         try! self.graph.initialize()
         try! self.startGraph()
     }
     
-    func render(toURL url: URL, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
+    func render(toURL url: URL, runoutMode: RenderRunoutMode = .none, running action: (RenderFrameCallback)->()) throws {
         let makeRecorder = { () throws -> AudioBufferConsumer in
             let sourceNode = self.outNode!
             let outInst = try sourceNode.getInstance()
             let typeID: AudioFileTypeID = kAudioFileAIFFType // FIXME
             let asbd: AudioStreamBasicDescription = try outInst.getProperty(withID: kAudioUnitProperty_StreamFormat, scope: kAudioUnitScope_Global, element: 0)
-    //        print("ASBD for default output: \(asbd)")
             return try AudioBufferFileRecorder(to: url, ofType: typeID, forStreamDescription: asbd)
         }
-        try self.render(toConsumer: makeRecorder, runoutMode: runoutMode, running: function)
+        try self.render(toConsumer: makeRecorder, runoutMode: runoutMode, running: action)
     }
     
-    func render(to file: String, runoutMode: RecordingRunoutMode = .none, running function: (RecordingRenderCallback)->()) throws {
-        try self.render(toURL: URL(fileURLWithPath: file), runoutMode: runoutMode, running: function)
+    func render(to file: String, runoutMode: RenderRunoutMode = .none, running action: (RenderFrameCallback)->()) throws {
+        try self.render(toURL: URL(fileURLWithPath: file), runoutMode: runoutMode, running: action)
     }
 }
 

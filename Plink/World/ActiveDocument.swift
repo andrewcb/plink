@@ -37,21 +37,20 @@ class ActiveDocument: NSDocument {
         self.transport.cuedActionCallback = { (action, args) in
             switch(action) {
             case .codeStatement(let code):
-                self.codeSystem.codeEngine?.eval(command: code)
+                _ = self.codeSystem.codeEngine?.eval(command: code)
             case .callProcedure(let proc):
                 guard let codeEngine = self.codeSystem.codeEngine else { return }
-                Swift.print("calling \(proc)()")
                 codeEngine.call(procedureNamed: proc, withArguments: args ?? [])
             }
         }
         
         self.transport.onRunningStateChange = {
-            if case let .starting(_) = self.transport.transmissionState {
+            if case .starting(_) = self.transport.transmissionState {
                 self.metronome.tempo = self.transport.score.baseTempo
             }
         }
         
-        self.audioSystem?.onPreRender = metronome.advanceByFrames
+        self.audioSystem?.onPreRender = metronome.advance
         self.audioSystem?.onAudioInterruption = scheduler.clearPendingMetroActions
         
         self.hasUndoManager = false
@@ -72,7 +71,7 @@ class ActiveDocument: NSDocument {
 
     private func snapshot() throws -> WorkspaceModel {
         // FIXME: forced unwrap
-        return WorkspaceModel(audioSystem: try self.audioSystem!.snapshot(), metronome: self.metronome.snapshot(), codeSystem: self.codeSystem.snapshot(), scoreModel: self.transport.score)
+        return WorkspaceModel(audioSystem: try self.audioSystem?.snapshot() ?? AudioSystemModel(), metronome: self.metronome.snapshot(), codeSystem: self.codeSystem.snapshot(), scoreModel: self.transport.score)
     }
     
     private func set(from snapshot: WorkspaceModel) throws {
@@ -146,7 +145,7 @@ class ActiveDocument: NSDocument {
         // stop transport if needed
         self.transport.stop()
         
-        let runoutMode: AudioSystem.RecordingRunoutMode = request.options.maxDecay > 0 ? AudioSystem.RecordingRunoutMode.toSilence(512, Int(ceil(request.options.maxDecay/audioSystem.bufferDuration))) : .none
+        let runoutMode: AudioSystem.RenderRunoutMode = request.options.maxDecay > 0 ? AudioSystem.RenderRunoutMode.toSilence(512, Int(ceil(request.options.maxDecay/audioSystem.bufferDuration))) : .none
         let recordingFunc: ((() -> ()) -> ()) throws -> ()
         switch(request.destination) {
         case .file(let url): recordingFunc = { fn in try audioSystem.render(toURL: url, runoutMode: runoutMode, running: fn) }

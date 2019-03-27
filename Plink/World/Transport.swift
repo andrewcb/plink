@@ -75,7 +75,6 @@ public class Transport {
     
     //MARK:
     
-
     /// The program position
     var programPosition: TickTime {
         switch(self.transmissionState) {
@@ -91,14 +90,12 @@ public class Transport {
     /// callbacks to be notified of a tick if the state is currently running
     public var onRunningTick: [((TickTime)->())] = []
     
-    
     private func runPlayContext(forPos pos: TickTime) {
         guard let ctx = self.playContext else { return }
         // cue list
         while let cue = ctx.nextCue(forTime: pos) {
             self.cuedActionCallback?(cue.action, nil)
         }
-        
     }
 
     /// Handle a tick from the metronome
@@ -118,6 +115,5 @@ public class Transport {
                 client(pos)
             }
         }
-
     }
 }

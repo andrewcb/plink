@@ -84,8 +84,6 @@ class Scheduler {
         metroAt[time] = (metroAt[time] ?? []) + [MetronomeScheduled(action: action, executeOnClear: executeOnClear)]
     }
     
-    
-    
     ///
     
     func clear() {
@@ -96,16 +94,13 @@ class Scheduler {
     /// Receive a running program time
     func runFor(time: TickTime) {
         let singles = singleActions[time.value] ?? []
-        // FIXME: make a queue for the language environment
-//        DispatchQueue.main.async {
-            for action in self.periodicActions {
-                action.executeIfPermitted(at: time)
-            }
-            
-            for action in singles {
-                action.action()
-            }
-//        }
+        for action in self.periodicActions {
+            action.executeIfPermitted(at: time)
+        }
+        
+        for action in singles {
+            action.action()
+        }
     }
     
     func metronomeTick(_ time: TickTime) {

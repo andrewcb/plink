@@ -69,6 +69,11 @@ struct AudioSystemModel: Codable {
         self.channels = channels
     }
     
+    /// Initialise an empty model, in the event of there being no audio system
+    init() {
+        self.channels = []
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.channels = try container.decode([ChannelModel].self, forKey: .channels)

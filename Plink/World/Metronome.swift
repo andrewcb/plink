@@ -27,7 +27,7 @@ public class Metronome {
     /// callbacks to be called every tick when the master transport is running
     public var onTick: [((TickTime)->())] = []
     
-    func advanceByFrames(_ frames: Int, _ rate: Int) {
+    func advance(byFrames frames: Int, _ rate: Int) {
         let elapsed = Double(frames)/Double(rate)
         let ticks = self.ticksPerSecond * elapsed
         let endTime = self.continuousTickTime + ticks
@@ -46,9 +46,9 @@ public class Metronome {
         for client in self.onTick {
             client(self.tickTime)
         }
-
     }
     
+    //MARK: snapshotting
     func snapshot() -> MetronomeModel {
         return MetronomeModel(tempo: self.tempo)
     }
