@@ -172,7 +172,7 @@ class World: NSDocument {
             let numFrames = Int(ceil(time/audioSystem.bufferDuration))
             try recordingFunc { [weak self] (pullFrame) in
                 guard let self = self else { return }
-                self.codeSystem.codeEngine?.eval(command: cmd)
+                _ = self.codeSystem.codeEngine?.eval(command: cmd)
                 for _ in 0..<numFrames {
                     pullFrame()
                 }

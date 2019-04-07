@@ -45,7 +45,6 @@ class MixerViewController: NSViewController {
     }
     
     @objc func updateLevels() {
-        guard let audioSystem = self.world?.audioSystem else { return }
         for item in self.mixerCollectionView.visibleItems() {
             (item as? RefreshableDisplay)?.refreshDisplay()
         }
@@ -69,7 +68,7 @@ class MixerViewController: NSViewController {
     private var _selectorCompletion: ((AudioUnitComponent)->())?
     private var _selectorTypesNeeded: [OSType] = [kAudioUnitType_MusicDevice]
     private var _popover: NSPopover?
-    func openAudioUnitDialog(fromView view: NSView, withTypes types: [OSType], completion completion:@escaping ((AudioUnitComponent)->())) {
+    func openAudioUnitDialog(fromView view: NSView, withTypes types: [OSType], completion:@escaping ((AudioUnitComponent)->())) {
         self._selectorTypesNeeded = types
         self._selectorCompletion = completion
         let popover = NSPopover()

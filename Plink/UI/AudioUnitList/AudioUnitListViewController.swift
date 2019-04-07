@@ -58,15 +58,18 @@ class AudioUnitListViewController: NSViewController {
     
     @IBAction func doubleClicked(_ sender: NSOutlineView) {
         guard let item = sender.item(atRow: sender.clickedRow) else { return }
-        print("Double clicked: \(item)")
         if let component = item as? AudioUnitComponent {
             // component selected
-            print("Will load component: \(component)")
             self.onSelection?(component)
             self.view.window?.close()
         }
-        if let topIndex = item as? Int {
+        if item as? Int != nil {
             // top-level index double-clicked; expand/close
+            if sender.isItemExpanded(item) {
+                sender.collapseItem(item)
+            } else {
+                sender.expandItem(item)
+            }
         }
     }
 }
@@ -109,13 +112,6 @@ extension AudioUnitListViewController: NSOutlineViewDelegate {
             }
         }
         return view
-    }
-    
-    func outlineViewSelectionDidChange(_ notification: Notification) {
-        guard let outlineView = notification.object as? NSOutlineView else { return }
-//        if let inst = outlineView.item(atRow: outlineView.selectedRow) as? AudioUnitComponent {
-//            self.selectInstrument(inst)
-//        }
-    }
+    }    
 }
 

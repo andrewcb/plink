@@ -113,7 +113,7 @@ extension MixerStripCollectionViewItem: RefreshableDisplay {
     func refreshDisplay() {
         guard
             let channel = self.channel?.index,
-            let level = self.channel?.audioSystem?.level(forChannel: 0)
+            let level = self.channel?.audioSystem?.level(forChannel: channel)
         else { return }
         self.levelMeter.levelReading = level
     }

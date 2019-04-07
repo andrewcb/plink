@@ -123,13 +123,12 @@ extension CueListViewController: NSTableViewDelegate {
             let id = tableColumn?.identifier,
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: id.rawValue+"Cell"), owner: nil) as? CueColumnCell
         else {
-            fatalError("no cell for \(tableColumn)")
+            fatalError("no cell for \(String(describing: tableColumn))")
         }
         cell.index = row
         cell.fill(from: cue)
         cell.onChange = self.cellChanged
         return cell
-        
     }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {

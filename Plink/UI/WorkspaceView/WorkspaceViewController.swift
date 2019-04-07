@@ -30,7 +30,7 @@ class WorkspaceViewController: NSViewController {
             case "BL": site.currentModuleName = "source"
             case "BR": site.currentModuleName = "repl"
             default:
-                print("Unknown module segue: \(segue.identifier)")
+                print("Unknown module segue: \(segue.identifier ?? "?")")
                 break
             }
             site.coordinator = self.coordinator

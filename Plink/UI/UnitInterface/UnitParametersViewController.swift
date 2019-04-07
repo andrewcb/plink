@@ -38,12 +38,10 @@ class UnitParameterValueCell: NSTableCellView {
     }
     
     @IBAction func valueChanged(_ sender: Any) {
-        print("param: \(self.paramInfo!.name), \(self.paramInfo!.unit.description), \(self.paramInfo!.range), \(self.paramInfo?.flags)")
+//        print("param: \(self.paramInfo!.name), \(self.paramInfo!.unit.description), \(self.paramInfo!.range), \(self.paramInfo?.flags)")
         if sender as? NSStepper == self.stepper {
-            print("stepper: value = \(self.stepper.doubleValue)")
             self.setValue(AudioUnitParameterValue(self.stepper.doubleValue))
         } else if sender as? NSTextField == self.textField {
-            print("text field: value = \(self.textField!.stringValue)")
             (AudioUnitParameterValue(self.textField!.stringValue) ?? self.value).map { self.setValue($0) }
         }
     }
