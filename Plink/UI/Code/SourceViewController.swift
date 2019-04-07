@@ -41,6 +41,8 @@ class SourceViewController: NSViewController {
         self.sourceTextView.isAutomaticTextReplacementEnabled = false
         self.sourceTextView.isAutomaticSpellingCorrectionEnabled = false
         self.sourceTextView.isRichText = false
+        
+        self.sourceTextView.delegate = self
     }
     
     override func viewDidAppear() {
