@@ -15,7 +15,7 @@ class SourceViewController: NSViewController {
     var font: NSFont = NSFont(name: "Monaco", size: 13.0) ?? NSFont.systemFont(ofSize: 13)
     
     var codeEngine: CodeLanguageEngine? {
-        return self.activeDocument?.codeSystem.codeEngine
+        return self.world?.codeSystem.codeEngine
     }
     
     let evalQueue = DispatchQueue(label: "CodeViewController.eval", qos: DispatchQoS.background, attributes: DispatchQueue.Attributes.concurrent, autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit  , target: nil)
@@ -45,9 +45,9 @@ class SourceViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.sourceTextView.string = self.activeDocument?.codeSystem.script ?? ""
+        self.sourceTextView.string = self.world?.codeSystem.script ?? ""
         NotificationCenter.default.addObserver(self, selector: #selector(self.codeStatusChanged(_:)), name: CodeSystem.scriptStateChanged, object: nil)
-        self.reloadButton.isEnabled = self.activeDocument?.codeSystem.scriptIsUnevaluated ?? true
+        self.reloadButton.isEnabled = self.world?.codeSystem.scriptIsUnevaluated ?? true
 
     }
     
@@ -57,17 +57,17 @@ class SourceViewController: NSViewController {
     }
     
     @objc func codeStatusChanged(_ notification: Notification) {
-        guard let codeSystem = self.activeDocument?.codeSystem else { return }
+        guard let codeSystem = self.world?.codeSystem else { return }
         self.reloadButton.isEnabled = codeSystem.scriptIsUnevaluated
     }
     
     @IBAction func doReload(_ sender: Any) {
-        self.activeDocument?.codeSystem.evalScript()
+        self.world?.codeSystem.evalScript()
     }
 }
 
 extension SourceViewController: NSTextViewDelegate {
     func textDidChange(_ notification: Notification) {
-        self.activeDocument?.codeSystem.script = self.sourceTextView.string
+        self.world?.codeSystem.script = self.sourceTextView.string
     }
 }

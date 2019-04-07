@@ -25,7 +25,7 @@
 		4467310422429FB50032CD18 /* TrailingSilenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4467310322429FB50032CD18 /* TrailingSilenceTests.swift */; };
 		447219512169014800B15AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219502169014800B15AC0 /* AppDelegate.swift */; };
 		447219532169014800B15AC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219522169014800B15AC0 /* ViewController.swift */; };
-		447219552169014800B15AC0 /* ActiveDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* ActiveDocument.swift */; };
+		447219552169014800B15AC0 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* World.swift */; };
 		447219572169014C00B15AC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 447219562169014C00B15AC0 /* Assets.xcassets */; };
 		4472195A2169014C00B15AC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 447219582169014C00B15AC0 /* Main.storyboard */; };
 		447219662169014C00B15AC0 /* PlinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219652169014C00B15AC0 /* PlinkTests.swift */; };
@@ -67,7 +67,7 @@
 		447219CF216AE9F700B15AC0 /* AudioSystemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219CE216AE9F700B15AC0 /* AudioSystemModel.swift */; };
 		447219D3216AEA0B00B15AC0 /* CodeSystemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D0216AEA0A00B15AC0 /* CodeSystemModel.swift */; };
 		447219D4216AEA0B00B15AC0 /* MetronomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D1216AEA0A00B15AC0 /* MetronomeModel.swift */; };
-		447219D5216AEA0B00B15AC0 /* WorkspaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D2216AEA0A00B15AC0 /* WorkspaceModel.swift */; };
+		447219D5216AEA0B00B15AC0 /* WorldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D2216AEA0A00B15AC0 /* WorldModel.swift */; };
 		447219D8216BB46E00B15AC0 /* UnitGUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D7216BB46E00B15AC0 /* UnitGUIViewController.swift */; };
 		447219DA216BB48100B15AC0 /* UnitParametersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219D9216BB48100B15AC0 /* UnitParametersViewController.swift */; };
 		447219DC216BB77000B15AC0 /* UnitInterfaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219DB216BB77000B15AC0 /* UnitInterfaceViewController.swift */; };
@@ -129,7 +129,7 @@
 		4472194D2169014700B15AC0 /* Plink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447219502169014800B15AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447219522169014800B15AC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		447219542169014800B15AC0 /* ActiveDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveDocument.swift; sourceTree = "<group>"; };
+		447219542169014800B15AC0 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		447219562169014C00B15AC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		447219592169014C00B15AC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4472195B2169014C00B15AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 		447219CE216AE9F700B15AC0 /* AudioSystemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSystemModel.swift; sourceTree = "<group>"; };
 		447219D0216AEA0A00B15AC0 /* CodeSystemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeSystemModel.swift; sourceTree = "<group>"; };
 		447219D1216AEA0A00B15AC0 /* MetronomeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetronomeModel.swift; sourceTree = "<group>"; };
-		447219D2216AEA0A00B15AC0 /* WorkspaceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceModel.swift; sourceTree = "<group>"; };
+		447219D2216AEA0A00B15AC0 /* WorldModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldModel.swift; sourceTree = "<group>"; };
 		447219D7216BB46E00B15AC0 /* UnitGUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitGUIViewController.swift; sourceTree = "<group>"; };
 		447219D9216BB48100B15AC0 /* UnitParametersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitParametersViewController.swift; sourceTree = "<group>"; };
 		447219DB216BB77000B15AC0 /* UnitInterfaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitInterfaceViewController.swift; sourceTree = "<group>"; };
@@ -352,7 +352,7 @@
 		44721972216904BF00B15AC0 /* World */ = {
 			isa = PBXGroup;
 			children = (
-				447219542169014800B15AC0 /* ActiveDocument.swift */,
+				447219542169014800B15AC0 /* World.swift */,
 				4472199D216A55A000B15AC0 /* CodeSystem.swift */,
 				447219B8216A5C2D00B15AC0 /* AudioSystem.swift */,
 				447219B6216A5ADB00B15AC0 /* Metronome.swift */,
@@ -366,7 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				449D698D21E7B96B0083DAE5 /* Migrations */,
-				447219D2216AEA0A00B15AC0 /* WorkspaceModel.swift */,
+				447219D2216AEA0A00B15AC0 /* WorldModel.swift */,
 				447219CE216AE9F700B15AC0 /* AudioSystemModel.swift */,
 				447219D0216AEA0A00B15AC0 /* CodeSystemModel.swift */,
 				447219D1216AEA0A00B15AC0 /* MetronomeModel.swift */,
@@ -867,7 +867,7 @@
 				447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */,
 				449D699A21F2A9CE0083DAE5 /* NSDraggingInfo+modernisation.swift in Sources */,
 				447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */,
-				447219D5216AEA0B00B15AC0 /* WorkspaceModel.swift in Sources */,
+				447219D5216AEA0B00B15AC0 /* WorldModel.swift in Sources */,
 				449D699521EB6AD70083DAE5 /* CycleListViewController.swift in Sources */,
 				447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */,
 				449D697F21DD89E20083DAE5 /* TickTimeFormattingService.swift in Sources */,
@@ -876,7 +876,7 @@
 				446730F72237102D0032CD18 /* RenderOptionsViewController.swift in Sources */,
 				4472197E21690BA200B15AC0 /* TransportViewController.swift in Sources */,
 				4472199C216A546A00B15AC0 /* JSCoreCodeEngine.swift in Sources */,
-				447219552169014800B15AC0 /* ActiveDocument.swift in Sources */,
+				447219552169014800B15AC0 /* World.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

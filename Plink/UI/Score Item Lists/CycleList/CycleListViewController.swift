@@ -93,7 +93,7 @@ class CycleListViewController: ScoreItemListViewController {
     var cycleList: [ScoreModel.Cycle] = []
     
     fileprivate func cellChanged(_ index: Int, _ name: String?, _ isActive: Bool?, _ period: TickDuration?, _ modulus: TickTime?, _ action: ScoreModel.CuedAction?) {
-        guard let transport = self.activeDocument?.transport else { return }
+        guard let transport = self.world?.transport else { return }
         let oldCycle = self.cycleList[index]
         let newCycle = ScoreModel.Cycle(name: name ?? oldCycle.name, isActive: isActive ?? oldCycle.isActive, period: period ?? oldCycle.period, modulus: modulus ?? oldCycle.modulus, action: action ?? oldCycle.action)
 //        print("Changed: \(oldCycle) => \(newCycle)")
@@ -108,7 +108,7 @@ class CycleListViewController: ScoreItemListViewController {
 
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.cycleList = self.activeDocument?.transport.score.cycleList ?? []
+        self.cycleList = self.world?.transport.score.cycleList ?? []
         self.tableView.reloadData()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.cycleListChanged(_:)), name: Transport.cyclesChanged, object: nil)
@@ -119,7 +119,7 @@ class CycleListViewController: ScoreItemListViewController {
     }
 
     @objc func cycleListChanged(_ notification: Notification) {
-        guard let transport = self.activeDocument?.transport else { return }
+        guard let transport = self.world?.transport else { return }
         DispatchQueue.main.async {
             let their = transport.score.cycleList
             let our = self.cycleList
@@ -131,7 +131,7 @@ class CycleListViewController: ScoreItemListViewController {
     }
     
     override func addItem() {
-        guard let transport = self.activeDocument?.transport else { return }
+        guard let transport = self.world?.transport else { return }
         let newName = "cycle\(self.cycleList.count + 1)"
         let newCycle = ScoreModel.Cycle(name: newName, isActive: true, period: TickTime(beats: 1, ticks: 0), modulus: TickTime(0), action: .codeStatement(""))
         self.cycleList.append(newCycle)
@@ -171,7 +171,7 @@ extension CycleListViewController: NSTableViewDataSource {
         
         guard
             let oldIndex = oldIndices.first,
-            let transport = self.activeDocument?.transport
+            let transport = self.world?.transport
         else { return false }
         
         let dest = (oldIndex>row) ? row : row-1

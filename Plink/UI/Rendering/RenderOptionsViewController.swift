@@ -73,7 +73,7 @@ class RenderOptionsViewController: NSViewController {
 
     }
     
-    var requestSubject: ActiveDocument.RenderRequest.Subject {
+    var requestSubject: World.RenderRequest.Subject {
         if self.subjectScoreRadioButton.state == .on {
             let start = TickTimeFormattingService.sharedInstance.parse(string: self.startTime.stringValue) ?? 0
             let duration = TickTimeFormattingService.sharedInstance.parse(string: self.duration.stringValue) ?? 0
@@ -83,9 +83,9 @@ class RenderOptionsViewController: NSViewController {
             return .command(self.codeLine.stringValue, self.commandTime.doubleValue)
         }
     }
-    var requestOptions: ActiveDocument.RenderRequest.Options {
+    var requestOptions: World.RenderRequest.Options {
         if self.runOutEnable.state == .on {
-            return ActiveDocument.RenderRequest.Options(maxDecay: self.runOutMaxTime.doubleValue)
+            return World.RenderRequest.Options(maxDecay: self.runOutMaxTime.doubleValue)
         } else {
             return .default
         }
@@ -104,7 +104,7 @@ class RenderOptionsViewController: NSViewController {
 }
 
 extension RenderOptionsViewController: NSTextFieldDelegate {
-        
+    
     func controlTextDidChange(_ obj: Notification) {
         guard
             let textField = obj.object as? NSTextField,

@@ -65,7 +65,7 @@ class CueListViewController: ScoreItemListViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.cueList = self.activeDocument?.transport.score.cueList ?? []
+        self.cueList = self.world?.transport.score.cueList ?? []
         self.tableView.reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(self.cueListChanged(_:)), name: Transport.cueListChanged, object: nil)
     }
@@ -76,7 +76,7 @@ class CueListViewController: ScoreItemListViewController {
     }
     
     @objc func cueListChanged(_ notification: Notification) {
-        guard let transport = self.activeDocument?.transport else { return }
+        guard let transport = self.world?.transport else { return }
         DispatchQueue.main.async {
             let newCues = transport.score.cueList
             if newCues == self.cueList { return }
@@ -86,7 +86,7 @@ class CueListViewController: ScoreItemListViewController {
     }
     
     fileprivate func cellChanged(_ index: Int, _ time: TickTime?, _ action: ScoreModel.CuedAction?) {
-        guard let transport = self.activeDocument?.transport else { return }
+        guard let transport = self.world?.transport else { return }
         let oldCue = self.cueList[index]
         let newCue = ScoreModel.Cue(time: time ?? oldCue.time, action: action ?? oldCue.action)
         self.cueList[index] = newCue
@@ -94,7 +94,7 @@ class CueListViewController: ScoreItemListViewController {
     }
     
     override func addItem() {
-        guard let transport = self.activeDocument?.transport else { return }
+        guard let transport = self.world?.transport else { return }
         let newCueTime = transport.score.cueList.last.map { $0.time+TickTime(beats: 1, ticks: 0)} ?? 0
         let newCue = ScoreModel.Cue(time: newCueTime, action: .codeStatement(""))
         transport.score.add(cue: newCue)
@@ -110,13 +110,13 @@ class CueListViewController: ScoreItemListViewController {
 
 extension CueListViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return self.activeDocument?.transport.score.cueList.count ?? 0
+        return self.world?.transport.score.cueList.count ?? 0
     }
 }
 
 extension CueListViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let cue = self.activeDocument?.transport.score.cueList[row] else {
+        guard let cue = self.world?.transport.score.cueList[row] else {
             fatalError("No cue list")
         }
         guard

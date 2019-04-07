@@ -12,7 +12,7 @@ class RenderProgressViewController: NSViewController {
     @IBOutlet var text: NSTextField!
     @IBOutlet var progress: NSProgressIndicator!
     
-    func display(status: ActiveDocument.RenderStatus) {
+    func display(status: World.RenderStatus) {
         switch(status) {
             
         case .started:

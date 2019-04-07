@@ -14,7 +14,7 @@ class REPLViewController: NSViewController {
     var font: NSFont = NSFont(name: "Monaco", size: 13.0) ?? NSFont.systemFont(ofSize: 13)
     
     var codeEngine: CodeLanguageEngine? {
-        return self.activeDocument?.codeSystem.codeEngine
+        return self.world?.codeSystem.codeEngine
     }
     
     let evalQueue = DispatchQueue(label: "REPLViewController.eval", qos: DispatchQoS.background, attributes: DispatchQueue.Attributes.concurrent, autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit  , target: nil)
@@ -29,7 +29,7 @@ class REPLViewController: NSViewController {
         self.replView.restoredScrollbackColor = .scrollbackRestoredText
         self.replView?.restoredScrollbackDelimiter  = "————————"
         
-        self.replView?.outputRestoredScrollback(self.activeDocument?.codeSystem.scrollback ?? "")
+        self.replView?.outputRestoredScrollback(self.world?.codeSystem.scrollback ?? "")
         
         self.replView.evaluator = { [weak self] (line) in
             guard let codeEngine = self?.codeEngine else { return nil }
@@ -50,7 +50,7 @@ class REPLViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.activeDocument?.codeSystem.codeEngine?.delegate = self
+        self.world?.codeSystem.codeEngine?.delegate = self
     }
 }
 
@@ -58,14 +58,14 @@ extension REPLViewController: CodeEngineDelegate {
     func logToConsole(_ message: String) {
         DispatchQueue.main.async {
             self.replView.printOutputLn(message)
-            self.activeDocument?.codeSystem.scrollback = self.replView.scrollbackTextView.string
+            self.world?.codeSystem.scrollback = self.replView.scrollbackTextView.string
         }
     }
     
     func codeLanguageExceptionOccurred(_ message: String) {
         DispatchQueue.main.async {
             self.replView.printErrorLn(message)
-            self.activeDocument?.codeSystem.scrollback = self.replView.scrollbackTextView.string
+            self.world?.codeSystem.scrollback = self.replView.scrollbackTextView.string
         }
     }
 }

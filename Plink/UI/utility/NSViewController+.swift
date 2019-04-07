@@ -9,8 +9,8 @@
 import Cocoa
 
 extension NSViewController {
-    var activeDocument: ActiveDocument? {
-        return self.view.window?.windowController?.document as? ActiveDocument
+    var world: World? {
+        return self.view.window?.windowController?.document as? World
     }
 
 }

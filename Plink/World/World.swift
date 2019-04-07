@@ -1,5 +1,5 @@
 //
-//  Document.swift
+//  World.swift
 //  Plink
 //
 //  Created by acb on 06/10/2018.
@@ -11,10 +11,10 @@ import CoreAudio
 import AudioToolbox
 
 /**
- The ActiveDocument is the open document in memory, and the objects constructed from it; it owns things such as the audio setup and transport which do not belong to a specific view or window.
+ The World is the open document in memory, and the objects constructed from it; it owns things such as the audio setup and transport which do not belong to a specific view or window.
  */
 
-class ActiveDocument: NSDocument {
+class World: NSDocument {
     
     let audioSystem: AudioSystem? = try? AudioSystem()
     let metronome: Metronome = Metronome()
@@ -69,12 +69,12 @@ class ActiveDocument: NSDocument {
     
     // MARK: save/restore
 
-    private func snapshot() throws -> WorkspaceModel {
+    private func snapshot() throws -> WorldModel {
         // FIXME: forced unwrap
-        return WorkspaceModel(audioSystem: try self.audioSystem?.snapshot() ?? AudioSystemModel(), metronome: self.metronome.snapshot(), codeSystem: self.codeSystem.snapshot(), scoreModel: self.transport.score)
+        return WorldModel(audioSystem: try self.audioSystem?.snapshot() ?? AudioSystemModel(), metronome: self.metronome.snapshot(), codeSystem: self.codeSystem.snapshot(), scoreModel: self.transport.score)
     }
     
-    private func set(from snapshot: WorkspaceModel) throws {
+    private func set(from snapshot: WorldModel) throws {
         try self.audioSystem?.set(from: snapshot.audioSystem)
         self.metronome.set(from: snapshot.metronome)
         self.codeSystem.set(from: snapshot.codeSystem)
@@ -95,10 +95,10 @@ class ActiveDocument: NSDocument {
         
         // Before we feed the data to our Decodable model, we check its version number and, if it's old, migrate it
         
-        let data = try migratedData(from: data, toVersion: WorkspaceModel.currentDocumentVersion)
+        let data = try migratedData(from: data, toVersion: WorldModel.currentDocumentVersion)
         
         let decoder = PropertyListDecoder()
-        let decoded = try decoder.decode(WorkspaceModel.self, from: data)
+        let decoded = try decoder.decode(WorldModel.self, from: data)
         Swift.print("Decoded: \(decoded)")
         
         try self.set(from: decoded)

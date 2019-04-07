@@ -1,5 +1,5 @@
 //
-//  WorkspaceModel.swift
+//  WorldModel.swift
 //  Plink
 //
 //  Created by acb on 29/08/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WorkspaceModel: Codable {
+struct WorldModel: Codable {
     
     var audioSystem: AudioSystemModel
     var metronome: MetronomeModel
@@ -44,7 +44,7 @@ struct WorkspaceModel: Codable {
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(WorkspaceModel.currentDocumentVersion, forKey: .documentVersion)
+        try container.encode(WorldModel.currentDocumentVersion, forKey: .documentVersion)
         try container.encode(self.audioSystem, forKey: .audioSystem)
         try container.encode(self.metronome, forKey: .metronome)
         try container.encode(self.codeSystem, forKey: .codeSystem)

@@ -43,7 +43,7 @@ class WorkspaceViewController: NSViewController {
     }
     
     @IBAction func renderAudioSelected(_ sender: Any) {
-        guard let window = self.view.window, let activeDocument = self.activeDocument else { fatalError("No window or activeDocument?!")}
+        guard let window = self.view.window, let activeDocument = self.world else { fatalError("No window or activeDocument?!")}
         let panel = NSSavePanel()
         panel.prompt = "Render"
         panel.isExtensionHidden = false
@@ -55,7 +55,7 @@ class WorkspaceViewController: NSViewController {
         
         panel.beginSheetModal(for: window) { (response) in
             if response == NSApplication.ModalResponse.OK, let url = panel.url {
-                let request = ActiveDocument.RenderRequest(subject: optsVC.requestSubject, destination: .file(url), options: optsVC.requestOptions)
+                let request = World.RenderRequest(subject: optsVC.requestSubject, destination: .file(url), options: optsVC.requestOptions)
 //                print("RenderRequest: \(request)")
                 
                 let progressWC = self.storyboard!.instantiateController(withIdentifier: "RenderProgress") as! NSWindowController

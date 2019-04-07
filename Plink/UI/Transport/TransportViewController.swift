@@ -22,9 +22,9 @@ class TransportViewController: NSViewController {
         super.viewWillAppear()
         self.levelMeter.orientation = .horizontal
         self.transportTempoChanged()
-        self.activeDocument?.metronome.onTempoChange = { self.transportTempoChanged() }
-        self.activeDocument?.transport.onRunningStateChange = { self.transportRunningStateChanged() }
-        self.activeDocument?.transport.onRunningTick.append( { self.runFor(time: $0) })
+        self.world?.metronome.onTempoChange = { self.transportTempoChanged() }
+        self.world?.transport.onRunningStateChange = { self.transportRunningStateChanged() }
+        self.world?.transport.onRunningTick.append( { self.runFor(time: $0) })
 
         self.levelUpdateTimer = Timer.scheduledTimer(timeInterval: 0.04, target: self, selector: #selector(self.updateLevels), userInfo: nil, repeats: true)
 
@@ -37,7 +37,7 @@ class TransportViewController: NSViewController {
     }
     
     @objc func updateLevels() {
-        guard let audioSystem = self.activeDocument?.audioSystem else { return }
+        guard let audioSystem = self.world?.audioSystem else { return }
         guard let master = audioSystem.masterLevel else { print("No level returned"); return }
         self.levelMeter.levelReading = master        
     }
@@ -47,24 +47,24 @@ class TransportViewController: NSViewController {
     }
     
     func transportTempoChanged() {
-        guard let metronome = self.activeDocument?.metronome else { return }
+        guard let metronome = self.world?.metronome else { return }
         self.tempoField.doubleValue = metronome.tempo
         self.tempoStepper.doubleValue = metronome.tempo
     }
     
     func transportRunningStateChanged() {
         DispatchQueue.main.async {
-            guard let transport = self.activeDocument?.transport else { return }
+            guard let transport = self.world?.transport else { return }
             self.setPos(to: transport.programPosition)
         }
     }
     
     @IBAction func playButtonPressed(_ sender: Any) {
-        self.activeDocument?.transport.startInPlace()
+        self.world?.transport.startInPlace()
     }
     
     @IBAction func stopButtonPressed(_ sender: Any) {
-        guard let transport = activeDocument?.transport else { return }
+        guard let transport = world?.transport else { return }
         switch(transport.transmissionState) {
         case .stopped(_): transport.rewindStopped()
         default: transport.stop()
@@ -72,7 +72,7 @@ class TransportViewController: NSViewController {
     }
     
     @IBAction func tempoValueChanged(_ sender: NSControl) {
-        guard let activeDocument = self.activeDocument else { return }
+        guard let activeDocument = self.world else { return }
         if sender.doubleValue != 0.0 {
             activeDocument.metronome.tempo = sender.doubleValue
             // currently setting the tempo on the transport controls will set the tempo of the score; perhaps this should change at some point?

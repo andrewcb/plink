@@ -45,7 +45,7 @@ class MixerViewController: NSViewController {
     }
     
     @objc func updateLevels() {
-        guard let audioSystem = self.activeDocument?.audioSystem else { return }
+        guard let audioSystem = self.world?.audioSystem else { return }
         for item in self.mixerCollectionView.visibleItems() {
             (item as? RefreshableDisplay)?.refreshDisplay()
         }
@@ -116,12 +116,12 @@ extension MixerViewController: NSCollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let audioSystem = self.activeDocument?.audioSystem else { return 0 }
+        guard let audioSystem = self.world?.audioSystem else { return 0 }
         return audioSystem.channels.count + 1
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        guard let audioSystem = self.activeDocument?.audioSystem else { fatalError() /* no audio system == no cells */ }
+        guard let audioSystem = self.world?.audioSystem else { fatalError() /* no audio system == no cells */ }
         guard indexPath[1] < audioSystem.channels.count else {
             let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MixerAddStripCollectionViewItem"), for: indexPath) as! OneButtonCollectionViewItem
             item.onPress = { [weak self] _ in
