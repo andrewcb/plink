@@ -30,7 +30,6 @@ public class ManagedAudioUnitInstance: AudioUnitInstance {
     
     private var _parameterInfo: [AudioUnitScope:[AudioUnitInstanceParameterInfo]] = [:]
     
-    // TODO: move to AudioUnitInstance extension?
     public func loadInterfaceView(withSize size: CGSize) -> NSView? {
         return loadInterfaceViewForAudioUnit(self.auRef, size)
     }

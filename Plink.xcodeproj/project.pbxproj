@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		442AA029225C08ED00CF8C8E /* AudioSystem.Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442AA028225C08ED00CF8C8E /* AudioSystem.Channel.swift */; };
 		4455B35B21D59308002F0426 /* ModuleSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */; };
 		4455B35D21D5932E002F0426 /* ModuleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */; };
 		4455B35F21D59996002F0426 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35E21D59996002F0426 /* SourceViewController.swift */; };
@@ -110,6 +111,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		442AA028225C08ED00CF8C8E /* AudioSystem.Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSystem.Channel.swift; sourceTree = "<group>"; };
 		4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleSiteViewController.swift; sourceTree = "<group>"; };
 		4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleCoordinator.swift; sourceTree = "<group>"; };
 		4455B35E21D59996002F0426 /* SourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +229,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		442AA027225C075A00CF8C8E /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				447219B8216A5C2D00B15AC0 /* AudioSystem.swift */,
+				442AA028225C08ED00CF8C8E /* AudioSystem.Channel.swift */,
+				445F6A9A21738F1500E4419A /* ManagedAudioUnitInstance.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		4455B35921D592CB002F0426 /* ModuleManagement */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,9 +364,9 @@
 		44721972216904BF00B15AC0 /* World */ = {
 			isa = PBXGroup;
 			children = (
+				442AA027225C075A00CF8C8E /* Audio */,
 				447219542169014800B15AC0 /* World.swift */,
 				4472199D216A55A000B15AC0 /* CodeSystem.swift */,
-				447219B8216A5C2D00B15AC0 /* AudioSystem.swift */,
 				447219B6216A5ADB00B15AC0 /* Metronome.swift */,
 				4455B36221D7D768002F0426 /* Transport.swift */,
 				447219CA216AE2D800B15AC0 /* Scheduler.swift */,
@@ -518,7 +530,6 @@
 				447219AA216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift */,
 				447219AB216A59BC00B15AC0 /* AudioUnitComponent.swift */,
 				447219DD216BBC6200B15AC0 /* Plink-Bridging-Header.h */,
-				445F6A9A21738F1500E4419A /* ManagedAudioUnitInstance.swift */,
 				445F6A9E2175627300E4419A /* AudioUnitParameterUnit+.swift */,
 			);
 			path = "AudioUnit helpers";
@@ -811,6 +822,7 @@
 				447219B3216A5A2900B15AC0 /* AudioUnitPreset.swift in Sources */,
 				4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */,
 				4455B36321D7D768002F0426 /* Transport.swift in Sources */,
+				442AA029225C08ED00CF8C8E /* AudioSystem.Channel.swift in Sources */,
 				447219D3216AEA0B00B15AC0 /* CodeSystemModel.swift in Sources */,
 				449D699D21F3785A0083DAE5 /* StereoPair.swift in Sources */,
 				4472198921690F2A00B15AC0 /* MixerStripCollectionViewItem.swift in Sources */,
