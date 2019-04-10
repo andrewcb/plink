@@ -40,12 +40,21 @@ public class Transport {
     init(metronome: Metronome) {
         self.metronome = metronome
         self.score = ScoreModel(cueList: [], cycles: [])
+        self.setScoreCallbacks()
+    }
+    
+    private func setScoreCallbacks() {
         self.score.onCueListChanged = {
             NotificationCenter.default.post(name: Transport.cueListChanged, object: nil)
         }
         self.score.onCycleListChanged = {
             NotificationCenter.default.post(name: Transport.cyclesChanged, object: nil)
         }
+    }
+    
+    func loadScore(from score: ScoreModel) {
+        self.score = score
+        self.setScoreCallbacks()
     }
 
     //MARK: Transmission control

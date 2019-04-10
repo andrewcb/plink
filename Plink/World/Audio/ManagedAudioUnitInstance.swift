@@ -34,7 +34,6 @@ public class ManagedAudioUnitInstance: AudioUnitInstance {
         return loadInterfaceViewForAudioUnit(self.auRef, size)
     }
     
-    // TODO: make this an override?
     public func allParameterInfo(forScope scope: AudioUnitScope) -> [AudioUnitInstanceParameterInfo] {
         if self._parameterInfo[scope] == nil {
             do {
