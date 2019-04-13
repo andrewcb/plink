@@ -13,6 +13,7 @@ class CueColumnCell: NSTableCellView {
     var index: Int = 0
     func fill(from cue: ScoreModel.Cue) { }
     var onChange: ((Int, TickTime?, ScoreModel.CuedAction?)->())?
+    var onDelete: ((Int) -> ())?
 }
 
 class CueTimeCell: CueColumnCell {
@@ -47,6 +48,12 @@ class CueActionCell: CueColumnCell {
         guard let textField = self.textField, sender as? NSTextField == textField else { return }
         let action = ScoreModel.CuedAction(codeText: textField.stringValue)
         self.onChange?(self.index, nil, action)
+    }
+}
+
+class CueDeleteCell: CueColumnCell {
+    @IBAction func clicked(_ sender: Any) {
+        self.onDelete?(self.index)
     }
 }
 
@@ -105,6 +112,13 @@ class CueListViewController: ScoreItemListViewController {
             self?.tableView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
         }
     }
+    
+    func deleteRow(at index: Int) {
+        print("Delete \(index)")
+        guard let transport = self.world?.transport else { return }
+        // FIXME: transport.scoreModel's onCueListChanged is for some reason empty
+        transport.score.deleteCue(at: index)
+    }
 
 }
 
@@ -128,6 +142,7 @@ extension CueListViewController: NSTableViewDelegate {
         cell.index = row
         cell.fill(from: cue)
         cell.onChange = self.cellChanged
+        cell.onDelete = self.deleteRow(at:)
         return cell
     }
     

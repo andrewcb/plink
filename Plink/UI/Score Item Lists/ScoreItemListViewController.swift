@@ -19,6 +19,9 @@ class ScoreItemListTableView: NSTableView {
     }
 }
 
+/// This NSTextField subclass is functionally identical to NSTextField, and exists only to mark out the text field to the window delegate as requiring a recoloured editor view
+class ScoreItemListTableTextField: NSTextField {}
+
 class ColouredTableHeaderCell: NSTableHeaderCell {
     override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
         if colourCueList {

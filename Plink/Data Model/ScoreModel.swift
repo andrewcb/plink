@@ -70,6 +70,11 @@ struct ScoreModel {
         self.onCueListChanged?()
     }
     
+    mutating func deleteCue(at index: Int) {
+        self.cueList.remove(at: index)
+        self.onCueListChanged?()
+    }
+    
     mutating func replaceCycle(atIndex index: Int, with cycle: Cycle) {
         self.cycleList[index] = cycle
         self.onCycleListChanged?()

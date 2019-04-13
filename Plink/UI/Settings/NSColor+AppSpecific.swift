@@ -20,4 +20,9 @@ extension NSColor {
     static var codeEchoText = NSColor(deviceHue: 0.8, saturation: 0.2, brightness: 0.5, alpha: 1.0)
     static var codeErrorText = NSColor(deviceHue: 0.0, saturation: 0.9, brightness: 0.8, alpha: 1.0)
     static var scrollbackRestoredText = NSColor(deviceHue: 0.8, saturation: 0.0, brightness: 0.5, alpha: 1.0)
+    
+    static var tableFieldEditorBackground = NSColor(deviceHue: 0.7, saturation: 0.3, brightness: 0.8, alpha: 1.0)
+    static var tableFieldEditorText = NSColor(deviceHue: 0.7, saturation: 0.4, brightness: 0.0, alpha: 1.0)
+    static var tableFieldEditorSelection = NSColor(deviceHue: 0.1, saturation: 0.9, brightness: 0.7, alpha: 1.0)
+
 }
