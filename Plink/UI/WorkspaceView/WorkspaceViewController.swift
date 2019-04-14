@@ -18,8 +18,8 @@ class WorkspaceViewController: NSViewController {
         
         self.coordinator.stealingPolicy = .leaveBlank
         self.coordinator.specs = [
-            ModuleCoordinator.Spec(name: "source", unique: true, shelveable: true, withStoryboardID: "Source"),
-            ModuleCoordinator.Spec(name: "repl", unique: true, shelveable: true, withStoryboardID: "REPL"),
+            ModuleCoordinator.Spec(name: "script", unique: true, shelveable: true, withStoryboardID: "Source"),
+            ModuleCoordinator.Spec(name: "console", unique: true, shelveable: true, withStoryboardID: "REPL"),
             ModuleCoordinator.Spec(name: "cueList", unique: true, shelveable: true, withStoryboardID: "CueList"),
             ModuleCoordinator.Spec(name: "cycleList", unique: true, shelveable: true, withStoryboardID: "CycleList")
         ]
@@ -27,8 +27,8 @@ class WorkspaceViewController: NSViewController {
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         if let site = segue.destinationController as? ModuleSiteViewController {
             switch(segue.identifier) {
-            case "BL": site.currentModuleName = "source"
-            case "BR": site.currentModuleName = "repl"
+            case "BL": site.currentModuleName = "script"
+            case "BR": site.currentModuleName = "console"
             default:
                 print("Unknown module segue: \(segue.identifier ?? "?")")
                 break
