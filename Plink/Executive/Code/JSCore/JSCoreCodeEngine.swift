@@ -26,6 +26,10 @@ class JSCoreCodeEngine: CodeLanguageEngine {
     
     /// Create the channel map ($ch)
     @objc func setUpChannels(_ notification: Notification) {
+        self.setUpChannels()
+    }
+    
+    func setUpChannels() {
         let channels = (self.env.audioSystem?.channels ?? []).map { ($0.name, JSCoreCodeEngine.Channel(channel: $0, engine: self)) }
         
         let charray = JSValue(object: channels.map { $0.1 }, in: self.ctx)!
@@ -77,6 +81,7 @@ class JSCoreCodeEngine: CodeLanguageEngine {
         self.ctx.setObject(Scheduler(scheduler: env.scheduler, engine: self), forKeyedSubscript: "scheduler" as NSCopying & NSObjectProtocol)
 
         self.setupMIDINote()
+        self.setUpChannels()
         
         ctx.exceptionHandler = { [weak self] (ctx, exc) in
             if let exc = exc {

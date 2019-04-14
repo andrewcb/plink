@@ -47,6 +47,7 @@ class CodeSystem {
     static let scriptStateChanged = Notification.Name("CodeSystem.ScriptStateChanged")
     
     func evalScript() {
+        self.codeEngine?.resetState()
         self.codeEngine?.eval(script: self.script)
         self.lastEvaluatedScript = self.script
         NotificationCenter.default.post(name: CodeSystem.scriptStateChanged, object: nil)
