@@ -1,6 +1,6 @@
 # Plink
 
-Plink is intended as an environment for allowing AudioUnit instruments and effects to be hosted and manipulated algorithmically. It is still under development.
+Plink is an environment for hosting AudioUnit instruments and effects and allowing them to be played and manipulated in code. It is still under development.
 
 ## Quick start
 
