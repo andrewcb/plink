@@ -16,9 +16,12 @@ and press enter. Your computer should play a short middle C, using a piano sound
 The command above sent a note to the instrument you loaded. `$ch.ch1` refers to the channel named "ch1" and `.instrument` is its instrument. The instrument's `playNote` method accepts a `MIDINote` object and plays it immediately. A `MIDINote` is a note with a MIDI pitch, velocity  and duration; the above command plays middle C (60), at velocity 100 (out of 127), for 12 ticks (or half a beat). (If you change the tempo and rerun the command, the actual duration in seconds of the note will change correspondingly.)
 5. The `playNote` function is asynchronous, exiting before the note plays. As such, running it repeatedly will play several notes at once. The following command plays a (C major 7) chord:   
 `[60, 64, 67, 71].forEach( (n) => { $ch.ch1.instrument.playNote(MIDINote(n, 100, 12)) } )`  
+
 6. It is possible to synchronously wait for a number of ticks of the metronome, with the `metronome.sleep` function; the following command plays the chord in ascending notes:     
 `[60, 64, 67, 71].forEach( (n) => { $ch.ch1.instrument.playNote(MIDINote(n, 100, 12)) ; metronome.sleep(6) } )`
+
 7. It is, as you can imagine, possible to play melodies using these mechanisms; try the following command:   `[76, 75, 76, 75, 76, 71, 74, 72, 69, 52, 57, 60, 64, 69, 71, 52, 56, 64, 68, 71, 72, 52, 57, 64].forEach( (n) => { $ch.ch1.instrument.playNote(MIDINote(n, 100, 12)) ; metronome.sleep(12) } )`  This is a very simple form of sequencing, blocking the interpreter while each note plays, and assuming all notes have the same duration. As an exercise, try writing a version where note durations may be specified in the input.
+
 8. Of course, entering such commands on the command line is less than ideal, which is what the script can be useful for. In the script window (to the left of the console), enter (or copy and paste):   
 ```
 var melody = [76, 75, 76, 75, 76, 71, 74, 72, 69, 52, 57, 60, 64, 69, 71, 52, 56, 64, 68, 71, 72, 52, 57, 64]  
