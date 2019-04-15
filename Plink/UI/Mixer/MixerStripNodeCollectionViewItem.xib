@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="MixerStripNodeCollectionViewItem" customModule="GDAW01" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="MixerStripNodeCollectionViewItem" customModule="Plink" customModuleProvider="target">
             <connections>
                 <outlet property="titleLabel" destination="vo6-gF-wzf" id="RJ0-I0-kRM"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -36,8 +37,8 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o80-MI-OFe">
-                    <rect key="frame" x="4" y="4" width="20" height="19"/>
-                    <buttonCell key="cell" type="recessed" title="" bezelStyle="recessed" alignment="center" imageScaling="proportionallyDown" inset="2" id="DaN-bx-Rwb">
+                    <rect key="frame" x="4" y="4" width="32" height="19"/>
+                    <buttonCell key="cell" type="recessed" bezelStyle="recessed" image="unit_ui" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="DaN-bx-Rwb">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                         <font key="font" size="16" name="Webdings"/>
                     </buttonCell>
@@ -59,6 +60,9 @@
             </constraints>
             <point key="canvasLocation" x="139" y="168.5"/>
         </customView>
-        <collectionViewItem nibName="MixerStripNodeCollectionViewItem" id="T8W-Nm-hdC" customClass="MixerStripNodeCollectionViewItem" customModule="GDAW01" customModuleProvider="target"/>
+        <collectionViewItem nibName="MixerStripNodeCollectionViewItem" id="T8W-Nm-hdC" customClass="MixerStripNodeCollectionViewItem" customModule="Plink" customModuleProvider="target"/>
     </objects>
+    <resources>
+        <image name="unit_ui" width="16" height="16"/>
+    </resources>
 </document>
