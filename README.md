@@ -9,7 +9,9 @@ Plink is an environment for hosting AudioUnit instruments and effects and allowi
 3. Click the top + in the channel strip; it will pop up a menu of instrument plugins, grouped by manufacturer. If you have no additional plugins installed, there will be only one group: Apple. Click on the disclosure triangle to open this, and then double-click on `DLSMusicDevice` to add this instrument; this is the built-in General MIDI synthesiser that ships with macOS.  (If you own any other AudioUnit instruments, you can of course load them here.)
 4. The cyan box in the channel strip represents the instrument. Clicking the button to the left of the instrument name will open a window with the AudioUnit's graphical user interface. This is the main way of adjusting the sound of a software synthesiser, and is probably more interesting for units other than `DLSMusicDevice`.
 4. Click on the bottom line of the Console window, and type the line: 
-`$ch.ch1.instrument.playNote(MIDINote(60, 100, 12))`  
+```
+$ch.ch1.instrument.playNote(MIDINote(60, 100, 12))
+```
 and press enter. Your computer should play a short middle C, using a piano sound.    
 The command above sent a note to the instrument you loaded. `$ch.ch1` refers to the channel named "ch1" and `.instrument` is its instrument. The instrument's `playNote` method accepts a `MIDINote` object and plays it immediately. A `MIDINote` is a note with a MIDI pitch, velocity  and duration; the above command plays middle C (60), at velocity 100 (out of 127), for 12 ticks (or half a beat). (If you change the tempo and rerun the command, the actual duration in seconds of the note will change correspondingly.)
 5. The `playNote` function is asynchronous, exiting before the note plays. As such, running it repeatedly will play several notes at once. The following command plays a (C major 7) chord:   
@@ -33,11 +35,25 @@ This does not cover all the functions of Plink, but hopefully covers enough to g
 
 ## Overview
 
+### The running environment
+
 A Plink environment consists of several systems in interaction: the *Audio System*, which hosts AudioUnit Instrument and Effect plug-ins, providing a mixer and audio output, the *Code System*, which executes code (currently in JavaScript, using macOS' JavaScriptCore engine), and the time system, which keeps a permanently running clock with an adjustable tempo (the Metronome), and a Score with a position which, when running, is moved forward at the Metronome's rate. 
 The Code System has access to the other systems, and code in it can interact with them; i.e., by sending MIDI events to, or adjusting the parameters of, AudioUnits, or scheduling deferred events to take place in a specified amount of musical time. 
 The time system's Score can cause code to be executed, either periodically while the score is running (as **cycles**) or at a specific time in the score (as **cues**). Additional capabilities are planned for the future.
 The Audio System runs continuously, typically to the system audio output device, though can also render audio offline, either from the Score, or by executing arbitrary sound-producing code. (The Audio System's audio-buffer-rendering mechanism also provides the basis of the Metronome's time.)
 
+Each Plink document window has one environment, with its own instances of audio, code and time systems.
+
+### Plink documents
+
+A Plink environment may be (partially) stored in a Plink document; these end with the `.plink` extension. A Plink document contains:
+
+* a description of the Audio System: the details of channels, and the AudioUnits loaded in each channel, each unit with its current settings
+* the script source code in the script pane
+* the Score, which currently means the Cue and Cycle lists
+* the time settings, which currently mean the current tempo
+
+The state of the JavaScript interpreter's memory is volatile, and is not saved to a document. (Indeed, the interpreter's variables are cleared every time the script is reloaded.)
 
 ## The Plink user interface
 
