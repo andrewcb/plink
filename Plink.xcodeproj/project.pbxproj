@@ -89,6 +89,8 @@
 		449D69A021F6459C0083DAE5 /* AudioBufferConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D699F21F6459C0083DAE5 /* AudioBufferConsumer.swift */; };
 		449D69A221F6490B0083DAE5 /* AudioBufferFileRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D69A121F6490B0083DAE5 /* AudioBufferFileRecorder.swift */; };
 		44A768FA226162DB00ED2B69 /* WorkspaceWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A768F9226162DB00ED2B69 /* WorkspaceWindowController.swift */; };
+		44A768FC22654CD700ED2B69 /* LevelSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A768FB22654CD700ED2B69 /* LevelSliderCell.swift */; };
+		44A768FE22654CF300ED2B69 /* PanSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A768FD22654CF300ED2B69 /* PanSliderCell.swift */; };
 		44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */; };
 		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
@@ -201,6 +203,8 @@
 		449D699F21F6459C0083DAE5 /* AudioBufferConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBufferConsumer.swift; sourceTree = "<group>"; };
 		449D69A121F6490B0083DAE5 /* AudioBufferFileRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBufferFileRecorder.swift; sourceTree = "<group>"; };
 		44A768F9226162DB00ED2B69 /* WorkspaceWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceWindowController.swift; sourceTree = "<group>"; };
+		44A768FB22654CD700ED2B69 /* LevelSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSliderCell.swift; sourceTree = "<group>"; };
+		44A768FD22654CF300ED2B69 /* PanSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanSliderCell.swift; sourceTree = "<group>"; };
 		44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
 		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
@@ -420,6 +424,8 @@
 				447219C4216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift */,
 				447219C5216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib */,
 				4472198421690F2A00B15AC0 /* OneButtonCollectionViewItem.swift */,
+				44A768FB22654CD700ED2B69 /* LevelSliderCell.swift */,
+				44A768FD22654CF300ED2B69 /* PanSliderCell.swift */,
 			);
 			path = Mixer;
 			sourceTree = "<group>";
@@ -815,6 +821,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44A768FE22654CF300ED2B69 /* PanSliderCell.swift in Sources */,
 				44ED39782187590A00CB15B4 /* MIDINote.swift in Sources */,
 				4472198821690F2A00B15AC0 /* OneButtonCollectionViewItem.swift in Sources */,
 				449D69A221F6490B0083DAE5 /* AudioBufferFileRecorder.swift in Sources */,
@@ -885,6 +892,7 @@
 				447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */,
 				447219D5216AEA0B00B15AC0 /* WorldModel.swift in Sources */,
 				449D699521EB6AD70083DAE5 /* CycleListViewController.swift in Sources */,
+				44A768FC22654CD700ED2B69 /* LevelSliderCell.swift in Sources */,
 				447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */,
 				449D697F21DD89E20083DAE5 /* TickTimeFormattingService.swift in Sources */,
 				447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */,
