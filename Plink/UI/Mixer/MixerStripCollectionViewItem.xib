@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -38,14 +38,14 @@
                         </customView>
                         <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BaZ-Wb-V3C">
                             <rect key="frame" x="63" y="13" width="19" height="127"/>
-                            <sliderCell key="cell" continuous="YES" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="right" sliderType="linear" id="O6w-7k-qvg"/>
+                            <sliderCell key="cell" continuous="YES" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="right" sliderType="linear" id="O6w-7k-qvg" customClass="LevelSliderCell" customModule="Plink" customModuleProvider="target"/>
                             <connections>
                                 <action selector="levelChanged:" target="-2" id="7H1-eP-5LO"/>
                             </connections>
                         </slider>
                         <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iOl-Ft-Dz4">
                             <rect key="frame" x="14" y="144" width="116" height="19"/>
-                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" sliderType="linear" id="JZd-VM-gf2"/>
+                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" sliderType="linear" id="JZd-VM-gf2" customClass="PanSliderCell" customModule="Plink" customModuleProvider="target"/>
                             <connections>
                                 <action selector="panChanged:" target="-2" id="SN3-Xi-H5i"/>
                             </connections>
