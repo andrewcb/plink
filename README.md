@@ -57,7 +57,7 @@ A Plink environment may be (partially) stored in a Plink document; these end wit
 * the Score, which currently means the Cue and Cycle lists
 * the time settings, which currently mean the current tempo
 
-The state of the JavaScript interpreter's memory is volatile, and is not saved to a document. (Indeed, the interpreter's variables are cleared every time the script is reloaded.)
+The state of the JavaScript interpreter's memory is ephemeral, and is not saved to a document. (Indeed, the interpreter's variables are cleared every time the script is reloaded.)
 
 ## The Plink user interface
 
