@@ -25,7 +25,6 @@
 		4467310222429F1C0032CD18 /* TrailingSilence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4467310122429F1C0032CD18 /* TrailingSilence.swift */; };
 		4467310422429FB50032CD18 /* TrailingSilenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4467310322429FB50032CD18 /* TrailingSilenceTests.swift */; };
 		447219512169014800B15AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219502169014800B15AC0 /* AppDelegate.swift */; };
-		447219532169014800B15AC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219522169014800B15AC0 /* ViewController.swift */; };
 		447219552169014800B15AC0 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219542169014800B15AC0 /* World.swift */; };
 		447219572169014C00B15AC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 447219562169014C00B15AC0 /* Assets.xcassets */; };
 		4472195A2169014C00B15AC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 447219582169014C00B15AC0 /* Main.storyboard */; };
@@ -133,7 +132,6 @@
 		4467310322429FB50032CD18 /* TrailingSilenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingSilenceTests.swift; sourceTree = "<group>"; };
 		4472194D2169014700B15AC0 /* Plink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447219502169014800B15AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		447219522169014800B15AC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		447219542169014800B15AC0 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		447219562169014C00B15AC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		447219592169014C00B15AC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -317,7 +315,6 @@
 				447219712169049A00B15AC0 /* UI */,
 				4472199F216A586800B15AC0 /* Library */,
 				447219502169014800B15AC0 /* AppDelegate.swift */,
-				447219522169014800B15AC0 /* ViewController.swift */,
 				447219562169014C00B15AC0 /* Assets.xcassets */,
 				447219582169014C00B15AC0 /* Main.storyboard */,
 				4472195B2169014C00B15AC0 /* Info.plist */,
@@ -828,7 +825,6 @@
 				446730FA223E9D200032CD18 /* RenderProgressViewController.swift in Sources */,
 				447219AC216A59BC00B15AC0 /* BasicAudioUnitInstance.swift in Sources */,
 				4455B35B21D59308002F0426 /* ModuleSiteViewController.swift in Sources */,
-				447219532169014800B15AC0 /* ViewController.swift in Sources */,
 				447219B3216A5A2900B15AC0 /* AudioUnitPreset.swift in Sources */,
 				4472198F216A50AC00B15AC0 /* ColorfulTextButton.swift in Sources */,
 				4455B36321D7D768002F0426 /* Transport.swift in Sources */,
