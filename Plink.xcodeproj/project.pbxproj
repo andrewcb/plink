@@ -90,6 +90,7 @@
 		44A768FA226162DB00ED2B69 /* WorkspaceWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A768F9226162DB00ED2B69 /* WorkspaceWindowController.swift */; };
 		44A768FC22654CD700ED2B69 /* LevelSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A768FB22654CD700ED2B69 /* LevelSliderCell.swift */; };
 		44A768FE22654CF300ED2B69 /* PanSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A768FD22654CF300ED2B69 /* PanSliderCell.swift */; };
+		44A7690322693F2700ED2B69 /* JSCoreAudioSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A7690222693F2700ED2B69 /* JSCoreAudioSystemTests.swift */; };
 		44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */; };
 		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
@@ -203,6 +204,7 @@
 		44A768F9226162DB00ED2B69 /* WorkspaceWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceWindowController.swift; sourceTree = "<group>"; };
 		44A768FB22654CD700ED2B69 /* LevelSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSliderCell.swift; sourceTree = "<group>"; };
 		44A768FD22654CF300ED2B69 /* PanSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanSliderCell.swift; sourceTree = "<group>"; };
+		44A7690222693F2700ED2B69 /* JSCoreAudioSystemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSCoreAudioSystemTests.swift; sourceTree = "<group>"; };
 		44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
 		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				445F6AA02176AB5B00E4419A /* World */,
+				44A768FF22692E5800ED2B69 /* Executive */,
 				449D699021EA52660083DAE5 /* Data Model */,
 				44ED396F2184A60F00CB15B4 /* UI */,
 				449D698721E16BDF0083DAE5 /* Library */,
@@ -673,6 +676,30 @@
 			path = Recording;
 			sourceTree = "<group>";
 		};
+		44A768FF22692E5800ED2B69 /* Executive */ = {
+			isa = PBXGroup;
+			children = (
+				44A7690022692E6600ED2B69 /* Code */,
+			);
+			path = Executive;
+			sourceTree = "<group>";
+		};
+		44A7690022692E6600ED2B69 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				44A7690122692E7000ED2B69 /* JSCore */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
+		44A7690122692E7000ED2B69 /* JSCore */ = {
+			isa = PBXGroup;
+			children = (
+				44A7690222693F2700ED2B69 /* JSCoreAudioSystemTests.swift */,
+			);
+			path = JSCore;
+			sourceTree = "<group>";
+		};
 		44ED396F2184A60F00CB15B4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -911,6 +938,7 @@
 				4467310022429C060032CD18 /* AudioBufferExtensionTests.swift in Sources */,
 				44ED39722184A6CE00CB15B4 /* NSRect+ComposableTests.swift in Sources */,
 				4467310422429FB50032CD18 /* TrailingSilenceTests.swift in Sources */,
+				44A7690322693F2700ED2B69 /* JSCoreAudioSystemTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
