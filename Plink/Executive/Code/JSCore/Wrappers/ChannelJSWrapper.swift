@@ -11,6 +11,7 @@ import JavaScriptCore
 
 @objc protocol ChannelExports: JSExport {
     var instrument: JSCoreCodeEngine.Unit? { get }
+    var audioEffects: [JSCoreCodeEngine.Unit] { get }
 }
 
 extension JSCoreCodeEngine {
@@ -27,7 +28,10 @@ extension JSCoreCodeEngine {
         
         @objc public var instrument: Unit? {
             return self.channel.instrument.flatMap({ try? $0.getInstance() }).map { JSCoreCodeEngine.Unit(instance: $0, engine: self.engine) }
-            
+        }
+        
+        @objc public var audioEffects: [Unit] {
+            return self.channel.inserts.compactMap({ try? $0.getInstance() }).map { JSCoreCodeEngine.Unit(instance: $0, engine: self.engine) }
         }
     }
 }

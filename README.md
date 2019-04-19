@@ -86,20 +86,20 @@ The Score is the sequence of events to be triggered at various times, and can be
 Channels are available in the `$ch` object, either by index (i.e., `$ch[0]`) or by name (i.e., `$ch.melody1`).
 Each channel is a Channel object, which has the following fields:
 
-* `instrument` - The channel's instrument (if one is set); this is a **Unit**
-* `effects` - an array of effect objects (not yet implemented)
+* `instrument` - The channel's instrument (if one is set); this is a `Unit`
+* `audioEffects` - a (possibly empty) array of `Unit` objects for any audio insert effects the instrument's output passes through
 
 ### Units
 
 a **Unit** provides an interface to an AudioUnit instrument or effect. It has the following methods:
 
-* `playNote(note)` — accepts a **MIDINote** (a note with a duration) and plays it (assuming that the unit is capable of playing notes). This sends a `NoteOn` message immediately, and schedules a `NoteOff` message in the note's duration.
+* `playNote(note)` — accepts a `MIDINote` (a note with a duration) and plays it (assuming that the unit is capable of playing notes). This sends a `NoteOn` message immediately, and schedules a `NoteOff` message in the note's duration.
 * `sendMIDIEvent(b1, b2, b3)` — The low-level MIDI event sending function, which sends an arbitrary three-byte MIDI event to the unit's MIDI input.
 * `getParam(name)` — given the name of a parameter of the unit, retrieve its value; returns a floating-point number.
 * `setParam(name, value)` — set the value of a named parameter.
 
 ### MIDINote
-A **MIDINote** is an object representing a MIDI note with duration; when played, it produces a note-on event and then, the duration's time later at  the current tempo, a note-off event. 
+A `MIDINote` is an object representing a MIDI note with duration; when played, it produces a note-on event and then, the duration's time later at  the current tempo, a note-off event. 
 
 The syntax for constructing a MIDINote is `MIDINote(pitch, velocity, duration)`;  pitch and velocity are MIDI byte values, and duration is the duration in ticks.  The MIDI channel of the note may be specified as an  optional fourth argument; if omitted, it is 0.
 
