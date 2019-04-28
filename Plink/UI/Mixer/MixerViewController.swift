@@ -65,10 +65,19 @@ class MixerViewController: NSViewController {
     }
     
     // MARK: opening the component selector
+    enum ComponentType {
+        case instrument
+        case audioEffect
+    }
     private var _selectorCompletion: ((AudioUnitComponent)->())?
     private var _selectorTypesNeeded: [OSType] = [kAudioUnitType_MusicDevice]
     private var _popover: NSPopover?
-    func openAudioUnitDialog(fromView view: NSView, withTypes types: [OSType], completion:@escaping ((AudioUnitComponent)->())) {
+    func openChannelComponentChooser(ofType type: ComponentType, fromView view: NSView, completion:@escaping ((AudioUnitComponent)->())) {
+        let types: [OSType]
+        switch(type) {
+        case .instrument: types = [kAudioUnitType_MusicDevice]
+        case .audioEffect: types = [kAudioUnitType_Effect, kAudioUnitType_MusicEffect]
+        }
         self._selectorTypesNeeded = types
         self._selectorCompletion = completion
         let popover = NSPopover()
@@ -141,15 +150,14 @@ extension MixerViewController: NSCollectionViewDataSource {
         let channel = audioSystem.channels[indexPath[1]]
         collectionViewItem.channel = channel
         collectionViewItem.onRequestInstrumentChoice = { (view) in
-            self.openAudioUnitDialog(fromView: view, withTypes: [kAudioUnitType_MusicDevice]) { (component) in
+            self.openChannelComponentChooser(ofType: .instrument, fromView: view) { (component) in
                 print("Will set instrument for \(channel) to \(component)")
                 try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
                 collectionViewItem.refresh()
             }
         }
         collectionViewItem.onRequestInsertAdd = { (view) in
-            // TODO: allow combinations of types
-            self.openAudioUnitDialog(fromView: view, withTypes: [kAudioUnitType_Effect, kAudioUnitType_MusicEffect]) { (component) in
+            self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (component) in
                 print("Will add insert for \(channel) to \(component)")
                 try! channel.addInsert(fromDescription: component.audioComponentDescription)
                 collectionViewItem.refresh()
