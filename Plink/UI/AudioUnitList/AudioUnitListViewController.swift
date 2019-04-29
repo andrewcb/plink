@@ -18,6 +18,11 @@ class AudioUnitListViewController: NSViewController {
         }
     }
     
+    enum OutlineItem {
+        case manufacturer(Int)
+        case component(AudioUnitComponent)
+    }
+    
     var onSelection: ((AudioUnitComponent)->())? = nil
     
     var availableInstruments = [AudioUnitComponent]() {
@@ -49,22 +54,19 @@ class AudioUnitListViewController: NSViewController {
     private func reloadInstruments() {
         DispatchQueue.global(qos: .utility).async { [weak self] in
             guard let s = self else { return }
-//            s.availableInstruments = s.playbackEngine.getListOfInstruments()
             s.availableInstruments = s.typesNeeded.flatMap { tp in AudioUnitComponent.findAll(matching: AudioComponentDescription(componentType: tp, componentSubType: 0, componentManufacturer: 0, componentFlags: 0, componentFlagsMask: 0)) }
-            print("got \(s.availableInstruments.count) instruments")
+//            print("got \(s.availableInstruments.count) instruments")
         }
     }
     
     
     @IBAction func doubleClicked(_ sender: NSOutlineView) {
-        guard let item = sender.item(atRow: sender.clickedRow) else { return }
-        if let component = item as? AudioUnitComponent {
-            // component selected
+        guard let item = sender.item(atRow: sender.clickedRow) as? OutlineItem else { return }
+        switch(item) {
+        case .component(let component):
             self.onSelection?(component)
             self.view.window?.close()
-        }
-        if item as? Int != nil {
-            // top-level index double-clicked; expand/close
+        case .manufacturer(let item):
             if sender.isItemExpanded(item) {
                 sender.collapseItem(item)
             } else {
@@ -76,23 +78,24 @@ class AudioUnitListViewController: NSViewController {
 
 extension AudioUnitListViewController: NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        if let index = item as? Int {
-            return self.instrumentsByManufacturer[index].1.count
-        } else {
-            return self.instrumentsByManufacturer.count
+        guard let i2 = item, let item = i2 as? OutlineItem else { return self.instrumentsByManufacturer.count }
+        switch(item) {
+        case .manufacturer(let index): return self.instrumentsByManufacturer[index].1.count
+        default: return 0
         }
     }
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        if let ii = item as? Int {
-            return self.instrumentsByManufacturer[ii].1[index]
-        } else {
-            return index
+        guard let ii = item, let oi = ii as? OutlineItem else { return OutlineItem.manufacturer(index) }
+        switch(oi) {
+        case .manufacturer(let mi): return OutlineItem.component(self.instrumentsByManufacturer[mi].1[index])
+        default: fatalError()
         }
     }
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        return item as? Int != nil
+        if let oi = item as? OutlineItem, case let .manufacturer(_) = oi { return true }
+        else { return false }
     }
 }
 
@@ -100,17 +103,20 @@ extension AudioUnitListViewController: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         var view: NSTableCellView?
         
-        if let i = item as? Int {
+        guard let oi = item as? OutlineItem else { return nil }
+        switch(oi) {
+        case .manufacturer(let i):
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ManufacturerCell"), owner: self) as? NSTableCellView
             if let textField = view?.textField {
                 textField.stringValue = self.instrumentsByManufacturer[i].0
             }
-        } else if let component = item as? AudioUnitComponent {
+        case .component(let component):
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ComponentCell"), owner: self) as? NSTableCellView
             if let textField = view?.textField {
                 textField.stringValue = component.componentName ?? "-"
             }
         }
+
         return view
     }    
 }
