@@ -771,7 +771,7 @@
                 </windowController>
                 <customObject id="X5I-cb-X9G" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1953" y="250"/>
+            <point key="canvasLocation" x="1946" y="-137"/>
         </scene>
         <!--Render Progress View Controller-->
         <scene sceneID="cg2-bJ-iz9">
@@ -808,12 +808,12 @@
                 </viewController>
                 <customObject id="96Z-E2-Bua" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1953" y="648"/>
+            <point key="canvasLocation" x="1946" y="175"/>
         </scene>
-        <!--Audio Unit List View Controller-->
+        <!--Audio Effect Selector-->
         <scene sceneID="enu-22-ff6">
             <objects>
-                <viewController storyboardIdentifier="AudioUnitListPopoverViewController" id="dxt-9Y-mDJ" customClass="AudioUnitListViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AudioEffectSelectorPopoverViewController" id="dxt-9Y-mDJ" userLabel="Audio Effect Selector" customClass="AudioUnitListViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="XJ6-gK-c6Q">
                         <rect key="frame" x="0.0" y="0.0" width="370" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1670,6 +1670,107 @@
                 <customObject id="8b3-H0-h4O" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="198" y="1266"/>
+        </scene>
+        <!--Instrument Selector-->
+        <scene sceneID="8pm-3s-ztJ">
+            <objects>
+                <viewController storyboardIdentifier="InstrumentSelectorPopoverViewController" id="Cw8-Ty-Z7E" userLabel="Instrument Selector" customClass="AudioUnitListViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="RCS-8S-0I4">
+                        <rect key="frame" x="0.0" y="0.0" width="370" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHn-4L-rAX">
+                                <rect key="frame" x="-1" y="0.0" width="371" height="300"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="lVN-db-aQ7">
+                                    <rect key="frame" x="0.0" y="0.0" width="371" height="300"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="Oua-9V-hmk" id="IMT-kD-Lgw">
+                                            <rect key="frame" x="0.0" y="0.0" width="371" height="300"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <size key="intercellSpacing" width="3" height="2"/>
+                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                            <tableColumns>
+                                                <tableColumn width="368" minWidth="40" maxWidth="1000" id="Oua-9V-hmk">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                    </tableHeaderCell>
+                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="Znk-8V-wn9">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                    <prototypeCellViews>
+                                                        <tableCellView identifier="ManufacturerCell" id="f5l-HI-wZ7">
+                                                            <rect key="frame" x="1" y="1" width="368" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WP2-di-iqL">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="368" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Manufacturer" id="JHc-b1-6od">
+                                                                        <font key="font" metaFont="cellTitle"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" red="1" green="0.78323102680000001" blue="0.80997342709999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="textField" destination="WP2-di-iqL" id="Cqw-oK-NGg"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                        <tableCellView identifier="ComponentCell" id="W5L-Gf-Hpb">
+                                                            <rect key="frame" x="1" y="20" width="368" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jm9-OT-hMt">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="368" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Component" id="tP8-lC-yeJ">
+                                                                        <font key="font" metaFont="cellTitle"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                            </subviews>
+                                                            <connections>
+                                                                <outlet property="textField" destination="jm9-OT-hMt" id="RwF-Yl-9xX"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                    </prototypeCellViews>
+                                                </tableColumn>
+                                            </tableColumns>
+                                            <connections>
+                                                <action trigger="doubleAction" selector="doubleClicked:" target="Cw8-Ty-Z7E" id="FaW-SJ-zAw"/>
+                                                <outlet property="dataSource" destination="Cw8-Ty-Z7E" id="Cx2-UE-VEZ"/>
+                                                <outlet property="delegate" destination="Cw8-Ty-Z7E" id="4zT-h8-82M"/>
+                                            </connections>
+                                        </outlineView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2n0-gc-ZAw">
+                                    <rect key="frame" x="1" y="251" width="349" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="6zL-q8-vMg">
+                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="instrumentsOutlineView" destination="IMT-kD-Lgw" id="pJv-i1-Af4"/>
+                    </connections>
+                </viewController>
+                <customObject id="Vo6-uj-mbc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1769" y="663"/>
         </scene>
     </scenes>
     <resources>

@@ -74,14 +74,19 @@ class MixerViewController: NSViewController {
     private var _popover: NSPopover?
     func openChannelComponentChooser(ofType type: ComponentType, fromView view: NSView, completion:@escaping ((AudioUnitComponent)->())) {
         let types: [OSType]
+        let viewControllerIdentifier: String
         switch(type) {
-        case .instrument: types = [kAudioUnitType_MusicDevice]
-        case .audioEffect: types = [kAudioUnitType_Effect, kAudioUnitType_MusicEffect]
+        case .instrument:
+            types = [kAudioUnitType_MusicDevice]
+            viewControllerIdentifier = "InstrumentSelectorPopoverViewController"
+        case .audioEffect:
+            types = [kAudioUnitType_Effect, kAudioUnitType_MusicEffect]
+            viewControllerIdentifier = "AudioEffectSelectorPopoverViewController"
         }
         self._selectorTypesNeeded = types
         self._selectorCompletion = completion
         let popover = NSPopover()
-        let vc = self.storyboard!.instantiateController(withIdentifier: "AudioUnitListPopoverViewController") as! AudioUnitListViewController
+        let vc = self.storyboard!.instantiateController(withIdentifier: viewControllerIdentifier) as! AudioUnitListViewController
         vc.typesNeeded = types
         vc.onSelection = { [weak self] (component) in
             self?._popover?.close()
