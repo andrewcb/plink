@@ -144,11 +144,19 @@ extension ComponentSelectorViewController: NSOutlineViewDelegate {
                 textField.stringValue = component.componentName ?? "-"
             }
         case .soundFontItem:
-            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ComponentCell"), owner: self) as? NSTableCellView
-            view?.textField?.stringValue = "Load a SoundFont"
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SoundFontCell"), owner: self) as? NSTableCellView
         }
 
         return view
-    }    
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
+        guard let oi = item as? OutlineItem else { return outlineView.rowHeight }
+        switch(oi) {
+        case .soundFontItem: return outlineView.rowHeight*2
+        default: return outlineView.rowHeight
+        }
+
+    }
 }
 
