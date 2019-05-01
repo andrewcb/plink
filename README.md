@@ -70,6 +70,14 @@ Below the mixer are two panes, which may show a number of possible views. The vi
 * **Cue List** — A list of one-off events to be executed at various times in the Score. Each consists of a time and some text, which may be the name of a function to be called, or an arbitrary JavaScript expression.
 * **Cycle List** — a list of cycles to be periodically executed. These work like Cues, only they are executed repeatedly, with an amount of musical time between executions. An offset may be specified; for example, a Cycle with a period of 2 beats and offset of 1 beat will be executed at beats 1, 3, 5, and so forth.
 
+## The Mixer
+
+The Plink Mixer consists of zero or more channels, each of which will typically have an *instrument* followed by a (possibly empty) chain of audio *effects*. When a note is played on the instrument, the audio flows through the channel's effects (in descending order, as displayed on the screen) before being mixed into the audio output. Each channel's Instrument and Effects are AudioUnits.
+
+MacOS comes with a few Apple AudioUnits, including a General MIDI synthesiser instrument, *DLSMusicDevice*. You can additionally use free or commercial AudioUnit plug-ins. Note that there is no facility for using VST plugins natively in Plink, though third party VST to AudioUnit adaptors may enable this.
+
+There is an experimental facility for loading [SoundFonts](https://en.wikipedia.org/wiki/SoundFont) as instruments. This uses the Apple DLSMusicDevice synthesiser (which has the ability to play SoundFonts, but no user interface for doing this non-programmatically). Note that this is currently experimental and has problems; for one, it depends on the SoundFont file remaining in the same location on the system to load, and a Plink document will fail to load if it depends on a SoundFont which is absent. It is anticipated that this will be fixed at some point.
+
 ## Musical time in Plink
 
 Events in Plink take place in musical time; this is measured in *ticks*, each tick being an arbitrary fraction of a beat (currently 1/24 of a beat; the number of ticks per beat is configured in the code, and may change in future; in JavaScript, `metronome.ticksPerBeat`  returns the current value). Most time as passed in JavaScript code is in ticks. Time specified in the Score is written in "beats:ticks" form.

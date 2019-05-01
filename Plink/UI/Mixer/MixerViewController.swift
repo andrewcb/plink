@@ -65,41 +65,30 @@ class MixerViewController: NSViewController {
     }
     
     // MARK: opening the component selector
-    enum ComponentType {
-        case instrument
-        case audioEffect
-    }
-    private var _selectorCompletion: ((AudioUnitListViewController.Selection)->())?
-    private var _selectorTypesNeeded: [OSType] = [kAudioUnitType_MusicDevice]
-    private var _popover: NSPopover?
-    func openChannelComponentChooser(ofType type: ComponentType, fromView view: NSView, completion:@escaping ((AudioUnitListViewController.Selection)->())) {
-        let types: [OSType]
+    func openChannelComponentChooser(ofType type: ComponentSelectorViewController.ComponentType, fromView view: NSView, completion:@escaping ((ComponentSelectorViewController.Selection)->())) {
         let viewControllerIdentifier: String
         switch(type) {
-        case .instrument:
-            types = [kAudioUnitType_MusicDevice]
-            viewControllerIdentifier = "InstrumentSelectorPopoverViewController"
-        case .audioEffect:
-            types = [kAudioUnitType_Effect, kAudioUnitType_MusicEffect]
-            viewControllerIdentifier = "AudioEffectSelectorPopoverViewController"
+        case .instrument: viewControllerIdentifier = "InstrumentSelectorPopoverViewController"
+        case .audioEffect: viewControllerIdentifier = "AudioEffectSelectorPopoverViewController"
         }
-        self._selectorTypesNeeded = types
-        self._selectorCompletion = completion
         let popover = NSPopover()
-        let vc = self.storyboard!.instantiateController(withIdentifier: viewControllerIdentifier) as! AudioUnitListViewController
-        vc.typesNeeded = types
-        vc.onSelection = { [weak self] (component) in
-            self?._popover?.close()
+        let vc = self.storyboard!.instantiateController(withIdentifier: viewControllerIdentifier) as! ComponentSelectorViewController
+        vc.componentType = type
+        vc.onSelection = { (component) in
+            popover.close()
             completion(component)
         }
         popover.contentViewController =  vc as NSViewController
         popover.behavior = .transient
 //        popover.delegate = self
         let anchorRect: NSRect = view.superview!.convert(view.frame, to: self.view)
-        self._popover = popover
         popover.show(relativeTo: anchorRect, of: self.view, preferredEdge: .maxX)
     }
 
+    fileprivate func load(soundFont sfurl: URL, intoChannel channel: AudioSystem.Channel) throws {
+        try channel.loadInstrument(fromDescription: .dlsSynth)
+        try channel.instrument?.getInstance().setProperty(withID: kMusicDeviceProperty_SoundBankURL, scope: kAudioUnitScope_Global, element: 0, to: sfurl)
+    }
     
     // MARK: Opening the AudioUnit interface view
     
@@ -161,6 +150,18 @@ extension MixerViewController: NSCollectionViewDataSource {
                     print("Will set instrument for \(channel) to \(component)")
                     try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
                     collectionViewItem.refresh()
+                case .goToSoundFont:
+                    let openpanel = NSOpenPanel()
+                    openpanel.allowedFileTypes = ["sf2"]
+                    openpanel.beginSheetModal(for: self.view.window!) { [weak self] (response) in
+                        guard
+                            let self=self,
+                            response == .OK,
+                            let url = openpanel.url
+                        else { return }
+                        try! self.load(soundFont: url, intoChannel: channel)
+                        collectionViewItem.refresh()
+                    }
                 }
             }
         }
@@ -168,9 +169,10 @@ extension MixerViewController: NSCollectionViewDataSource {
             self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (choice) in
                 switch(choice) {
                 case .component(let component):
-                    print("Will set instrument for \(channel) to \(component)")
-                    try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
+                    try! channel.addInsert(fromDescription: component.audioComponentDescription)
                     collectionViewItem.refresh()
+                case .goToSoundFont:
+                    fatalError() // no SoundFonts here
                 }
             }
             

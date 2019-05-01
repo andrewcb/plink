@@ -1,5 +1,5 @@
 //
-//  AudioUnitListViewController.swift
+//  ComponentSelectorViewController.swift
 //  Plink
 //
 //  Created by acb on 05/09/2018.
@@ -9,24 +9,39 @@
 import Cocoa
 import AudioToolbox
 
-class AudioUnitListViewController: NSViewController {
-    @IBOutlet weak var instrumentsOutlineView: NSOutlineView!
+class ComponentSelectorViewController: NSViewController {
     
-    var typesNeeded: [OSType] = [] {
+    public enum ComponentType {
+        case instrument
+        case audioEffect
+    }
+    
+    public var componentType: ComponentType = .instrument {
         didSet {
             self.reloadInstruments()
         }
     }
+
+    @IBOutlet weak var instrumentsOutlineView: NSOutlineView!
+
+    let typesNeeded: [ComponentType:[OSType]] = [
+        .instrument: [kAudioUnitType_MusicDevice],
+        .audioEffect: [kAudioUnitType_Effect, kAudioUnitType_MusicEffect]
+    ]
+    
+    private var hasSoundFontItem: Bool { return self.componentType == .instrument }
     
     enum OutlineItem {
         case manufacturer(Int)
         case component(AudioUnitComponent)
+        case soundFontItem
     }
     
     
     // returning a user selection, i.e., a component, or a special choice if available
     enum Selection {
         case component(AudioUnitComponent)
+        case goToSoundFont // go to the SoundFont workflow
     }
     var onSelection: ((Selection)->())? = nil
     
@@ -59,8 +74,7 @@ class AudioUnitListViewController: NSViewController {
     private func reloadInstruments() {
         DispatchQueue.global(qos: .utility).async { [weak self] in
             guard let s = self else { return }
-            s.availableInstruments = s.typesNeeded.flatMap { tp in AudioUnitComponent.findAll(matching: AudioComponentDescription(componentType: tp, componentSubType: 0, componentManufacturer: 0, componentFlags: 0, componentFlagsMask: 0)) }
-//            print("got \(s.availableInstruments.count) instruments")
+            s.availableInstruments = (s.typesNeeded[s.componentType] ?? []).flatMap { tp in AudioUnitComponent.findAll(matching: AudioComponentDescription(componentType: tp, componentSubType: 0, componentManufacturer: 0, componentFlags: 0, componentFlagsMask: 0)) }
         }
     }
     
@@ -77,13 +91,19 @@ class AudioUnitListViewController: NSViewController {
             } else {
                 sender.expandItem(item)
             }
+        case .soundFontItem:
+            self.onSelection?(.goToSoundFont)
+            self.view.window?.close()
         }
     }
 }
 
-extension AudioUnitListViewController: NSOutlineViewDataSource {
+extension ComponentSelectorViewController: NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        guard let i2 = item, let item = i2 as? OutlineItem else { return self.instrumentsByManufacturer.count }
+        guard let i2 = item, let item = i2 as? OutlineItem else {
+            // top-level
+            return self.instrumentsByManufacturer.count + (self.hasSoundFontItem ? 1 : 0)
+        }
         switch(item) {
         case .manufacturer(let index): return self.instrumentsByManufacturer[index].1.count
         default: return 0
@@ -91,7 +111,10 @@ extension AudioUnitListViewController: NSOutlineViewDataSource {
     }
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        guard let ii = item, let oi = ii as? OutlineItem else { return OutlineItem.manufacturer(index) }
+        guard let ii = item, let oi = ii as? OutlineItem else {
+            let manuIndex = index - (hasSoundFontItem ? 1 : 0 )
+            return manuIndex < 0 ? OutlineItem.soundFontItem : OutlineItem.manufacturer(manuIndex)
+        }
         switch(oi) {
         case .manufacturer(let mi): return OutlineItem.component(self.instrumentsByManufacturer[mi].1[index])
         default: fatalError()
@@ -104,7 +127,7 @@ extension AudioUnitListViewController: NSOutlineViewDataSource {
     }
 }
 
-extension AudioUnitListViewController: NSOutlineViewDelegate {
+extension ComponentSelectorViewController: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         var view: NSTableCellView?
         
@@ -120,9 +143,20 @@ extension AudioUnitListViewController: NSOutlineViewDelegate {
             if let textField = view?.textField {
                 textField.stringValue = component.componentName ?? "-"
             }
+        case .soundFontItem:
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SoundFontCell"), owner: self) as? NSTableCellView
         }
 
         return view
-    }    
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
+        guard let oi = item as? OutlineItem else { return outlineView.rowHeight }
+        switch(oi) {
+        case .soundFontItem: return outlineView.rowHeight*2
+        default: return outlineView.rowHeight
+        }
+
+    }
 }
 
