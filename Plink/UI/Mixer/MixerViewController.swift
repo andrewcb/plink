@@ -69,10 +69,10 @@ class MixerViewController: NSViewController {
         case instrument
         case audioEffect
     }
-    private var _selectorCompletion: ((AudioUnitComponent)->())?
+    private var _selectorCompletion: ((AudioUnitListViewController.Selection)->())?
     private var _selectorTypesNeeded: [OSType] = [kAudioUnitType_MusicDevice]
     private var _popover: NSPopover?
-    func openChannelComponentChooser(ofType type: ComponentType, fromView view: NSView, completion:@escaping ((AudioUnitComponent)->())) {
+    func openChannelComponentChooser(ofType type: ComponentType, fromView view: NSView, completion:@escaping ((AudioUnitListViewController.Selection)->())) {
         let types: [OSType]
         let viewControllerIdentifier: String
         switch(type) {
@@ -155,17 +155,23 @@ extension MixerViewController: NSCollectionViewDataSource {
         let channel = audioSystem.channels[indexPath[1]]
         collectionViewItem.channel = channel
         collectionViewItem.onRequestInstrumentChoice = { (view) in
-            self.openChannelComponentChooser(ofType: .instrument, fromView: view) { (component) in
-                print("Will set instrument for \(channel) to \(component)")
-                try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
-                collectionViewItem.refresh()
+            self.openChannelComponentChooser(ofType: .instrument, fromView: view) { (choice) in
+                switch(choice) {
+                case .component(let component):
+                    print("Will set instrument for \(channel) to \(component)")
+                    try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
+                    collectionViewItem.refresh()
+                }
             }
         }
         collectionViewItem.onRequestInsertAdd = { (view) in
-            self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (component) in
-                print("Will add insert for \(channel) to \(component)")
-                try! channel.addInsert(fromDescription: component.audioComponentDescription)
-                collectionViewItem.refresh()
+            self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (choice) in
+                switch(choice) {
+                case .component(let component):
+                    print("Will set instrument for \(channel) to \(component)")
+                    try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
+                    collectionViewItem.refresh()
+                }
             }
             
         }

@@ -12,7 +12,7 @@ import AudioToolbox
 class AudioUnitListViewController: NSViewController {
     @IBOutlet weak var instrumentsOutlineView: NSOutlineView!
     
-    var typesNeeded: [OSType] = [] { //} = kAudioUnitType_MusicDevice {
+    var typesNeeded: [OSType] = [] {
         didSet {
             self.reloadInstruments()
         }
@@ -23,7 +23,12 @@ class AudioUnitListViewController: NSViewController {
         case component(AudioUnitComponent)
     }
     
-    var onSelection: ((AudioUnitComponent)->())? = nil
+    
+    // returning a user selection, i.e., a component, or a special choice if available
+    enum Selection {
+        case component(AudioUnitComponent)
+    }
+    var onSelection: ((Selection)->())? = nil
     
     var availableInstruments = [AudioUnitComponent]() {
         didSet {
@@ -64,7 +69,7 @@ class AudioUnitListViewController: NSViewController {
         guard let item = sender.item(atRow: sender.clickedRow) as? OutlineItem else { return }
         switch(item) {
         case .component(let component):
-            self.onSelection?(component)
+            self.onSelection?(.component(component))
             self.view.window?.close()
         case .manufacturer(let item):
             if sender.isItemExpanded(item) {
