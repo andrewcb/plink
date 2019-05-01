@@ -813,7 +813,7 @@
         <!--Audio Effect Selector-->
         <scene sceneID="enu-22-ff6">
             <objects>
-                <viewController storyboardIdentifier="AudioEffectSelectorPopoverViewController" id="dxt-9Y-mDJ" userLabel="Audio Effect Selector" customClass="AudioUnitListViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AudioEffectSelectorPopoverViewController" id="dxt-9Y-mDJ" userLabel="Audio Effect Selector" customClass="ComponentSelectorViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="XJ6-gK-c6Q">
                         <rect key="frame" x="0.0" y="0.0" width="370" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1674,7 +1674,7 @@
         <!--Instrument Selector-->
         <scene sceneID="8pm-3s-ztJ">
             <objects>
-                <viewController storyboardIdentifier="InstrumentSelectorPopoverViewController" id="Cw8-Ty-Z7E" userLabel="Instrument Selector" customClass="AudioUnitListViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InstrumentSelectorPopoverViewController" id="Cw8-Ty-Z7E" userLabel="Instrument Selector" customClass="ComponentSelectorViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="RCS-8S-0I4">
                         <rect key="frame" x="0.0" y="0.0" width="370" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>

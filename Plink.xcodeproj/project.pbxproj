@@ -58,7 +58,7 @@
 		447219BC216A5E5400B15AC0 /* ChannelJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BB216A5E5400B15AC0 /* ChannelJSWrapper.swift */; };
 		447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BD216A5E8F00B15AC0 /* UnitJSWrapper.swift */; };
 		447219C0216A5F9800B15AC0 /* MetronomeJSWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219BF216A5F9800B15AC0 /* MetronomeJSWrapper.swift */; };
-		447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219C2216AC89400B15AC0 /* AudioUnitListViewController.swift */; };
+		447219C3216AC89400B15AC0 /* ComponentSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219C2216AC89400B15AC0 /* ComponentSelectorViewController.swift */; };
 		447219C7216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447219C4216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift */; };
 		447219C8216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 447219C5216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib */; };
 		447219C9216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 447219C6216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib */; };
@@ -170,7 +170,7 @@
 		447219BB216A5E5400B15AC0 /* ChannelJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelJSWrapper.swift; sourceTree = "<group>"; };
 		447219BD216A5E8F00B15AC0 /* UnitJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitJSWrapper.swift; sourceTree = "<group>"; };
 		447219BF216A5F9800B15AC0 /* MetronomeJSWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeJSWrapper.swift; sourceTree = "<group>"; };
-		447219C2216AC89400B15AC0 /* AudioUnitListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioUnitListViewController.swift; sourceTree = "<group>"; };
+		447219C2216AC89400B15AC0 /* ComponentSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentSelectorViewController.swift; sourceTree = "<group>"; };
 		447219C4216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixerStripNodeCollectionViewItem.swift; sourceTree = "<group>"; };
 		447219C5216AC97700B15AC0 /* MixerStripNodeCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerStripNodeCollectionViewItem.xib; sourceTree = "<group>"; };
 		447219C6216AC97700B15AC0 /* MixerStripAddNodeCollectionViewItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixerStripAddNodeCollectionViewItem.xib; sourceTree = "<group>"; };
@@ -559,7 +559,7 @@
 		447219C1216AC86F00B15AC0 /* AudioUnitList */ = {
 			isa = PBXGroup;
 			children = (
-				447219C2216AC89400B15AC0 /* AudioUnitListViewController.swift */,
+				447219C2216AC89400B15AC0 /* ComponentSelectorViewController.swift */,
 			);
 			path = AudioUnitList;
 			sourceTree = "<group>";
@@ -912,7 +912,7 @@
 				4455B35F21D59996002F0426 /* SourceViewController.swift in Sources */,
 				447219B9216A5C2D00B15AC0 /* AudioSystem.swift in Sources */,
 				449D699A21F2A9CE0083DAE5 /* NSDraggingInfo+modernisation.swift in Sources */,
-				447219C3216AC89400B15AC0 /* AudioUnitListViewController.swift in Sources */,
+				447219C3216AC89400B15AC0 /* ComponentSelectorViewController.swift in Sources */,
 				447219D5216AEA0B00B15AC0 /* WorldModel.swift in Sources */,
 				449D699521EB6AD70083DAE5 /* CycleListViewController.swift in Sources */,
 				44A768FC22654CD700ED2B69 /* LevelSliderCell.swift in Sources */,
