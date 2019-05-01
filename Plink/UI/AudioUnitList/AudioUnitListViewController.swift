@@ -18,15 +18,19 @@ class AudioUnitListViewController: NSViewController {
         }
     }
     
+    var hasSoundFontItem: Bool = false
+    
     enum OutlineItem {
         case manufacturer(Int)
         case component(AudioUnitComponent)
+        case soundFontItem
     }
     
     
     // returning a user selection, i.e., a component, or a special choice if available
     enum Selection {
         case component(AudioUnitComponent)
+        case goToSoundFont // go to the SoundFont workflow
     }
     var onSelection: ((Selection)->())? = nil
     
@@ -77,13 +81,19 @@ class AudioUnitListViewController: NSViewController {
             } else {
                 sender.expandItem(item)
             }
+        case .soundFontItem:
+            self.onSelection?(.goToSoundFont)
+            self.view.window?.close()
         }
     }
 }
 
 extension AudioUnitListViewController: NSOutlineViewDataSource {
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        guard let i2 = item, let item = i2 as? OutlineItem else { return self.instrumentsByManufacturer.count }
+        guard let i2 = item, let item = i2 as? OutlineItem else {
+            // top-level
+            return self.instrumentsByManufacturer.count + (self.hasSoundFontItem ? 1 : 0)
+        }
         switch(item) {
         case .manufacturer(let index): return self.instrumentsByManufacturer[index].1.count
         default: return 0
@@ -91,7 +101,10 @@ extension AudioUnitListViewController: NSOutlineViewDataSource {
     }
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        guard let ii = item, let oi = ii as? OutlineItem else { return OutlineItem.manufacturer(index) }
+        guard let ii = item, let oi = ii as? OutlineItem else {
+            let manuIndex = index - (hasSoundFontItem ? 1 : 0 )
+            return manuIndex < 0 ? OutlineItem.soundFontItem : OutlineItem.manufacturer(index)
+        }
         switch(oi) {
         case .manufacturer(let mi): return OutlineItem.component(self.instrumentsByManufacturer[mi].1[index])
         default: fatalError()
@@ -120,6 +133,9 @@ extension AudioUnitListViewController: NSOutlineViewDelegate {
             if let textField = view?.textField {
                 textField.stringValue = component.componentName ?? "-"
             }
+        case .soundFontItem:
+            view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ComponentCell"), owner: self) as? NSTableCellView
+            view?.textField?.stringValue = "Load a SoundFont"
         }
 
         return view

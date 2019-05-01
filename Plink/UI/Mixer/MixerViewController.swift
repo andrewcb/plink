@@ -88,6 +88,7 @@ class MixerViewController: NSViewController {
         let popover = NSPopover()
         let vc = self.storyboard!.instantiateController(withIdentifier: viewControllerIdentifier) as! AudioUnitListViewController
         vc.typesNeeded = types
+        vc.hasSoundFontItem = (type == .instrument) // TODO: devolve this to the selector
         vc.onSelection = { [weak self] (component) in
             self?._popover?.close()
             completion(component)
@@ -100,6 +101,10 @@ class MixerViewController: NSViewController {
         popover.show(relativeTo: anchorRect, of: self.view, preferredEdge: .maxX)
     }
 
+    fileprivate func load(soundFont sfurl: URL, intoChannel channel: AudioSystem.Channel) throws {
+        try channel.loadInstrument(fromDescription: .dlsSynth)
+        try channel.instrument?.getInstance().setProperty(withID: kMusicDeviceProperty_SoundBankURL, scope: kAudioUnitScope_Global, element: 0, to: sfurl)
+    }
     
     // MARK: Opening the AudioUnit interface view
     
@@ -161,6 +166,18 @@ extension MixerViewController: NSCollectionViewDataSource {
                     print("Will set instrument for \(channel) to \(component)")
                     try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
                     collectionViewItem.refresh()
+                case .goToSoundFont:
+                    let openpanel = NSOpenPanel()
+                    openpanel.allowedFileTypes = ["sf2"]
+                    openpanel.beginSheetModal(for: self.view.window!) { [weak self] (response) in
+                        guard
+                            let self=self,
+                            response == .OK,
+                            let url = openpanel.url
+                        else { return }
+                        try! self.load(soundFont: url, intoChannel: channel)
+                        collectionViewItem.refresh()
+                    }
                 }
             }
         }
@@ -171,6 +188,8 @@ extension MixerViewController: NSCollectionViewDataSource {
                     print("Will set instrument for \(channel) to \(component)")
                     try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
                     collectionViewItem.refresh()
+                case .goToSoundFont:
+                    fatalError() // no SoundFonts here
                 }
             }
             

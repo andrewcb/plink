@@ -16,10 +16,11 @@ extension AudioComponentDescription {
         self.init(componentType: type, componentSubType: subType, componentManufacturer: manufacturer, componentFlags: 0, componentFlagsMask: 0)
     }
     
-    public static var defaultOutput = AudioComponentDescription(type: kAudioUnitType_Output, subType: kAudioUnitSubType_DefaultOutput, manufacturer: kAudioUnitManufacturer_Apple)
-    public static var genericOutput = AudioComponentDescription(type: kAudioUnitType_Output, subType: kAudioUnitSubType_GenericOutput, manufacturer: kAudioUnitManufacturer_Apple)
-    public static var stereoMixer = AudioComponentDescription(type: kAudioUnitType_Mixer, subType: kAudioUnitSubType_StereoMixer, manufacturer: kAudioUnitManufacturer_Apple)
-    public static var multiChannelMixer = AudioComponentDescription(type: kAudioUnitType_Mixer, subType: kAudioUnitSubType_MultiChannelMixer, manufacturer: kAudioUnitManufacturer_Apple)
+    public static let defaultOutput = AudioComponentDescription(type: kAudioUnitType_Output, subType: kAudioUnitSubType_DefaultOutput, manufacturer: kAudioUnitManufacturer_Apple)
+    public static let genericOutput = AudioComponentDescription(type: kAudioUnitType_Output, subType: kAudioUnitSubType_GenericOutput, manufacturer: kAudioUnitManufacturer_Apple)
+    public static let stereoMixer = AudioComponentDescription(type: kAudioUnitType_Mixer, subType: kAudioUnitSubType_StereoMixer, manufacturer: kAudioUnitManufacturer_Apple)
+    public static let multiChannelMixer = AudioComponentDescription(type: kAudioUnitType_Mixer, subType: kAudioUnitSubType_MultiChannelMixer, manufacturer: kAudioUnitManufacturer_Apple)
+    public static let dlsSynth = AudioComponentDescription(type: kAudioUnitType_MusicDevice, subType: kAudioUnitSubType_DLSSynth, manufacturer: kAudioUnitManufacturer_Apple)
 }
 
 extension AudioComponentDescription: Equatable {
