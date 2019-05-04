@@ -49,11 +49,12 @@ class CycleTimeValueCell: CycleColumnCell {
         self.time = self.getValue(from: cycle)
         self.textField?.stringValue = TickTimeFormattingService.sharedInstance.format(time: self.time)
     }
+    func isValid(_ value: TickTime) -> Bool { return true }
     
     @IBAction func valueChanged(_ sender: Any) {
         guard let textField = self.textField, sender as? NSTextField == textField else { return }
-        guard let time = TickTimeFormattingService.sharedInstance.parse(string: textField.stringValue) else {
-            print("Badly formatted time: \(self.textField!.stringValue)")
+        guard let time = TickTimeFormattingService.sharedInstance.parse(string: textField.stringValue), self.isValid(time) else {
+            print("Badly formatted or invalid time: \(self.textField!.stringValue)")
             textField.stringValue = TickTimeFormattingService.sharedInstance.format(time: self.time)
             return
         }
@@ -63,8 +64,13 @@ class CycleTimeValueCell: CycleColumnCell {
 }
 
 class CyclePeriodCell: CycleTimeValueCell {
+    override func isValid(_ value: TickTime) -> Bool {
+        return value.value > 0
+    }
     override func getValue(from cycle: ScoreModel.Cycle) -> TickTime { return cycle.period }
-    override func callOnChange(_ value: TickTime) { self.onChange?(self.index, nil, nil, value, nil, nil) }
+    override func callOnChange(_ value: TickTime) {
+        self.onChange?(self.index, nil, nil, value, nil, nil)
+    }
 }
 
 class CycleModulusCell: CycleTimeValueCell {
