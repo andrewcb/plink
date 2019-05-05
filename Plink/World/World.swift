@@ -99,7 +99,7 @@ class World: NSDocument {
         
         let decoder = PropertyListDecoder()
         let decoded = try decoder.decode(WorldModel.self, from: data)
-        Swift.print("Decoded: \(decoded)")
+//        Swift.print("Decoded: \(decoded)")
         
         try self.set(from: decoded)
     }

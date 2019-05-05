@@ -74,7 +74,19 @@ class JSCoreCodeEngine: CodeLanguageEngine {
             }
         }
         
-        let diagDumpFunc: @convention(block) () -> () = { [weak self] () in
+        let diagChannelsDumpFunc: @convention(block) () -> () = { [weak self] () in
+            guard
+                let self = self,
+                let audioSystem = self.env.audioSystem,
+                let delegate = self.delegate
+            else { return }
+            for (i, ch) in audioSystem.channels.enumerated() {
+                delegate.logToConsole("\(i): \(ch.name): \(ch.instrument?.description ?? "-") |> [\(ch.inserts.map { $0.description }.joined(separator: ", "))]")
+            }
+
+        }
+        
+        let diagGraphDumpFunc: @convention(block) () -> () = { [weak self] () in
             guard
                 let self = self,
                 let audioSystem = self.env.audioSystem,
@@ -97,7 +109,8 @@ class JSCoreCodeEngine: CodeLanguageEngine {
         // MARK: the $diag object
         // TODO: configure this out in production builds
         let diag = JSValue(newObjectIn: ctx)
-        diag?.setObject(diagDumpFunc, forKeyedSubscript: "dump" as NSCopying & NSObjectProtocol)
+        diag?.setObject(diagChannelsDumpFunc, forKeyedSubscript: "cdump" as NSCopying & NSObjectProtocol)
+        diag?.setObject(diagGraphDumpFunc, forKeyedSubscript: "gdump" as NSCopying & NSObjectProtocol)
         self.ctx.setObject(diag, forKeyedSubscript: "$diag" as NSCopying & NSObjectProtocol)
         
         ctx.exceptionHandler = { [weak self] (ctx, exc) in
