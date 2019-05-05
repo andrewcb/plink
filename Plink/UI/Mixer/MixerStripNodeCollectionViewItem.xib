@@ -8,6 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MixerStripNodeCollectionViewItem" customModule="Plink" customModuleProvider="target">
             <connections>
+                <outlet property="changeButton" destination="Y4v-8H-BSY" id="RhD-is-BEs"/>
+                <outlet property="removeButton" destination="Yf3-y0-fvK" id="gWZ-jb-uMf"/>
+                <outlet property="showWindowButton" destination="o80-MI-OFe" id="Wn7-mD-z7B"/>
                 <outlet property="titleLabel" destination="vo6-gF-wzf" id="RJ0-I0-kRM"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -15,19 +18,19 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="120" height="27"/>
+            <rect key="frame" x="0.0" y="0.0" width="132" height="27"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vo6-gF-wzf">
-                    <rect key="frame" x="46" y="8" width="28" height="11"/>
+                    <rect key="frame" x="52" y="8" width="28" height="11"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="ScX-TD-jX5">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" verticalCompressionResistancePriority="751" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y4v-8H-BSY">
-                    <rect key="frame" x="90" y="5" width="28" height="18"/>
+                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y4v-8H-BSY">
+                    <rect key="frame" x="86" y="4" width="24" height="19"/>
                     <buttonCell key="cell" type="recessed" title="" bezelStyle="recessed" alignment="center" imageScaling="proportionallyDown" inset="2" id="aKy-xv-fBa">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                         <font key="font" size="16" name="Webdings"/>
@@ -46,16 +49,29 @@
                         <action selector="showWindow:" target="-2" id="E1Z-h8-ouB"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yf3-y0-fvK">
+                    <rect key="frame" x="104" y="4" width="18" height="19"/>
+                    <buttonCell key="cell" type="recessed" title="✖︎" bezelStyle="recessed" alignment="center" imageScaling="proportionallyDown" inset="2" id="ToB-00-Qs6">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="doRemove:" target="-2" id="0Xv-hr-Scw"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="o80-MI-OFe" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="4" id="7Sd-rD-JjE"/>
+                <constraint firstItem="Yf3-y0-fvK" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="9tZ-ph-l1E"/>
                 <constraint firstAttribute="bottom" secondItem="vo6-gF-wzf" secondAttribute="bottom" constant="8" id="BvM-WA-Ev7"/>
                 <constraint firstItem="vo6-gF-wzf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="Dgx-Fh-SxW"/>
                 <constraint firstItem="Y4v-8H-BSY" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="JzB-wr-YZQ"/>
+                <constraint firstItem="Yf3-y0-fvK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Y4v-8H-BSY" secondAttribute="trailing" constant="4" id="Ou8-bw-wYp"/>
                 <constraint firstItem="Y4v-8H-BSY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vo6-gF-wzf" secondAttribute="trailing" constant="4" id="QO0-Ze-trF"/>
                 <constraint firstItem="vo6-gF-wzf" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="geX-Ip-1Xx"/>
+                <constraint firstAttribute="trailing" secondItem="Yf3-y0-fvK" secondAttribute="trailing" id="gnp-5E-1Nx"/>
                 <constraint firstItem="vo6-gF-wzf" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="ntN-Ov-TJU"/>
-                <constraint firstAttribute="trailing" secondItem="Y4v-8H-BSY" secondAttribute="trailing" id="p3h-Pf-qR2"/>
+                <constraint firstItem="Yf3-y0-fvK" firstAttribute="leading" secondItem="Y4v-8H-BSY" secondAttribute="trailing" priority="750" constant="8" id="v1Q-M7-Bg0"/>
                 <constraint firstItem="o80-MI-OFe" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="vl4-ae-dW6"/>
             </constraints>
             <point key="canvasLocation" x="139" y="168.5"/>

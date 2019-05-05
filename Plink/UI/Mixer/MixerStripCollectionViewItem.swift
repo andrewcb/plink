@@ -14,7 +14,10 @@ class MixerStripCollectionViewItem: NSCollectionViewItem {
     
     // arguments: the view from which the request was launched
     var onRequestInstrumentChoice: ((NSView)->())?
+    var onRequestInsertChoice: ((Int, NSView)->())?
     var onRequestInsertAdd: ((NSView)->())?
+    var onRequestInsertRemove: ((Int)->())?
+    var onRequestInstrumentRemove: (()->())?
 
     var onRequestAUInterfaceWindowOpen: ((AudioUnitGraph<ManagedAudioUnitInstance>.Node)->())?
 
@@ -82,9 +85,10 @@ extension MixerStripCollectionViewItem: NSCollectionViewDataSource {
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         
+        let isInstrument = indexPath[0] == 0
         guard let node = self.node(forIndexPath: indexPath) else {
             let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MixerStripAddNodeCollectionViewItem"), for: indexPath) as! OneButtonCollectionViewItem
-            item.onPress = (indexPath[0] == 0 ? self.onRequestInstrumentChoice : self.onRequestInsertAdd)
+            item.onPress = (isInstrument ? self.onRequestInstrumentChoice : self.onRequestInsertAdd)
             return item
         }
         
@@ -93,10 +97,11 @@ extension MixerStripCollectionViewItem: NSCollectionViewDataSource {
             return item
         }
         collectionViewItem.view.wantsLayer = true
-        collectionViewItem.view.layer?.backgroundColor = (indexPath[0] == Section.instrument.rawValue) ? NSColor.instrumentNode.cgColor : NSColor.audioEffectNode.cgColor
+        collectionViewItem.view.layer?.backgroundColor = isInstrument ? NSColor.instrumentNode.cgColor : NSColor.audioEffectNode.cgColor
         collectionViewItem.view.layer?.cornerRadius = 2.0
         collectionViewItem.titleLabel.stringValue = (try? node.getInstance())?.getAudioUnitComponent()?.componentName ?? ""
-        collectionViewItem.onChangePressed = self.onRequestInstrumentChoice // FIXME
+        collectionViewItem.onChangePressed = isInstrument ? self.onRequestInstrumentChoice : { [weak self] (view) in self?.onRequestInsertChoice?(indexPath[1], view) }
+        collectionViewItem.onRemovePressed = isInstrument ? { [weak self] () in self?.onRequestInstrumentRemove?()} : { [weak self] () in self?.onRequestInsertRemove?(indexPath[1]) }
         collectionViewItem.onShowWindowPressed = { [weak self] () in
             // fetch the node anew, as the version of node in the enclosing scope may be stale.
             guard let self = self, let node = self.node(forIndexPath: indexPath) else { return }

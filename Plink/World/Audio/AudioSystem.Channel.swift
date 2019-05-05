@@ -65,12 +65,29 @@ extension AudioSystem {
             try lastHead?.connect(to: insert)
             self._headNode = self.findHeadNode()
             try self.audioSystem?.startGraph()
-            
+        }
+        
+        func removeInsert(atIndex index: Int) throws {
+            guard index<self._inserts.count else { return }
+            let isLast = index == self._inserts.count-1
+            let target = self._inserts[index]
+            let prev = (index==0) ? self.instrument : self._inserts[index-1]
+            try self.audioSystem?.stopGraph()
+            try prev?.disconnectOutput()
+            try target.disconnectOutput()
+            self._inserts.remove(at: index)
+            if isLast {
+                self._headNode = self.findHeadNode()
+            } else {
+                try prev?.connect(to: self._inserts[index])
+            }
+            try self.audioSystem?.startGraph()
         }
         
         /// The node that's at the end of the chain
         var _headNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node? {
             didSet(prev) {
+                guard self._headNode != prev else { return }
                 self.onHeadNodeChanged?(self, prev)
                 print("head node changed:")
                 audioSystem!.graph.dump()
