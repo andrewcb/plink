@@ -96,8 +96,11 @@ extension MixerStripCollectionViewItem: NSCollectionViewDataSource {
         collectionViewItem.view.layer?.backgroundColor = (indexPath[0] == Section.instrument.rawValue) ? NSColor.instrumentNode.cgColor : NSColor.audioEffectNode.cgColor
         collectionViewItem.view.layer?.cornerRadius = 2.0
         collectionViewItem.titleLabel.stringValue = (try? node.getInstance())?.getAudioUnitComponent()?.componentName ?? ""
-        collectionViewItem.onChangePressed = self.onRequestInstrumentChoice
-        collectionViewItem.onShowWindowPressed = { [weak self] () in self?.onRequestAUInterfaceWindowOpen?(node) }
+        collectionViewItem.onChangePressed = self.onRequestInstrumentChoice // FIXME
+        collectionViewItem.onShowWindowPressed = { [weak self] () in
+            // fetch the node anew, as the version of node in the enclosing scope may be stale.
+            guard let self = self, let node = self.node(forIndexPath: indexPath) else { return }
+            self.onRequestAUInterfaceWindowOpen?(node) }
         return item
     }
 }
