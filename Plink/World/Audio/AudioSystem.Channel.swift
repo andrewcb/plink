@@ -85,6 +85,17 @@ extension AudioSystem {
             self._inserts = try snapshot.inserts.map {
                 try AudioUnitGraph.Node(graph: graph, presetData: $0)
             }
+            if !self._inserts.isEmpty {
+                try graph.stop()
+                try graph.uninitialize()
+                try self.instrument!.connect(to: self._inserts.first!)
+                try zip(self._inserts, self._inserts.dropFirst()).forEach { (a, b) in
+                    try a.connect(to: b)
+                }
+                try graph.initialize()
+                try graph.start()
+            }
+            
             self._headNode = self.findHeadNode()
             
             self.gain = snapshot.gain
