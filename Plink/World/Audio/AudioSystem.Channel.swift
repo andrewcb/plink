@@ -12,6 +12,13 @@ import AudioToolbox
 extension AudioSystem {
     /// A Channel, currently consisting of an instrument and some inserts
     class Channel {
+        
+        /// An address of a component of the Channel
+        enum Address {
+            case instrument
+            case insert(Int)
+        }
+        
         var name: String {
             didSet {
                 self.audioSystem?.channelsChanged()
@@ -40,6 +47,15 @@ extension AudioSystem {
         var inserts: [AudioUnitGraph<ManagedAudioUnitInstance>.Node] {
             return self._inserts
         }
+        
+        func node(forAddress address: Address) -> AudioUnitGraph<ManagedAudioUnitInstance>.Node?  {
+            switch(address) {
+            case .instrument: return self.instrument
+            case .insert(let index):
+                return (index < self.inserts.count) ? self.inserts[index] : nil
+            }
+        }
+        
         // methods for adding inserts
         func add(insert: AudioUnitGraph<ManagedAudioUnitInstance>.Node) throws {
             let lastHead = self.headNode

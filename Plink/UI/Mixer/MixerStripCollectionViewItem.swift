@@ -68,17 +68,16 @@ extension MixerStripCollectionViewItem: NSCollectionViewDataSource {
         }
     }
     
-    private func node(forIndexPath indexPath: IndexPath) -> AudioUnitGraph<ManagedAudioUnitInstance>.Node? {
-        switch(indexPath[0]) {
-        case Section.instrument.rawValue: return channel?.instrument
-        case Section.inserts.rawValue:
-            guard let inserts = channel?.inserts else { return nil }
-            guard indexPath[1]<inserts.count else { return nil }
-            return inserts[indexPath[1]]
-        default: return nil
-            //        case 0:
-            //            return
+    private func nodeAddress(forIndexPath indexPath: IndexPath) -> AudioSystem.Channel.Address {
+        assert(indexPath[0] == 0 || indexPath[0] == 1)
+        switch Section(rawValue: indexPath[0])! {
+        case .instrument: return .instrument
+        case .inserts: return .insert(indexPath[1])
         }
+    }
+    
+    private func node(forIndexPath indexPath: IndexPath) -> AudioUnitGraph<ManagedAudioUnitInstance>.Node? {
+        return channel?.node(forAddress: nodeAddress(forIndexPath: indexPath))
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
