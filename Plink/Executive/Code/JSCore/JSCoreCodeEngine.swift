@@ -55,9 +55,11 @@ class JSCoreCodeEngine: CodeLanguageEngine {
         }
 
         let recordFunc: @convention(block) (NSString, Float32, JSValue) -> () = { [weak self] (outpath, dur, fn) in
-            guard let self = self else { return }
+            guard
+                let self = self,
+                let audioSystem = self.env.audioSystem
+            else { return }
             do {
-                guard let audioSystem = self.env.audioSystem else { return }
                 let frameDuration = Float32(1.0/((Float64(audioSystem.sampleRate) / Float64(audioSystem.numSamplesPerBuffer))))
                 let frameCount = Int(ceilf(dur/frameDuration))
                 try audioSystem.render(to: outpath as String, running: { (renderCallback) in
@@ -72,6 +74,15 @@ class JSCoreCodeEngine: CodeLanguageEngine {
             }
         }
         
+        let diagDumpFunc: @convention(block) () -> () = { [weak self] () in
+            guard
+                let self = self,
+                let audioSystem = self.env.audioSystem,
+                let delegate = self.delegate
+            else { return }
+            audioSystem.graph.dump(delegate.logToConsole)
+        }
+        
         ///MARK: API objects/functions set up here
 
         self.ctx.setObject(unsafeBitCast(logFunc, to: AnyObject.self), forKeyedSubscript: "log" as NSCopying & NSObjectProtocol)
@@ -82,6 +93,12 @@ class JSCoreCodeEngine: CodeLanguageEngine {
 
         self.setupMIDINote()
         self.setUpChannels()
+        
+        // MARK: the $diag object
+        // TODO: configure this out in production builds
+        let diag = JSValue(newObjectIn: ctx)
+        diag?.setObject(diagDumpFunc, forKeyedSubscript: "dump" as NSCopying & NSObjectProtocol)
+        self.ctx.setObject(diag, forKeyedSubscript: "$diag" as NSCopying & NSObjectProtocol)
         
         ctx.exceptionHandler = { [weak self] (ctx, exc) in
             if let exc = exc {

@@ -352,17 +352,17 @@ extension AudioUnitGraph.Node {
 }
 
 extension AudioUnitGraph {
-    func dump() {
+    func dump(_ printFunc: ((String)->())={ s in Swift.print(s)}) {
         do {
-            print("Graph has nodes: \(try self.getNodeIDs())")
+            printFunc("Graph has nodes: \(try self.getNodeIDs())")
             for interaction in try self.getNodeInteractions() {
                 if interaction.nodeInteractionType == kAUNodeInteraction_Connection {
                     let conn = interaction.nodeInteraction.connection
-                    print("\(conn.sourceNode):\(conn.sourceOutputNumber) => \(conn.destNode):\(conn.destInputNumber)")
+                    printFunc("\(conn.sourceNode):\(conn.sourceOutputNumber) => \(conn.destNode):\(conn.destInputNumber)")
                 }
             }
         } catch {
-            print("graph dump failed: \(error)")
+            printFunc("graph dump failed: \(error)")
         }
     }
 
