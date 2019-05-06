@@ -196,7 +196,6 @@ extension MixerViewController: NSCollectionViewDataSource {
         guard indexPath[1] < audioSystem.channels.count else {
             let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MixerAddStripCollectionViewItem"), for: indexPath) as! OneButtonCollectionViewItem
             item.onPress = { [weak self] _ in
-                print("Add a channel!")
                 do {
                     try audioSystem.createChannel()
                     self?.mixerCollectionView.reloadData()

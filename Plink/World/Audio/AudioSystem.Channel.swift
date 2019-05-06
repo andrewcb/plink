@@ -108,8 +108,6 @@ extension AudioSystem {
             didSet(prev) {
                 guard self._headNode != prev else { return }
                 self.onHeadNodeChanged?(self, prev)
-                print("head node changed:")
-                audioSystem!.graph.dump()
             }
         }
         var headNode: AudioUnitGraph<ManagedAudioUnitInstance>.Node? {
