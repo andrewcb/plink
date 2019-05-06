@@ -90,6 +90,7 @@ extension AudioSystem {
             let target = self._inserts[index]
             let prev = (index==0) ? self.instrument : self._inserts[index-1]
             try self.audioSystem?.stopGraph()
+            try self.audioSystem?.graph.uninitialize()
             try prev?.disconnectOutput()
             try target.disconnectOutput()
             self._inserts.remove(at: index)
@@ -98,6 +99,7 @@ extension AudioSystem {
             } else {
                 try prev?.connect(to: self._inserts[index])
             }
+            try self.audioSystem?.graph.initialize()
             try self.audioSystem?.startGraph()
         }
         

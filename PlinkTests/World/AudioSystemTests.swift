@@ -43,6 +43,19 @@ class AudioSystemTests: XCTestCase {
         XCTAssertTrue(try! ch.instrument!.isConnected(to: ch.inserts[0], input: 0))
     }
 
+    func testCreateAndRemoveInsert() {
+        let s = try! AudioSystem()
+        let ch = try! s.createChannel()
+        XCTAssertEqual(try! s.graph.getNodeCount(), 2)
+        try! ch.loadInstrument(fromDescription: AudioComponentDescription(type: kAudioUnitType_MusicDevice, subType: kAudioUnitSubType_DLSSynth, manufacturer: kAudioUnitManufacturer_Apple))
+        try! ch.addInsert(fromDescription: AudioComponentDescription(type: kAudioUnitType_Effect, subType: kAudioUnitSubType_Delay, manufacturer: kAudioUnitManufacturer_Apple))
+        try! ch.removeInsert(atIndex: 0)
+        XCTAssertEqual(try! s.graph.getNodeCount(), 3)
+        XCTAssertEqual(ch.inserts.count, 0)
+        XCTAssertEqual(ch.instrument!, ch.headNode!)
+        XCTAssertTrue(try! ch.instrument!.isConnected(to: s.mixerNode, input: 0))
+    }
+    
     func testCreateMultipleChannelsWithInserts() {
         let s = try! AudioSystem()
         let ch1 = try! s.createChannel()
