@@ -65,22 +65,8 @@ class MixerViewController: NSViewController {
     }
     
     // MARK: opening the component selector
-    func openChannelComponentChooser(ofType type: ComponentSelectorViewController.ComponentType, fromView view: NSView, completion:@escaping ((ComponentSelectorViewController.Selection)->())) {
-        let viewControllerIdentifier: String
-        switch(type) {
-        case .instrument: viewControllerIdentifier = "InstrumentSelectorPopoverViewController"
-        case .audioEffect: viewControllerIdentifier = "AudioEffectSelectorPopoverViewController"
-        }
-        let popover = NSPopover()
-        let vc = self.storyboard!.instantiateController(withIdentifier: viewControllerIdentifier) as! ComponentSelectorViewController
-        vc.componentType = type
-        vc.onSelection = { (component) in
-            popover.close()
-            completion(component)
-        }
-        popover.contentViewController =  vc as NSViewController
-        popover.behavior = .transient
-//        popover.delegate = self
+    func openChannelComponentChooser(ofType type: ComponentSelectorPopover.ComponentType, fromView view: NSView, completion:@escaping ((ComponentSelectorPopover.Selection)->())) {
+        let popover = ComponentSelectorPopover(type: type, fromStoryboard: self.storyboard!, completion: completion)
         let anchorRect: NSRect = view.superview!.convert(view.frame, to: self.view)
         popover.show(relativeTo: anchorRect, of: self.view, preferredEdge: .maxX)
     }

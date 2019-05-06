@@ -11,12 +11,7 @@ import AudioToolbox
 
 class ComponentSelectorViewController: NSViewController {
     
-    public enum ComponentType {
-        case instrument
-        case audioEffect
-    }
-    
-    public var componentType: ComponentType = .instrument {
+    public var componentType: ComponentSelectorPopover.ComponentType = .instrument {
         didSet {
             self.reloadInstruments()
         }
@@ -24,11 +19,6 @@ class ComponentSelectorViewController: NSViewController {
 
     @IBOutlet weak var instrumentsOutlineView: NSOutlineView!
 
-    let typesNeeded: [ComponentType:[OSType]] = [
-        .instrument: [kAudioUnitType_MusicDevice],
-        .audioEffect: [kAudioUnitType_Effect, kAudioUnitType_MusicEffect]
-    ]
-    
     private var hasSoundFontItem: Bool { return self.componentType == .instrument }
     
     enum OutlineItem {
@@ -37,17 +27,10 @@ class ComponentSelectorViewController: NSViewController {
         case soundFontItem
     }
     
-    
-    // returning a user selection, i.e., a component, or a special choice if available
-    enum Selection {
-        case component(AudioUnitComponent)
-        case goToSoundFont // go to the SoundFont workflow
-    }
-    var onSelection: ((Selection)->())? = nil
+    var onSelection: ((ComponentSelectorPopover.Selection)->())? = nil
     
     var availableInstruments = [AudioUnitComponent]() {
         didSet {
-            print("Setting availableInstruments")
             var d: [String:[AudioUnitComponent]] = [:]
             for inst in self.availableInstruments {
                 let manufacturerName = inst.manufacturerName ?? "?"
@@ -60,7 +43,6 @@ class ComponentSelectorViewController: NSViewController {
     }
     var instrumentsByManufacturer: [(String, [AudioUnitComponent])] = [] {
         didSet {
-            print("did set instrumentsByManufacturer: \(self.instrumentsByManufacturer.count) manufacturers")
             DispatchQueue.main.async { [weak self] in
                 self?.instrumentsOutlineView.reloadData()
             }
@@ -74,7 +56,7 @@ class ComponentSelectorViewController: NSViewController {
     private func reloadInstruments() {
         DispatchQueue.global(qos: .utility).async { [weak self] in
             guard let s = self else { return }
-            s.availableInstruments = (s.typesNeeded[s.componentType] ?? []).flatMap { tp in AudioUnitComponent.findAll(matching: AudioComponentDescription(componentType: tp, componentSubType: 0, componentManufacturer: 0, componentFlags: 0, componentFlagsMask: 0)) }
+            s.availableInstruments = s.componentType.osTypes.flatMap { tp in AudioUnitComponent.findAll(matching: AudioComponentDescription(componentType: tp, componentSubType: 0, componentManufacturer: 0, componentFlags: 0, componentFlagsMask: 0)) }
         }
     }
     
@@ -122,7 +104,7 @@ extension ComponentSelectorViewController: NSOutlineViewDataSource {
     }
     
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        if let oi = item as? OutlineItem, case let .manufacturer(_) = oi { return true }
+        if let oi = item as? OutlineItem, case .manufacturer(_) = oi { return true }
         else { return false }
     }
 }
@@ -156,7 +138,6 @@ extension ComponentSelectorViewController: NSOutlineViewDelegate {
         case .soundFontItem: return outlineView.rowHeight*2
         default: return outlineView.rowHeight
         }
-
     }
 }
 
