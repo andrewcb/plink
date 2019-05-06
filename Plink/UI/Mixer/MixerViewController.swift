@@ -147,7 +147,6 @@ extension MixerViewController: NSCollectionViewDataSource {
             self.openChannelComponentChooser(ofType: .instrument, fromView: view) { (choice) in
                 switch(choice) {
                 case .component(let component):
-//                    print("Will set instrument for \(channel) to \(component)")
                     try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
                     collectionViewItem.refresh()
                 case .goToSoundFont:
@@ -163,6 +162,18 @@ extension MixerViewController: NSCollectionViewDataSource {
                         collectionViewItem.refresh()
                     }
                 }
+            }
+        }
+        
+        collectionViewItem.onRequestInsertChoice = { (index, view) in
+            self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (choice) in
+                switch(choice) {
+                case .component(let component):
+                    try! channel.replaceInsert(atIndex: index, usingDescription: component.audioComponentDescription)
+                default:
+                    fatalError("SoundFonts not available as inserts")
+                }
+                collectionViewItem.refresh()
             }
         }
         

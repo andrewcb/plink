@@ -56,7 +56,7 @@ extension AudioSystem {
             }
         }
         
-        // methods for adding inserts
+        // methods for manipulating inserts
         func add(insert: AudioUnitGraph<ManagedAudioUnitInstance>.Node) throws {
             let lastHead = self.headNode
             self._inserts.append(insert)
@@ -64,6 +64,23 @@ extension AudioSystem {
             try lastHead?.disconnectOutput()
             try lastHead?.connect(to: insert)
             self._headNode = self.findHeadNode()
+            try self.audioSystem?.startGraph()
+        }
+        
+        func replaceInsert(atIndex index: Int, with insert: AudioUnitGraph<ManagedAudioUnitInstance>.Node) throws {
+            let target = self._inserts[index]
+            let prev = (index==0) ? self.instrument : self._inserts[index-1]
+            let next = (index<self._inserts.count-1) ? self._inserts[index+1] : nil
+            try self.audioSystem?.stopGraph()
+            try prev?.disconnectOutput()
+            try target.disconnectOutput()
+            self._inserts[index] = insert
+            try prev?.connect(to: insert)
+            if let next = next {
+                try insert.connect(to: next)
+            } else {
+                self._headNode = self.findHeadNode()
+            }
             try self.audioSystem?.startGraph()
         }
         
@@ -145,7 +162,14 @@ extension AudioSystem {
             guard let insert = try self.audioSystem?.graph.addNode(withDescription: description) else { return }
             try self.add(insert: insert)
             try self.audioSystem?.startGraph()
+        }
+        
+        func replaceInsert(atIndex index: Int, usingDescription description: AudioComponentDescription) throws {
+            try self.audioSystem?.stopGraph()
+            defer { try! self.audioSystem?.startGraph() }
             
+            guard let insert = try self.audioSystem?.graph.addNode(withDescription: description) else { return }
+            try self.replaceInsert(atIndex: index, with: insert)
         }
         
         var gain: AudioUnitParameterValue {
