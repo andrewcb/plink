@@ -18,6 +18,8 @@ protocol ContainsView {
 
 /** The parent view controller for the unit interface window */
 class UnitInterfaceViewController: NSViewController, AcceptsAUInstance {
+    @IBOutlet var containerView: NSView!
+    
     var audioUnitInstance: ManagedAudioUnitInstance? {
         didSet {
             self.containedView = self.audioUnitInstance?.loadInterfaceView(withSize: CGSize(width: 640, height: 480)) 
@@ -25,6 +27,11 @@ class UnitInterfaceViewController: NSViewController, AcceptsAUInstance {
     }
     var containedView: NSView? {
         didSet {
+            let tabBarHeight: CGFloat = 27 // FIXME: this is a fudge; determine this empirically
+            let 𝛥 = self.view.bounds.size.height - self.containerView.bounds.size.height + tabBarHeight
+            if let vsize = containedView?.bounds.size {
+                self.view.window?.setContentSize(CGSize(width: vsize.width, height: vsize.height+𝛥))
+            }
             self.pushContainedView()
         }
     }
