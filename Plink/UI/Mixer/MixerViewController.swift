@@ -90,6 +90,75 @@ class MixerViewController: NSViewController {
         try channel.instrument?.getInstance().setProperty(withID: kMusicDeviceProperty_SoundBankURL, scope: kAudioUnitScope_Global, element: 0, to: sfurl)
     }
     
+    // MARK: channel-strip user action request handlers
+    // these are curried functions that take context
+    fileprivate func requestInstrumentChoiceHandler(forChannel channel: AudioSystem.Channel, collectionViewItem: MixerStripCollectionViewItem) -> ((NSView)->()) {
+        return { (view) in
+            self.openChannelComponentChooser(ofType: .instrument, fromView: view) { (choice) in
+                switch(choice) {
+                case .component(let component):
+                    try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
+                    collectionViewItem.refresh()
+                case .goToSoundFont:
+                    let openpanel = NSOpenPanel()
+                    openpanel.allowedFileTypes = ["sf2"]
+                    openpanel.beginSheetModal(for: self.view.window!) { [weak self] (response) in
+                        guard
+                            let self=self,
+                            response == .OK,
+                            let url = openpanel.url
+                            else { return }
+                        try! self.load(soundFont: url, intoChannel: channel)
+                        collectionViewItem.refresh()
+                    }
+                }
+            }
+        }
+    }
+    
+    fileprivate func requestInsertChoiceHander(forChannel channel: AudioSystem.Channel, collectionViewItem: MixerStripCollectionViewItem) -> ((Int, NSView)->()) {
+        return { (index, view) in
+            self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (choice) in
+                switch(choice) {
+                case .component(let component):
+                    try! channel.replaceInsert(atIndex: index, usingDescription: component.audioComponentDescription)
+                default:
+                    fatalError("SoundFonts not available as inserts")
+                }
+                collectionViewItem.refresh()
+            }
+        }
+    }
+    
+    fileprivate func requestInsertAdditionHandler(forChannel channel: AudioSystem.Channel, collectionViewItem: MixerStripCollectionViewItem) -> ((NSView)->()) {
+        return { (view) in
+            self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (choice) in
+                switch(choice) {
+                case .component(let component):
+                    try! channel.addInsert(fromDescription: component.audioComponentDescription)
+                    collectionViewItem.refresh()
+                case .goToSoundFont:
+                    fatalError() // no SoundFonts here
+                }
+            }
+        }
+    }
+
+    fileprivate func requestInstrumentRemoveHandler(forChannel channel: AudioSystem.Channel, collectionViewItem: MixerStripCollectionViewItem) -> (()->()) {
+        return { () in
+            channel.instrument = nil;
+            collectionViewItem.refresh()
+        }
+    }
+    
+    fileprivate func requestInsertRemoveHandler(forChannel channel: AudioSystem.Channel, collectionViewItem: MixerStripCollectionViewItem) -> ((Int)->()) {
+        return { (index) in
+            try? channel.removeInsert(atIndex: index)
+            collectionViewItem.refresh()
+        }
+    }
+
+    
     // MARK: Opening the AudioUnit interface view
     
     private var audioUnitInstanceForGUI: ManagedAudioUnitInstance?
@@ -143,62 +212,12 @@ extension MixerViewController: NSCollectionViewDataSource {
         else {return item}
         let channel = audioSystem.channels[indexPath[1]]
         collectionViewItem.channel = channel
-        collectionViewItem.onRequestInstrumentChoice = { (view) in
-            self.openChannelComponentChooser(ofType: .instrument, fromView: view) { (choice) in
-                switch(choice) {
-                case .component(let component):
-                    try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
-                    collectionViewItem.refresh()
-                case .goToSoundFont:
-                    let openpanel = NSOpenPanel()
-                    openpanel.allowedFileTypes = ["sf2"]
-                    openpanel.beginSheetModal(for: self.view.window!) { [weak self] (response) in
-                        guard
-                            let self=self,
-                            response == .OK,
-                            let url = openpanel.url
-                        else { return }
-                        try! self.load(soundFont: url, intoChannel: channel)
-                        collectionViewItem.refresh()
-                    }
-                }
-            }
-        }
-        
-        collectionViewItem.onRequestInsertChoice = { (index, view) in
-            self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (choice) in
-                switch(choice) {
-                case .component(let component):
-                    try! channel.replaceInsert(atIndex: index, usingDescription: component.audioComponentDescription)
-                default:
-                    fatalError("SoundFonts not available as inserts")
-                }
-                collectionViewItem.refresh()
-            }
-        }
-        
-        collectionViewItem.onRequestInsertAdd = { (view) in
-            self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (choice) in
-                switch(choice) {
-                case .component(let component):
-                    try! channel.addInsert(fromDescription: component.audioComponentDescription)
-                    collectionViewItem.refresh()
-                case .goToSoundFont:
-                    fatalError() // no SoundFonts here
-                }
-            }
-        }
-        collectionViewItem.onRequestInsertRemove = { (index) in
-            try? channel.removeInsert(atIndex: index)
-            collectionViewItem.refresh()
-        }
-        collectionViewItem.onRequestInstrumentRemove = { () in
-            channel.instrument = nil;
-            collectionViewItem.refresh()
-        }
-        collectionViewItem.onRequestAUInterfaceWindowOpen = { node in
-            self.openUnitInterface(forNode: node)
-        }
+        collectionViewItem.onRequestInstrumentChoice = self.requestInstrumentChoiceHandler(forChannel: channel, collectionViewItem: collectionViewItem)
+        collectionViewItem.onRequestInsertChoice = self.requestInsertChoiceHander(forChannel: channel, collectionViewItem: collectionViewItem)
+        collectionViewItem.onRequestInsertAdd = self.requestInsertAdditionHandler(forChannel: channel, collectionViewItem: collectionViewItem)
+        collectionViewItem.onRequestInsertRemove = self.requestInsertRemoveHandler(forChannel: channel, collectionViewItem: collectionViewItem)
+        collectionViewItem.onRequestInstrumentRemove = self.requestInstrumentRemoveHandler(forChannel: channel, collectionViewItem: collectionViewItem)
+        collectionViewItem.onRequestAUInterfaceWindowOpen = self.openUnitInterface(forNode:)
         collectionViewItem.view.wantsLayer = true
         collectionViewItem.view.layer?.backgroundColor = NSColor.mixerBackground.cgColor
         collectionViewItem.nameField.stringValue = channel.name
