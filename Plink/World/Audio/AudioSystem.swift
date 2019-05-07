@@ -150,11 +150,11 @@ class AudioSystem {
         self.onAudioInterruption?()
     }
     
-    private func modifyingGraph(_ actions: (() throws ->())) throws {
+    internal func modifyingGraph(reinit: Bool = true, _ actions: (() throws ->())) throws {
         try stopGraph()
-        try graph.uninitialize()
+        if reinit { try graph.uninitialize() }
         try actions()
-        try graph.initialize()
+        if reinit { try graph.initialize() }
         try startGraph()
     }
 

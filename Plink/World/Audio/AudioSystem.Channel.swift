@@ -24,20 +24,22 @@ extension AudioSystem {
                 self.audioSystem?.channelsChanged()
             }
         }
+        // A link to the AudioSystem this Channel is part of; this is set when it is added, and is guaranteed to be
+        // present while the Channel is in operation. It will be nil when a newly-created Channel has not been added yet.
         var audioSystem: AudioSystem? = nil
         var index: Int = -1
         var instrument: AudioUnitGraph<ManagedAudioUnitInstance>.Node? = nil {
             didSet(prev) {
                 guard prev != self.instrument else { return }
                 do {
-                    try self.audioSystem?.stopGraph()
-                    try prev?.disconnectAll()
-                    try prev?.removeFromGraph()
-                    if let firstInsert = inserts.first {
-                        try self.instrument?.connect(to: firstInsert)
+                    try self.audioSystem!.modifyingGraph(reinit:false) {
+                        try prev?.disconnectAll()
+                        try prev?.removeFromGraph()
+                        if let firstInsert = inserts.first {
+                            try self.instrument?.connect(to: firstInsert)
+                        }
+                        self._headNode = self.findHeadNode()
                     }
-                    self._headNode = self.findHeadNode()
-                    try self.audioSystem?.startGraph()
                 } catch {
                     fatalError("failed to disconnect/connect nodes: \(error)")
                 }
@@ -60,28 +62,28 @@ extension AudioSystem {
         func add(insert: AudioUnitGraph<ManagedAudioUnitInstance>.Node) throws {
             let lastHead = self.headNode
             self._inserts.append(insert)
-            try self.audioSystem?.stopGraph()
-            try lastHead?.disconnectOutput()
-            try lastHead?.connect(to: insert)
-            self._headNode = self.findHeadNode()
-            try self.audioSystem?.startGraph()
+            try self.audioSystem!.modifyingGraph(reinit:false) {
+                try lastHead?.disconnectOutput()
+                try lastHead?.connect(to: insert)
+                self._headNode = self.findHeadNode()
+            }
         }
         
         func replaceInsert(atIndex index: Int, with insert: AudioUnitGraph<ManagedAudioUnitInstance>.Node) throws {
             let target = self._inserts[index]
             let prev = (index==0) ? self.instrument : self._inserts[index-1]
             let next = (index<self._inserts.count-1) ? self._inserts[index+1] : nil
-            try self.audioSystem?.stopGraph()
-            try prev?.disconnectOutput()
-            try target.disconnectOutput()
-            self._inserts[index] = insert
-            try prev?.connect(to: insert)
-            if let next = next {
-                try insert.connect(to: next)
-            } else {
-                self._headNode = self.findHeadNode()
+            try self.audioSystem!.modifyingGraph(reinit:false) {
+                try prev?.disconnectOutput()
+                try target.disconnectOutput()
+                self._inserts[index] = insert
+                try prev?.connect(to: insert)
+                if let next = next {
+                    try insert.connect(to: next)
+                } else {
+                    self._headNode = self.findHeadNode()
+                }
             }
-            try self.audioSystem?.startGraph()
         }
         
         func removeInsert(atIndex index: Int) throws {
@@ -89,18 +91,16 @@ extension AudioSystem {
             let isLast = index == self._inserts.count-1
             let target = self._inserts[index]
             let prev = (index==0) ? self.instrument : self._inserts[index-1]
-            try self.audioSystem?.stopGraph()
-            try self.audioSystem?.graph.uninitialize()
-            try prev?.disconnectOutput()
-            try target.disconnectOutput()
-            self._inserts.remove(at: index)
-            if isLast {
-                self._headNode = self.findHeadNode()
-            } else {
-                try prev?.connect(to: self._inserts[index])
+            try self.audioSystem!.modifyingGraph {
+                try prev?.disconnectOutput()
+                try target.disconnectOutput()
+                self._inserts.remove(at: index)
+                if isLast {
+                    self._headNode = self.findHeadNode()
+                } else {
+                    try prev?.connect(to: self._inserts[index])
+                }
             }
-            try self.audioSystem?.graph.initialize()
-            try self.audioSystem?.startGraph()
         }
         
         /// The node that's at the end of the chain
@@ -157,19 +157,18 @@ extension AudioSystem {
         }
         
         func addInsert(fromDescription description: AudioComponentDescription) throws {
-            try self.audioSystem?.stopGraph()
+            try self.audioSystem!.modifyingGraph(reinit:false) {
             
-            guard let insert = try self.audioSystem?.graph.addNode(withDescription: description) else { return }
-            try self.add(insert: insert)
-            try self.audioSystem?.startGraph()
+                guard let insert = try self.audioSystem?.graph.addNode(withDescription: description) else { return }
+                try self.add(insert: insert)
+            }
         }
         
         func replaceInsert(atIndex index: Int, usingDescription description: AudioComponentDescription) throws {
-            try self.audioSystem?.stopGraph()
-            defer { try! self.audioSystem?.startGraph() }
-            
-            guard let insert = try self.audioSystem?.graph.addNode(withDescription: description) else { return }
-            try self.replaceInsert(atIndex: index, with: insert)
+            try self.audioSystem!.modifyingGraph(reinit:false) {
+                guard let insert = try self.audioSystem?.graph.addNode(withDescription: description) else { return }
+                try self.replaceInsert(atIndex: index, with: insert)
+            }
         }
         
         var gain: AudioUnitParameterValue {
