@@ -914,7 +914,7 @@
         <!--Unit Interface-->
         <scene sceneID="lZg-3H-WC5">
             <objects>
-                <windowController id="FNA-sc-SWe" userLabel="Unit Interface" sceneMemberID="viewController">
+                <windowController id="FNA-sc-SWe" userLabel="Unit Interface" customClass="UnitInterfaceWindowController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Vfa-iW-LhY">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
