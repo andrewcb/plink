@@ -81,6 +81,7 @@ class MixerViewController: NSViewController {
     fileprivate func requestInstrumentChoiceHandler(forChannel channel: AudioSystem.Channel, collectionViewItem: MixerStripCollectionViewItem) -> ((NSView)->()) {
         return { (view) in
             self.openChannelComponentChooser(ofType: .instrument, fromView: view) { (choice) in
+                (try? channel.instrument?.getInstance())??.prepareForRemoval()
                 switch(choice) {
                 case .component(let component):
                     try! channel.loadInstrument(fromDescription: component.audioComponentDescription)
@@ -107,6 +108,9 @@ class MixerViewController: NSViewController {
             self.openChannelComponentChooser(ofType: .audioEffect, fromView: view) { (choice) in
                 switch(choice) {
                 case .component(let component):
+                    if index < channel.inserts.count {
+                        (try? channel.inserts[index].getInstance())?.prepareForRemoval()
+                    }
                     try! channel.replaceInsert(atIndex: index, usingDescription: component.audioComponentDescription)
                 default:
                     fatalError("SoundFonts not available as inserts")
@@ -132,6 +136,7 @@ class MixerViewController: NSViewController {
 
     fileprivate func requestInstrumentRemoveHandler(forChannel channel: AudioSystem.Channel, collectionViewItem: MixerStripCollectionViewItem) -> (()->()) {
         return { () in
+            (try? channel.instrument?.getInstance())??.prepareForRemoval()
             channel.instrument = nil;
             collectionViewItem.refresh()
         }
@@ -139,6 +144,9 @@ class MixerViewController: NSViewController {
     
     fileprivate func requestInsertRemoveHandler(forChannel channel: AudioSystem.Channel, collectionViewItem: MixerStripCollectionViewItem) -> ((Int)->()) {
         return { (index) in
+            if index < channel.inserts.count {
+                (try? channel.inserts[index].getInstance())?.prepareForRemoval()
+            }
             try? channel.removeInsert(atIndex: index)
             collectionViewItem.refresh()
         }
@@ -150,8 +158,14 @@ class MixerViewController: NSViewController {
     private var audioUnitInstanceForGUI: ManagedAudioUnitInstance?
     func openUnitInterface(forNode node: AudioUnitGraph<ManagedAudioUnitInstance>.Node ) {
         do {
-            self.audioUnitInstanceForGUI = try node.getInstance()
-            self.performSegue(withIdentifier: "OpenUnitInterface", sender: nil)
+            let instance = try node.getInstance()
+            if let window = instance.interfaceWindow {
+                window.orderFrontRegardless()
+            } else {
+                self.audioUnitInstanceForGUI = instance
+                self.performSegue(withIdentifier: "OpenUnitInterface", sender: nil)
+
+            }
         } catch {
             
         }
@@ -162,6 +176,7 @@ class MixerViewController: NSViewController {
         if let windowController = segue.destinationController as? NSWindowController {
             if let uivc = windowController.contentViewController as? UnitInterfaceViewController {
                 uivc.audioUnitInstance = self.audioUnitInstanceForGUI
+                self.audioUnitInstanceForGUI?.interfaceWindow = windowController.window
             }
         }
     }

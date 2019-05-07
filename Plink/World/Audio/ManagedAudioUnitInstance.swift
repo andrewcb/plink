@@ -13,6 +13,8 @@ import Foundation
 public class ManagedAudioUnitInstance: AudioUnitInstance {
     public var auRef: AudioUnit
     
+    public var interfaceWindow: NSWindow? = nil
+    
     required public init(auRef: AudioUnit) {
         self.auRef = auRef
     }
@@ -32,6 +34,10 @@ public class ManagedAudioUnitInstance: AudioUnitInstance {
     
     public func loadInterfaceView(withSize size: CGSize) -> NSView? {
         return loadInterfaceViewForAudioUnit(self.auRef, size)
+    }
+    
+    public func prepareForRemoval() {
+        self.interfaceWindow?.close()
     }
     
     public func allParameterInfo(forScope scope: AudioUnitScope) -> [AudioUnitInstanceParameterInfo] {
