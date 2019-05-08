@@ -15,8 +15,10 @@ class ScoreModelTests: XCTestCase {
         XCTAssertEqual(ScoreModel.CuedAction(codeText: "anIdentifier"), .callProcedure("anIdentifier"))
         XCTAssertEqual(ScoreModel.CuedAction(codeText: "another_id"), .callProcedure("another_id"))
         XCTAssertEqual(ScoreModel.CuedAction(codeText: "_another_id123"), .callProcedure("_another_id123"))
+        XCTAssertEqual(ScoreModel.CuedAction(codeText: "eliminateWhiteSpace "), .callProcedure("eliminateWhiteSpace"))
         XCTAssertEqual(ScoreModel.CuedAction(codeText: "$foo"), .callProcedure("$foo"))
         XCTAssertEqual(ScoreModel.CuedAction(codeText: "doSomething(1,2,3)"), .codeStatement("doSomething(1,2,3)"))
+        XCTAssertEqual(ScoreModel.CuedAction(codeText: " doSomething(1,2,3) "), .codeStatement("doSomething(1,2,3)"))
     }
 
     func testDecodeCue() {

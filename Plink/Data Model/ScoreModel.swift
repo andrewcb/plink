@@ -97,6 +97,7 @@ struct ScoreModel {
 extension ScoreModel.CuedAction {
     /// Construct a CuedAction given some code text; if it's just a symbol, it becomes a .callProcedure, otherwise it's a .codeStatement
     init(codeText: String) {
+        let codeText = codeText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let reSymbol = try! NSRegularExpression(pattern: "^[a-zA-Z$_][a-zA-Z0-9$_]*$", options: [])
         if !reSymbol.matches(in: codeText, range: NSRange(location:0, length: codeText.count)).isEmpty {
             self = .callProcedure(codeText)
