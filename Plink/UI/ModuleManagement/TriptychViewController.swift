@@ -194,4 +194,11 @@ extension TriptychViewController: NSSplitViewDelegate {
     func splitView(_ splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
         return true
     }
+    
+    func splitView(_ splitView: NSSplitView, constrainMinCoordinate proposedMinimumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
+        if dividerIndex == 0 {
+            return proposedMinimumPosition >= 16 ? proposedMinimumPosition : 0.0
+        }
+        return proposedMinimumPosition
+    }
 }
