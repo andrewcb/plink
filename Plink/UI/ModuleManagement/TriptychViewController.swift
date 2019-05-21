@@ -47,8 +47,8 @@ class TriptychViewController: NSViewController {
             self.isEditable = false
             self.isBordered = false
             self.drawsBackground = true
-            self.backgroundColor = NSColor.black
-            self.textColor = NSColor.white
+            self.backgroundColor = NSColor(white: 1.0, alpha: 0.4)
+            self.textColor = NSColor(white: 0.0, alpha: 1.0)
             self.translatesAutoresizingMaskIntoConstraints = false
             
             self.addGestureRecognizer(NSClickGestureRecognizer(target: self, action: #selector(self.clicked)))
@@ -109,14 +109,8 @@ class TriptychViewController: NSViewController {
         }
         
         leftButton = makeButton(position: .left)
-        let lc1 = leftButton.rightAnchor.constraint(equalTo: leftView.rightAnchor)
-        lc1.priority = .defaultHigh
-        lc1.isActive = true
-        let lc2 = leftButton.leftAnchor.constraint(greaterThanOrEqualTo: self.splitView.leftAnchor)
-        lc2.priority = .defaultHigh
-        lc2.isActive = true
         leftButton.onClick = { [unowned self] () in
-            if self.splitView.isSubviewCollapsed(self.splitView.arrangedSubviews[0]) {
+            if self.splitView.arrangedSubviews[0].frame.size.width < 1.0 {
                 let centreWidth = self.splitView.arrangedSubviews[1].bounds.width
                 let maxOpenWidth = min(centreWidth-10, (self.splitView.bounds.size.width*0.333).rounded(.down))
                 let w =  self.leftWidth.flatMap { ($0 <  maxOpenWidth) ? $0 : nil } ?? (centreWidth * 0.333).rounded(.down)
@@ -129,13 +123,6 @@ class TriptychViewController: NSViewController {
         }
         
         rightButton = makeButton(position: .right)
-        let rc1 = rightButton.leftAnchor.constraint(equalTo: rightView.leftAnchor)
-        rc1.priority = .defaultHigh
-        rc1.isActive = true
-        
-        let rc2 = rightButton.rightAnchor.constraint(lessThanOrEqualTo: self.splitView.rightAnchor)
-        rc2.priority = .defaultHigh
-        rc2.isActive = true
         rightButton.onClick = { [unowned self] () in
             if self.splitView.isSubviewCollapsed(self.splitView.arrangedSubviews[2]) {
                 let centreWidth = self.splitView.arrangedSubviews[1].bounds.width
@@ -156,11 +143,24 @@ class TriptychViewController: NSViewController {
         self.splitView.setPosition(self.splitView.frame.size.width, ofDividerAt: 1)
     }
 
+    private func updateButtonPositions() {
+        let leftView = self.splitView.arrangedSubviews[0]
+        let rightView = self.splitView.arrangedSubviews[2]
+        leftButton.frame.origin.x = max(0.0, leftView.frame.size.width - leftButton.frame.size.width)
+        rightButton.frame.origin.x = min(self.splitView.frame.size.width, self.splitView.arrangedSubviews[0].frame.size.width + self.splitView.arrangedSubviews[1].frame.size.width + self.splitView.dividerThickness) - rightButton.frame.size.width
+    }
+    
+    override func viewWillLayout() {
+        super.viewWillLayout()
+        self.updateButtonPositions()
+    }
+    
     fileprivate func updateButtons() {
-        let leftOpen = !self.splitView.isSubviewCollapsed(self.splitView.arrangedSubviews[0])
+        let leftOpen = self.splitView.arrangedSubviews[0].frame.size.width >= 1.0
         self.leftButton.state = leftOpen ? .open : .closed
         let rightOpen = !self.splitView.isSubviewCollapsed(self.splitView.arrangedSubviews[2])
         self.rightButton.state = rightOpen ? .open : .closed
+        self.updateButtonPositions()
     }
     
     private func loadEmbeddedViews() {
@@ -170,9 +170,10 @@ class TriptychViewController: NSViewController {
             site.coordinator = self.coordinator
             self.coordinator?.register(site)
             site.menuPosition = .topTrailing
+            site.menuOffset = CGSize(width: 18.0, height: 0.0)
             site.menuOverlapsContainer = true
             site.textColor = NSColor(white: 0.0, alpha: 1.0)
-            site.backgroundColor = NSColor(white: 1.0, alpha: 0.2)
+            site.backgroundColor = NSColor(white: 1.0, alpha: 0.4)
             let substrate = self.splitView.arrangedSubviews[i]
             self.addChild(site)
             substrate.addSubview(site.view)
@@ -183,42 +184,6 @@ class TriptychViewController: NSViewController {
 
         }
     }
-    
-    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-        if let site = segue.destinationController as? ModuleSiteViewController {
-            let pos: Int?
-            switch(segue.identifier) {
-            case "TL":
-                pos = 0
-            case "TR":
-                pos = 2
-            case "TC":
-                site.currentModuleName = "mixer"
-                pos = 1
-            default:
-                print("Unknown module segue: \(segue.identifier ?? "?")")
-                pos = nil
-                break
-            }
-            site.coordinator = self.coordinator
-            self.coordinator?.register(site)
-            site.menuPosition = .topTrailing
-            site.menuOverlapsContainer = true
-            site.textColor = NSColor(white: 0.0, alpha: 1.0)
-            site.backgroundColor = NSColor(white: 1.0, alpha: 0.2)
-            if let pos = pos {
-                let substrate = self.splitView.arrangedSubviews[pos]
-                self.addChild(site)
-                substrate.addSubview(site.view)
-                substrate.leftAnchor.constraint(equalTo: site.view.leftAnchor).isActive = true
-                substrate.rightAnchor.constraint(equalTo: site.view.rightAnchor).isActive = true
-                substrate.topAnchor.constraint(equalTo: site.view.topAnchor).isActive = true
-                substrate.bottomAnchor.constraint(equalTo: site.view.bottomAnchor).isActive = true
-            }
-        }
-    }
-
-
 }
 
 extension TriptychViewController: NSSplitViewDelegate {
