@@ -109,7 +109,6 @@ class ModuleSiteViewController: NSViewController {
     }
     
     override func viewDidLoad() {
-        print("viewDidLoad")
         self.view.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(containerView)
@@ -161,7 +160,6 @@ class ModuleSiteViewController: NSViewController {
     }
     
     @objc func menuAction() {
-        print("! \(self.selectionMenu.indexOfSelectedItem)")
         guard self.availableModules.count > self.selectionMenu.indexOfSelectedItem else { return }
         let name = self.availableModules[self.selectionMenu.indexOfSelectedItem]
         self.coordinator?.requestLoad(ofModule: name, forSite: self)
