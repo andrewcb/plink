@@ -113,9 +113,9 @@ class ModuleSiteViewController: NSViewController {
         self.menuBConstraint?.isActive = self.menuPosition.isBottom
         self.menuLConstraint?.isActive = self.menuPosition.isLeading
         self.menuRConstraint?.isActive = self.menuPosition.isTrailing
-        self.menuTConstraint?.constant = self.menuOffset.height
+        self.menuTConstraint?.constant = -self.menuOffset.height
         self.menuBConstraint?.constant = self.menuOffset.height
-        self.menuLConstraint?.constant = self.menuOffset.width
+        self.menuLConstraint?.constant = -self.menuOffset.width
         self.menuRConstraint?.constant = self.menuOffset.width
     }
     

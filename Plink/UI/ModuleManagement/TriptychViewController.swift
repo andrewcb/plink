@@ -170,7 +170,7 @@ class TriptychViewController: NSViewController {
             site.coordinator = self.coordinator
             self.coordinator?.register(site)
             site.menuPosition = .topTrailing
-            site.menuOffset = CGSize(width: 18.0, height: 0.0)
+            site.menuOffset = CGSize(width: 18.0, height: 2.0)
             site.menuOverlapsContainer = true
             site.textColor = NSColor(white: 0.0, alpha: 1.0)
             site.backgroundColor = NSColor(white: 1.0, alpha: 0.4)
