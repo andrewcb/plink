@@ -21,7 +21,8 @@ class WorkspaceViewController: NSViewController {
             ModuleCoordinator.Spec(name: "script", unique: true, shelveable: true, withStoryboardID: "Source"),
             ModuleCoordinator.Spec(name: "console", unique: true, shelveable: true, withStoryboardID: "REPL"),
             ModuleCoordinator.Spec(name: "cueList", unique: true, shelveable: true, withStoryboardID: "CueList"),
-            ModuleCoordinator.Spec(name: "cycleList", unique: true, shelveable: true, withStoryboardID: "CycleList")
+            ModuleCoordinator.Spec(name: "cycleList", unique: true, shelveable: true, withStoryboardID: "CycleList"),
+            ModuleCoordinator.Spec(name: "mixer", unique: true, shelveable: true, withStoryboardID: "Mixer")
         ]
     }
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -39,6 +40,8 @@ class WorkspaceViewController: NSViewController {
             site.menuOverlapsContainer = true
             site.textColor = NSColor(white: 0.0, alpha: 1.0)
             site.backgroundColor = NSColor(white: 1.0, alpha: 0.2)
+        } else if let triptych = segue.destinationController as? TriptychViewController {
+            triptych.coordinator = self.coordinator
         }
     }
     

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		442AA029225C08ED00CF8C8E /* AudioSystem.Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442AA028225C08ED00CF8C8E /* AudioSystem.Channel.swift */; };
+		44404341229421FF005DEED2 /* TriptychViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44404340229421FF005DEED2 /* TriptychViewController.swift */; };
 		4455B35B21D59308002F0426 /* ModuleSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */; };
 		4455B35D21D5932E002F0426 /* ModuleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */; };
 		4455B35F21D59996002F0426 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35E21D59996002F0426 /* SourceViewController.swift */; };
@@ -117,6 +118,7 @@
 
 /* Begin PBXFileReference section */
 		442AA028225C08ED00CF8C8E /* AudioSystem.Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSystem.Channel.swift; sourceTree = "<group>"; };
+		44404340229421FF005DEED2 /* TriptychViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriptychViewController.swift; sourceTree = "<group>"; };
 		4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleSiteViewController.swift; sourceTree = "<group>"; };
 		4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleCoordinator.swift; sourceTree = "<group>"; };
 		4455B35E21D59996002F0426 /* SourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 			children = (
 				4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */,
 				4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */,
+				44404340229421FF005DEED2 /* TriptychViewController.swift */,
 			);
 			path = ModuleManagement;
 			sourceTree = "<group>";
@@ -914,6 +917,7 @@
 				445F6A9F2175627300E4419A /* AudioUnitParameterUnit+.swift in Sources */,
 				44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */,
 				449D697C21DD66A50083DAE5 /* CueListViewController.swift in Sources */,
+				44404341229421FF005DEED2 /* TriptychViewController.swift in Sources */,
 				445F6A9B21738F1500E4419A /* ManagedAudioUnitInstance.swift in Sources */,
 				447219AF216A59BC00B15AC0 /* AudioUnitGraph.swift in Sources */,
 				447219CB216AE2D800B15AC0 /* Scheduler.swift in Sources */,

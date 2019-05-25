@@ -54,6 +54,7 @@ class MixerViewController: NSViewController {
     private func setupCollectionView() {
         let layout = Layout()
         layout.scrollDirection = .horizontal
+        layout.sectionInset = NSEdgeInsets(top: 0.0, left: 16.0, bottom: 0.0, right: 0.0)
         self.mixerCollectionView.collectionViewLayout = layout
         ["MixerStripCollectionViewItem", "MixerAddStripCollectionViewItem"].forEach { (nib) in
             mixerCollectionView.register(NSNib(nibNamed: nib, bundle: nil), forItemWithIdentifier: NSUserInterfaceItemIdentifier(nib))

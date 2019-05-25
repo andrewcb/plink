@@ -25,6 +25,13 @@ class ModuleSiteViewController: NSViewController {
         didSet { self.adjustConstraints() }
     }
     
+    /// The offset of the menu from the corner of the container
+    var menuOffset: CGSize = .zero {
+        didSet {
+            self.adjustConstraints()
+        }
+    }
+    
     /// If true, the container fills the entire space, with the menu button overlapping it
     var menuOverlapsContainer: Bool = false {
         didSet { self.adjustConstraints() }
@@ -106,10 +113,13 @@ class ModuleSiteViewController: NSViewController {
         self.menuBConstraint?.isActive = self.menuPosition.isBottom
         self.menuLConstraint?.isActive = self.menuPosition.isLeading
         self.menuRConstraint?.isActive = self.menuPosition.isTrailing
+        self.menuTConstraint?.constant = -self.menuOffset.height
+        self.menuBConstraint?.constant = self.menuOffset.height
+        self.menuLConstraint?.constant = -self.menuOffset.width
+        self.menuRConstraint?.constant = self.menuOffset.width
     }
     
     override func viewDidLoad() {
-        print("viewDidLoad")
         self.view.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(containerView)
@@ -161,7 +171,6 @@ class ModuleSiteViewController: NSViewController {
     }
     
     @objc func menuAction() {
-        print("! \(self.selectionMenu.indexOfSelectedItem)")
         guard self.availableModules.count > self.selectionMenu.indexOfSelectedItem else { return }
         let name = self.availableModules[self.selectionMenu.indexOfSelectedItem]
         self.coordinator?.requestLoad(ofModule: name, forSite: self)
