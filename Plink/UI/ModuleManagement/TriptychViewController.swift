@@ -82,6 +82,8 @@ class TriptychViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.wantsLayer = true
+        self.view.layer?.backgroundColor = NSColor.codeBackground.cgColor
 
         self.splitView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         self.splitView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
@@ -103,7 +105,7 @@ class TriptychViewController: NSViewController {
             self.view.addSubview(btn)
             btn.state = .open
             btn.widthAnchor.constraint(equalToConstant: 16).isActive = true
-            btn.heightAnchor.constraint(equalToConstant: 16).isActive = true
+            btn.heightAnchor.constraint(equalToConstant: 19).isActive = true
             btn.topAnchor.constraint(equalTo: self.splitView.topAnchor, constant: 2.0).isActive = true
             return btn
         }
@@ -164,7 +166,7 @@ class TriptychViewController: NSViewController {
     }
     
     private func loadEmbeddedViews() {
-        [nil, "mixer", nil].enumerated().forEach { (i, name) in
+        [nil, "mixer", "cueList"].enumerated().forEach { (i, name) in
             let site = ModuleSiteViewController()
             site.currentModuleName = name.map { ModuleCoordinator.Spec.Name(rawValue: $0) }
             site.coordinator = self.coordinator
