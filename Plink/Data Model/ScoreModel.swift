@@ -10,18 +10,10 @@ import Foundation
 
 /** The model encapsulating the Score, i.e., all events (not defined in code) mapped to a transport time. */
 struct ScoreModel {
-    // A type of action that may be triggered once-off or repeatedly
-    enum CuedAction {
-        /// Evaluate some code text exactly as is
-        case codeStatement(String)
-        /// Call a named procedure, passing whichever arguments are sensible
-        case callProcedure(String)
-    }
-
     // MARK: a Cue: is a timestamped action (typically code statements to execute)
     struct Cue: WithTime {
         let time: TickTime
-        let action: CuedAction
+        let action: CodeEngineAction
     }
     
     // MARK: a Cycle is a (switchable) periodic action
@@ -30,7 +22,7 @@ struct ScoreModel {
         var isActive: Bool
         let period: TickDuration
         let modulus: TickTime
-        let action: CuedAction
+        let action: CodeEngineAction
     }
     
     typealias CueList = [Cue]
@@ -94,52 +86,8 @@ struct ScoreModel {
 
 }
 
-extension ScoreModel.CuedAction {
-    /// Construct a CuedAction given some code text; if it's just a symbol, it becomes a .callProcedure, otherwise it's a .codeStatement
-    init(codeText: String) {
-        let codeText = codeText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        let reSymbol = try! NSRegularExpression(pattern: "^[a-zA-Z$_][a-zA-Z0-9$_]*$", options: [])
-        if !reSymbol.matches(in: codeText, range: NSRange(location:0, length: codeText.count)).isEmpty {
-            self = .callProcedure(codeText)
-        } else {
-            self = .codeStatement(codeText)
-        }
-    }
-}
-
-extension ScoreModel.CuedAction: Equatable {}
 extension ScoreModel.Cue: Equatable {}
 extension ScoreModel.Cycle: Equatable {}
-
-extension ScoreModel.CuedAction: Codable {
-    enum CodingKeys: String, CodingKey {
-        case code
-        case procedure
-    }
-    
-    struct DecodingError: Swift.Error { }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        if let code = try container.decodeIfPresent(String.self, forKey: .code) {
-            self = .codeStatement(code)
-        } else if let proc = try container.decodeIfPresent(String.self, forKey: .procedure) {
-            self = .callProcedure(proc)
-        } else {
-            throw DecodingError()
-        }
-        
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch(self) {
-        case .codeStatement(let code): try container.encode(code, forKey: .code)
-        case .callProcedure(let proc): try container.encode(proc, forKey: .procedure)
-        }
-    }
-}
 
 extension ScoreModel.Cue: Codable {
     enum CodingKeys: String, CodingKey {
@@ -150,7 +98,7 @@ extension ScoreModel.Cue: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.time = TickTime(try container.decode(Int.self, forKey: .time))
-        self.action = try ScoreModel.CuedAction(from: decoder)
+        self.action = try CodeEngineAction(from: decoder)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -174,7 +122,7 @@ extension ScoreModel.Cycle: Codable {
         self.isActive = try container.decode(Bool.self, forKey: .isActive)
         self.period = TickTime(try container.decode(Int.self, forKey: .period))
         self.modulus = TickTime(try container.decodeIfPresent(Int.self, forKey: .modulus) ?? 0)
-        self.action = try ScoreModel.CuedAction(from: decoder)
+        self.action = try CodeEngineAction(from: decoder)
     }
     
     func encode(to encoder: Encoder) throws {

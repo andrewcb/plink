@@ -12,7 +12,7 @@ import Cocoa
 class CueColumnCell: NSTableCellView {
     var index: Int = 0
     func fill(from cue: ScoreModel.Cue) { }
-    var onChange: ((Int, TickTime?, ScoreModel.CuedAction?)->())?
+    var onChange: ((Int, TickTime?, CodeEngineAction?)->())?
     var onDelete: ((Int) -> ())?
 }
 
@@ -46,7 +46,7 @@ class CueActionCell: CueColumnCell {
     }
     @IBAction func valueChanged(_ sender: Any) {
         guard let textField = self.textField, sender as? NSTextField == textField else { return }
-        let action = ScoreModel.CuedAction(codeText: textField.stringValue)
+        let action = CodeEngineAction(codeText: textField.stringValue)
         self.onChange?(self.index, nil, action)
     }
 }
@@ -92,7 +92,7 @@ class CueListViewController: ScoreItemListViewController {
         }
     }
     
-    fileprivate func cellChanged(_ index: Int, _ time: TickTime?, _ action: ScoreModel.CuedAction?) {
+    fileprivate func cellChanged(_ index: Int, _ time: TickTime?, _ action: CodeEngineAction?) {
         guard let transport = self.world?.transport else { return }
         let oldCue = self.cueList[index]
         let newCue = ScoreModel.Cue(time: time ?? oldCue.time, action: action ?? oldCue.action)
@@ -114,7 +114,7 @@ class CueListViewController: ScoreItemListViewController {
     }
     
     func deleteRow(at index: Int) {
-        print("Delete \(index)")
+        //print("Delete \(index)")
         guard let transport = self.world?.transport else { return }
         // FIXME: transport.scoreModel's onCueListChanged is for some reason empty
         transport.score.deleteCue(at: index)

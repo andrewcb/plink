@@ -11,7 +11,7 @@ import Foundation
 class CycleColumnCell: NSTableCellView {
     var index: Int = 0
     func fill(from cycle: ScoreModel.Cycle) { }
-    var onChange: ((Int, String?, Bool?, TickDuration?, TickTime?, ScoreModel.CuedAction?)->())?
+    var onChange: ((Int, String?, Bool?, TickDuration?, TickTime?, CodeEngineAction?)->())?
 }
 
 class CycleNameCell: CycleColumnCell {
@@ -87,7 +87,7 @@ class CycleActionCell: CycleColumnCell {
     }
     @IBAction func valueChanged(_ sender: Any) {
         guard let textField = self.textField, sender as? NSTextField == textField else { return }
-        let action = ScoreModel.CuedAction(codeText: textField.stringValue)
+        let action = CodeEngineAction(codeText: textField.stringValue)
         self.onChange?(self.index, nil, nil, nil, nil, action)
     }
 }
@@ -98,7 +98,7 @@ class CycleListViewController: ScoreItemListViewController {
     
     var cycleList: [ScoreModel.Cycle] = []
     
-    fileprivate func cellChanged(_ index: Int, _ name: String?, _ isActive: Bool?, _ period: TickDuration?, _ modulus: TickTime?, _ action: ScoreModel.CuedAction?) {
+    fileprivate func cellChanged(_ index: Int, _ name: String?, _ isActive: Bool?, _ period: TickDuration?, _ modulus: TickTime?, _ action: CodeEngineAction?) {
         guard let transport = self.world?.transport else { return }
         let oldCycle = self.cycleList[index]
         let newCycle = ScoreModel.Cycle(name: name ?? oldCycle.name, isActive: isActive ?? oldCycle.isActive, period: period ?? oldCycle.period, modulus: modulus ?? oldCycle.modulus, action: action ?? oldCycle.action)

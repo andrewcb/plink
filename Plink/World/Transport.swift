@@ -30,7 +30,7 @@ public class Transport {
     
     /// A callback provided to execute a CuedAction within whatever systems it affects
     /// Called with: the CuedAction, and any arguments to pass if it is a procedure call
-    var cuedActionCallback: ((ScoreModel.CuedAction, [Any]?)->())?
+    var cuedActionCallback: ((CodeEngineAction, [Any]?)->())?
     
     private var playContext: PlayContext?
     

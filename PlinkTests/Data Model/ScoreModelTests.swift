@@ -11,23 +11,13 @@ import XCTest
 
 class ScoreModelTests: XCTestCase {
     
-    func testCuedActionFromCodeText() {
-        XCTAssertEqual(ScoreModel.CuedAction(codeText: "anIdentifier"), .callProcedure("anIdentifier"))
-        XCTAssertEqual(ScoreModel.CuedAction(codeText: "another_id"), .callProcedure("another_id"))
-        XCTAssertEqual(ScoreModel.CuedAction(codeText: "_another_id123"), .callProcedure("_another_id123"))
-        XCTAssertEqual(ScoreModel.CuedAction(codeText: "eliminateWhiteSpace "), .callProcedure("eliminateWhiteSpace"))
-        XCTAssertEqual(ScoreModel.CuedAction(codeText: "$foo"), .callProcedure("$foo"))
-        XCTAssertEqual(ScoreModel.CuedAction(codeText: "doSomething(1,2,3)"), .codeStatement("doSomething(1,2,3)"))
-        XCTAssertEqual(ScoreModel.CuedAction(codeText: " doSomething(1,2,3) "), .codeStatement("doSomething(1,2,3)"))
-    }
-
     func testDecodeCue() {
         // this is done using JSON, for simplicity; a Cue does not contain embedded binary data, and will serialise identically to plists and JSON
         let data = "{\"time\":57, \"code\":\"playFanfare()\"}".data(using: .utf8)!
         let decoder = JSONDecoder()
         let cue = try! decoder.decode(ScoreModel.Cue.self, from: data)
         XCTAssertEqual(cue.time, TickTime(57))
-        XCTAssertEqual(cue.action, ScoreModel.CuedAction.codeStatement("playFanfare()"))
+        XCTAssertEqual(cue.action, CodeEngineAction.codeStatement("playFanfare()"))
     }
     
     func testDecodeCycle() {
@@ -39,13 +29,13 @@ class ScoreModelTests: XCTestCase {
         XCTAssertFalse(cycle1.isActive)
         XCTAssertEqual(cycle1.period, 24)
         XCTAssertEqual(cycle1.modulus, 0)
-        XCTAssertEqual(cycle1.action, ScoreModel.CuedAction.codeStatement("playKick()"))
+        XCTAssertEqual(cycle1.action, CodeEngineAction.codeStatement("playKick()"))
         let cycle2 = try! decoder.decode(ScoreModel.Cycle.self, from: data2)
         XCTAssertEqual(cycle2.name, "SD")
         XCTAssertTrue(cycle2.isActive)
         XCTAssertEqual(cycle2.period, 24)
         XCTAssertEqual(cycle2.modulus, 12)
-        XCTAssertEqual(cycle2.action, ScoreModel.CuedAction.callProcedure("playSnare"))
+        XCTAssertEqual(cycle2.action, CodeEngineAction.callProcedure("playSnare"))
 
     }
     

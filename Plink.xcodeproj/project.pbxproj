@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		442AA029225C08ED00CF8C8E /* AudioSystem.Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442AA028225C08ED00CF8C8E /* AudioSystem.Channel.swift */; };
 		44404341229421FF005DEED2 /* TriptychViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44404340229421FF005DEED2 /* TriptychViewController.swift */; };
+		44404343229AE0C9005DEED2 /* CodeEngineAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44404342229AE0C9005DEED2 /* CodeEngineAction.swift */; };
+		44404345229B0821005DEED2 /* CodeEngineActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44404344229B0821005DEED2 /* CodeEngineActionTests.swift */; };
 		4455B35B21D59308002F0426 /* ModuleSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */; };
 		4455B35D21D5932E002F0426 /* ModuleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */; };
 		4455B35F21D59996002F0426 /* SourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4455B35E21D59996002F0426 /* SourceViewController.swift */; };
@@ -119,6 +121,8 @@
 /* Begin PBXFileReference section */
 		442AA028225C08ED00CF8C8E /* AudioSystem.Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSystem.Channel.swift; sourceTree = "<group>"; };
 		44404340229421FF005DEED2 /* TriptychViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriptychViewController.swift; sourceTree = "<group>"; };
+		44404342229AE0C9005DEED2 /* CodeEngineAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEngineAction.swift; sourceTree = "<group>"; };
+		44404344229B0821005DEED2 /* CodeEngineActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEngineActionTests.swift; sourceTree = "<group>"; };
 		4455B35A21D59308002F0426 /* ModuleSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleSiteViewController.swift; sourceTree = "<group>"; };
 		4455B35C21D5932E002F0426 /* ModuleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleCoordinator.swift; sourceTree = "<group>"; };
 		4455B35E21D59996002F0426 /* SourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceViewController.swift; sourceTree = "<group>"; };
@@ -479,6 +483,7 @@
 				44721994216A534B00B15AC0 /* CodeEngineDelegate.swift */,
 				44721995216A534B00B15AC0 /* CodeLanguageEngine.swift */,
 				44721999216A543E00B15AC0 /* CodeEngineEnvironment.swift */,
+				44404342229AE0C9005DEED2 /* CodeEngineAction.swift */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -697,6 +702,7 @@
 			isa = PBXGroup;
 			children = (
 				44A7690122692E7000ED2B69 /* JSCore */,
+				44404344229B0821005DEED2 /* CodeEngineActionTests.swift */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -888,6 +894,7 @@
 				447219512169014800B15AC0 /* AppDelegate.swift in Sources */,
 				447219792169096800B15AC0 /* NSViewController+.swift in Sources */,
 				445F6AA4218146E200E4419A /* LevelMeterView.swift in Sources */,
+				44404343229AE0C9005DEED2 /* CodeEngineAction.swift in Sources */,
 				449D698F21E7C7030083DAE5 /* DocumentFormatMigration.swift in Sources */,
 				4472199E216A55A000B15AC0 /* CodeSystem.swift in Sources */,
 				447219DC216BB77000B15AC0 /* UnitInterfaceViewController.swift in Sources */,
@@ -944,6 +951,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				449D698A21E16DF50083DAE5 /* BidirectionalCollectionWithTimeTests.swift in Sources */,
+				44404345229B0821005DEED2 /* CodeEngineActionTests.swift in Sources */,
 				447219662169014C00B15AC0 /* PlinkTests.swift in Sources */,
 				449D699221EA52890083DAE5 /* ScoreModelTests.swift in Sources */,
 				445F6AA22176AB8300E4419A /* AudioSystemTests.swift in Sources */,
