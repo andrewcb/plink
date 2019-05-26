@@ -10,7 +10,11 @@ import Cocoa
 
 class MixerStripCollectionViewItem: NSCollectionViewItem {
     
-    var channel: AudioSystem.Channel? = nil
+    var channel: AudioSystem.Channel? = nil {
+        didSet {
+            self.nodesCollectionView?.reloadData()
+        }
+    }
     
     // arguments: the view from which the request was launched
     var onRequestInstrumentChoice: ((NSView)->())?
