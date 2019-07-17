@@ -26,3 +26,14 @@ protocol CodeLanguageEngine {
     /// call a named procedure, passing given arguments
     func call(procedureNamed proc: String, withArguments args: [Any])
 }
+
+extension CodeLanguageEngine {
+    func run(action: CodeEngineAction, withArgs args: [Any]?) {
+        switch(action) {
+        case .codeStatement(let code):
+           _ = self.eval(command: code)
+        case .callProcedure(let proc):
+            self.call(procedureNamed: proc, withArguments: args ?? [])
+        }
+    }
+}

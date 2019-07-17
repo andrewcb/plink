@@ -33,15 +33,8 @@ class World: NSDocument {
             { self.scheduler.metronomeTick($0) }
         ])
         
-        // TODO: perhaps another object should handle this and route it appropriately?
         self.transport.cuedActionCallback = { (action, args) in
-            switch(action) {
-            case .codeStatement(let code):
-                _ = self.codeSystem.codeEngine?.eval(command: code)
-            case .callProcedure(let proc):
-                guard let codeEngine = self.codeSystem.codeEngine else { return }
-                codeEngine.call(procedureNamed: proc, withArguments: args ?? [])
-            }
+            self.codeSystem.codeEngine?.run(action: action, withArgs: args)
         }
         
         self.transport.onRunningStateChange = {
