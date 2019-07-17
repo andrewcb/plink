@@ -47,9 +47,11 @@ class TransportViewController: NSViewController {
     }
     
     func transportTempoChanged() {
-        guard let metronome = self.world?.metronome else { return }
-        self.tempoField.doubleValue = metronome.tempo
-        self.tempoStepper.doubleValue = metronome.tempo
+        DispatchQueue.main.async {
+            guard let metronome = self.world?.metronome else { return }
+            self.tempoField.doubleValue = metronome.tempo
+            self.tempoStepper.doubleValue = metronome.tempo
+        }
     }
     
     func transportRunningStateChanged() {
