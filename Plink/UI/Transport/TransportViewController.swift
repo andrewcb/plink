@@ -46,7 +46,9 @@ class TransportViewController: NSViewController {
         let metronome = world.metronome
         guard let master = audioSystem.masterLevel else { print("No level returned"); return }
         self.levelMeter.reading = master
-        self.loadMeter.reading = Float(metronome.load)
+        if let peakLoad = metronome.peakLoad {
+            self.loadMeter.reading = Float(peakLoad)
+        }
     }
     
     func setPos(to time: TickTime) {

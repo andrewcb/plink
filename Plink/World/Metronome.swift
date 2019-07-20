@@ -32,8 +32,9 @@ public class Metronome {
     // the numerator and denominator of the load value, in nanoseconds:
     private var loadRealTimeNS: UInt64 = 0
     private var loadRenderTimeNS: UInt64 = 0
+    private var _peakLoad: Double?
     
-    var load: Double {
+    var avgLoad: Double {
         guard loadRenderTimeNS > 0 else { return 0.0 }
         defer {
             self.loadRealTimeNS = 0
@@ -41,14 +42,18 @@ public class Metronome {
         }
         return Double(self.loadRealTimeNS) / Double(self.loadRenderTimeNS)
     }
+    var peakLoad: Double? {
+        defer { self._peakLoad = nil }
+        return self._peakLoad
+    }
     
     ///MARK:
     
     func advance(byFrames frames: Int, _ rate: Int) {
         let stime = mach_absolute_time()
-        let elapsedNsec = UInt64(frames)*NSEC_PER_SEC / UInt64(rate)
-        let elapsed = Double(frames)/Double(rate)
-        let ticks = self.ticksPerSecond * elapsed
+        let renderedNsec = UInt64(frames)*NSEC_PER_SEC / UInt64(rate)
+        let renderedSec = Double(frames)/Double(rate)
+        let ticks = self.ticksPerSecond * renderedSec
         let endTime = self.continuousTickTime + ticks
         if floor(endTime) > floor(self.continuousTickTime) {
             for t in (Int(ceil(self.continuousTickTime))..<Int(ceil(endTime))) {
@@ -56,8 +61,10 @@ public class Metronome {
                 self.runForCurrentTick()
             }
         }
-        self.loadRealTimeNS += convertToNanoseconds(fromMachTime: mach_absolute_time() - stime)
-        self.loadRenderTimeNS += elapsedNsec
+        let elapsedRealNsec = convertToNanoseconds(fromMachTime: mach_absolute_time() - stime)
+        self.loadRealTimeNS += elapsedRealNsec
+        self.loadRenderTimeNS += renderedNsec
+        self._peakLoad = max(self._peakLoad ?? 0, Double(elapsedRealNsec) / Double(renderedNsec))
         self.continuousTickTime = endTime
     }
 

@@ -448,6 +448,11 @@
                                     <constraint firstAttribute="width" constant="128" id="232-sL-qn9"/>
                                     <constraint firstAttribute="height" constant="22" id="iC1-hR-8wH"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Gtf-He-phe" customClass="LoadMeterView" customModule="Plink" customModuleProvider="target">
                                 <rect key="frame" x="457" y="39" width="128" height="22"/>
@@ -455,6 +460,11 @@
                                     <constraint firstAttribute="width" constant="128" id="5TB-t7-fAL"/>
                                     <constraint firstAttribute="height" constant="22" id="ZEf-Ou-CgI"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </customView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s9v-Qn-4sx">
                                 <rect key="frame" x="455" y="61" width="132" height="13"/>
