@@ -31,6 +31,8 @@ extension CodeEngineAction {
 
 extension CodeEngineAction: Equatable {}
 
+extension CodeEngineAction: Hashable {}
+
 extension CodeEngineAction: Codable {
     enum CodingKeys: String, CodingKey {
         case code

@@ -15,12 +15,14 @@ class TransportViewController: NSViewController {
     @IBOutlet var tempoField: NSTextField!
     @IBOutlet var tempoStepper: NSStepper!
     @IBOutlet var levelMeter: LevelMeterView!
+    @IBOutlet var loadMeter: LoadMeterView!
 
     var levelUpdateTimer: Timer?
     
     override func viewWillAppear() {
         super.viewWillAppear()
         self.levelMeter.orientation = .horizontal
+        self.loadMeter.orientation = .horizontal
         self.transportTempoChanged()
         self.world?.metronome.onTempoChange = { self.transportTempoChanged() }
         self.world?.transport.onRunningStateChange = { self.transportRunningStateChanged() }
@@ -37,9 +39,14 @@ class TransportViewController: NSViewController {
     }
     
     @objc func updateLevels() {
-        guard let audioSystem = self.world?.audioSystem else { return }
+        guard
+            let world = self.world,
+            let audioSystem = world.audioSystem
+        else { return }
+        let metronome = world.metronome
         guard let master = audioSystem.masterLevel else { print("No level returned"); return }
-        self.levelMeter.levelReading = master        
+        self.levelMeter.reading = master
+        self.loadMeter.reading = Float(metronome.load)
     }
     
     func setPos(to time: TickTime) {

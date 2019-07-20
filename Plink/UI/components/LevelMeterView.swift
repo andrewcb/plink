@@ -9,17 +9,14 @@
 import Cocoa
 import AudioToolbox
 
-class LevelMeterView: NSView {
-    enum Orientation {
-        case vertical
-        case horizontal
-    }
+class LevelMeterView: LinearMeterView {
+    
+    typealias Reading = AudioSystem.StereoLevelReading
     
     @IBInspectable var backgroundColor: NSColor = NSColor.black
-    var orientation: Orientation = .vertical
-    var levelReading: AudioSystem.StereoLevelReading? {
+    var reading: Reading? {
         didSet {
-            self._normalisedLevels = self.levelReading.map {
+            self._normalisedLevels = self.reading.map {
                 $0.map { (LevelMeterView.levelToProportion($0.average), LevelMeterView.levelToProportion($0.peak))  } }
             
         }
@@ -38,10 +35,6 @@ class LevelMeterView: NSView {
             self.needsDisplay = true
         }
     }
-    
-    // logical coördinates, with respect to the current orientation
-    var logicalLength: CGFloat { return self.orientation == .vertical ? self.bounds.height : self.bounds.width }
-    var logicalBreadth: CGFloat { return self.orientation == .horizontal ? self.bounds.height : self.bounds.width }
     
     let gradient = NSGradient(colors: [NSColor.green, NSColor.yellow, NSColor.red], atLocations: [0.0, 0.75, 1.0], colorSpace: NSColorSpace.deviceRGB)!
     

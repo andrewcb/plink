@@ -23,7 +23,6 @@ class World: NSDocument {
     let scheduler: Scheduler = Scheduler()
 
     override init() {
-        
         self.transport = Transport(metronome: self.metronome)
         self.codeSystem = CodeSystem(env: CodeEngineEnvironment(audioSystem: self.audioSystem, metronome: self.metronome, transport: self.transport, scheduler: self.scheduler))
         super.init()
@@ -34,7 +33,10 @@ class World: NSDocument {
         ])
         
         self.transport.cuedActionCallback = { (action, args) in
+            let stime = mach_absolute_time()
             self.codeSystem.codeEngine?.run(action: action, withArgs: args)
+            let etime = convertToNanoseconds(fromMachTime: mach_absolute_time() - stime) / NSEC_PER_USEC
+//            Swift.print("\(action): \(etime) usec")
         }
         
         self.transport.onRunningStateChange = {

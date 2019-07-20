@@ -365,7 +365,7 @@
             <objects>
                 <viewController id="JM4-3Z-c2K" customClass="TransportViewController" customModule="Plink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="s4A-9V-jdf">
-                        <rect key="frame" x="0.0" y="0.0" width="461" height="80"/>
+                        <rect key="frame" x="0.0" y="0.0" width="725" height="80"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dS6-fr-4tc">
@@ -426,9 +426,17 @@
                                     <action selector="tempoValueChanged:" target="JM4-3Z-c2K" id="tk9-w1-Rm2"/>
                                 </connections>
                             </stepper>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4tF-Z4-7JX">
-                                <rect key="frame" x="228" y="63" width="87" height="13"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4tF-Z4-7JX">
+                                <rect key="frame" x="226" y="61" width="89" height="13"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="TEMPO" id="Y75-kB-YRj">
+                                    <font key="font" metaFont="system" size="10"/>
+                                    <color key="textColor" white="0.1102957589" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XtC-3i-MDh">
+                                <rect key="frame" x="319" y="61" width="132" height="13"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="LEVEL" id="puK-j8-xix">
                                     <font key="font" metaFont="system" size="10"/>
                                     <color key="textColor" white="0.1102957589" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -441,22 +449,48 @@
                                     <constraint firstAttribute="height" constant="22" id="iC1-hR-8wH"/>
                                 </constraints>
                             </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Gtf-He-phe" customClass="LoadMeterView" customModule="Plink" customModuleProvider="target">
+                                <rect key="frame" x="457" y="39" width="128" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="128" id="5TB-t7-fAL"/>
+                                    <constraint firstAttribute="height" constant="22" id="ZEf-Ou-CgI"/>
+                                </constraints>
+                            </customView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s9v-Qn-4sx">
+                                <rect key="frame" x="455" y="61" width="132" height="13"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="LOAD (code)" id="Lx6-bQ-WV8">
+                                    <font key="font" metaFont="system" size="10"/>
+                                    <color key="textColor" white="0.1102957589" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="dS6-fr-4tc" firstAttribute="top" secondItem="aua-PE-zju" secondAttribute="top" id="1Ns-px-ZnW"/>
+                            <constraint firstItem="s9v-Qn-4sx" firstAttribute="bottom" secondItem="XtC-3i-MDh" secondAttribute="bottom" id="2H8-1d-Y8u"/>
                             <constraint firstItem="dS6-fr-4tc" firstAttribute="height" secondItem="aua-PE-zju" secondAttribute="height" id="563-DQ-OjW"/>
                             <constraint firstItem="fw5-Uj-Vam" firstAttribute="leading" secondItem="oxO-dE-266" secondAttribute="trailing" constant="16" id="6z8-ws-dkx"/>
+                            <constraint firstItem="XtC-3i-MDh" firstAttribute="bottom" secondItem="4tF-Z4-7JX" secondAttribute="bottom" id="7LM-yH-LOh"/>
                             <constraint firstItem="aua-PE-zju" firstAttribute="leading" secondItem="s4A-9V-jdf" secondAttribute="leading" constant="20" id="EE9-PM-vzR"/>
+                            <constraint firstItem="Gtf-He-phe" firstAttribute="top" secondItem="RAn-3u-9ch" secondAttribute="top" id="ETU-cL-DxE"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RAn-3u-9ch" secondAttribute="trailing" constant="12" id="KwO-js-zT4"/>
+                            <constraint firstItem="s9v-Qn-4sx" firstAttribute="top" secondItem="XtC-3i-MDh" secondAttribute="top" id="L5U-AW-an0"/>
+                            <constraint firstItem="XtC-3i-MDh" firstAttribute="top" secondItem="4tF-Z4-7JX" secondAttribute="top" id="PUp-Q8-Boi"/>
+                            <constraint firstItem="XtC-3i-MDh" firstAttribute="trailing" secondItem="RAn-3u-9ch" secondAttribute="trailing" id="Wo3-Kq-xPe"/>
+                            <constraint firstItem="Gtf-He-phe" firstAttribute="bottom" secondItem="RAn-3u-9ch" secondAttribute="bottom" id="XAS-Hl-9mr"/>
                             <constraint firstItem="RAn-3u-9ch" firstAttribute="centerY" secondItem="aud-xw-Zrd" secondAttribute="centerY" id="XvV-pf-72i"/>
                             <constraint firstItem="dS6-fr-4tc" firstAttribute="leading" secondItem="aua-PE-zju" secondAttribute="trailing" id="YAA-IQ-5a7"/>
                             <constraint firstItem="oxO-dE-266" firstAttribute="leading" secondItem="dS6-fr-4tc" secondAttribute="trailing" constant="16" id="aTA-Vi-tR1"/>
+                            <constraint firstItem="XtC-3i-MDh" firstAttribute="leading" secondItem="RAn-3u-9ch" secondAttribute="leading" id="dzd-4z-GeL"/>
                             <constraint firstItem="4tF-Z4-7JX" firstAttribute="trailing" secondItem="aud-xw-Zrd" secondAttribute="trailing" id="ecv-6x-YL5"/>
                             <constraint firstItem="oxO-dE-266" firstAttribute="centerY" secondItem="dS6-fr-4tc" secondAttribute="centerY" id="erK-jL-XUS"/>
+                            <constraint firstItem="s9v-Qn-4sx" firstAttribute="trailing" secondItem="Gtf-He-phe" secondAttribute="trailing" id="g3V-cY-01Q"/>
                             <constraint firstItem="fw5-Uj-Vam" firstAttribute="centerY" secondItem="oxO-dE-266" secondAttribute="centerY" id="hJT-O5-Ndb"/>
                             <constraint firstItem="aua-PE-zju" firstAttribute="top" secondItem="s4A-9V-jdf" secondAttribute="top" constant="20" id="iSd-20-sZY"/>
                             <constraint firstItem="fw5-Uj-Vam" firstAttribute="top" secondItem="4tF-Z4-7JX" secondAttribute="bottom" constant="3" id="ifx-Io-KpH"/>
+                            <constraint firstItem="Gtf-He-phe" firstAttribute="leading" secondItem="RAn-3u-9ch" secondAttribute="trailing" constant="8" id="k5A-N5-H8P"/>
                             <constraint firstItem="aud-xw-Zrd" firstAttribute="leading" secondItem="fw5-Uj-Vam" secondAttribute="trailing" constant="8" id="pwm-mC-RNE"/>
+                            <constraint firstItem="s9v-Qn-4sx" firstAttribute="centerX" secondItem="Gtf-He-phe" secondAttribute="centerX" id="rZg-dD-ivR"/>
                             <constraint firstItem="aud-xw-Zrd" firstAttribute="centerY" secondItem="fw5-Uj-Vam" secondAttribute="centerY" id="uOJ-Mq-n54"/>
                             <constraint firstItem="RAn-3u-9ch" firstAttribute="leading" secondItem="aud-xw-Zrd" secondAttribute="trailing" constant="8" id="vs6-GT-fAT"/>
                             <constraint firstItem="4tF-Z4-7JX" firstAttribute="leading" secondItem="fw5-Uj-Vam" secondAttribute="leading" id="ywY-ND-JbP"/>
@@ -464,6 +498,7 @@
                     </view>
                     <connections>
                         <outlet property="levelMeter" destination="RAn-3u-9ch" id="6gy-Oa-YPc"/>
+                        <outlet property="loadMeter" destination="Gtf-He-phe" id="O4Q-WR-mth"/>
                         <outlet property="playButton" destination="dS6-fr-4tc" id="svi-OJ-Uve"/>
                         <outlet property="positionLabel" destination="oxO-dE-266" id="U3z-a0-PBS"/>
                         <outlet property="stopButton" destination="aua-PE-zju" id="WPq-5H-GRX"/>
@@ -473,7 +508,7 @@
                 </viewController>
                 <customObject id="AHr-jS-Yj3" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="812" y="553"/>
+            <point key="canvasLocation" x="943.5" y="553"/>
         </scene>
         <!--Mixer View Controller-->
         <scene sceneID="g0Y-Hy-JRo">
@@ -922,7 +957,7 @@
                 </viewController>
                 <customObject id="5Qc-kM-g6Q" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1312" y="663"/>
+            <point key="canvasLocation" x="1718" y="663"/>
         </scene>
         <!--Unit Interface-->
         <scene sceneID="lZg-3H-WC5">
@@ -1819,7 +1854,7 @@
                 </viewController>
                 <customObject id="Vo6-uj-mbc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1769" y="663"/>
+            <point key="canvasLocation" x="2175" y="663"/>
         </scene>
     </scenes>
     <resources>

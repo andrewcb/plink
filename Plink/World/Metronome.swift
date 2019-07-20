@@ -27,7 +27,26 @@ public class Metronome {
     /// callbacks to be called every tick when the master transport is running
     public var onTick: [((TickTime)->())] = []
     
+    ///MARK: Load monitoring
+    
+    // the numerator and denominator of the load value, in nanoseconds:
+    private var loadRealTimeNS: UInt64 = 0
+    private var loadRenderTimeNS: UInt64 = 0
+    
+    var load: Double {
+        guard loadRenderTimeNS > 0 else { return 0.0 }
+        defer {
+            self.loadRealTimeNS = 0
+            self.loadRenderTimeNS = 0
+        }
+        return Double(self.loadRealTimeNS) / Double(self.loadRenderTimeNS)
+    }
+    
+    ///MARK:
+    
     func advance(byFrames frames: Int, _ rate: Int) {
+        let stime = mach_absolute_time()
+        let elapsedNsec = UInt64(frames)*NSEC_PER_SEC / UInt64(rate)
         let elapsed = Double(frames)/Double(rate)
         let ticks = self.ticksPerSecond * elapsed
         let endTime = self.continuousTickTime + ticks
@@ -37,6 +56,8 @@ public class Metronome {
                 self.runForCurrentTick()
             }
         }
+        self.loadRealTimeNS += convertToNanoseconds(fromMachTime: mach_absolute_time() - stime)
+        self.loadRenderTimeNS += elapsedNsec
         self.continuousTickTime = endTime
     }
 

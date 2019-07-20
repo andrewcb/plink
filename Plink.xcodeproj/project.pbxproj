@@ -98,6 +98,9 @@
 		44A769092282258A00ED2B69 /* UnitInterfaceWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A769082282258A00ED2B69 /* UnitInterfaceWindowController.swift */; };
 		44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */; };
 		44AAF6FE21BF314B00F5F394 /* AudioUnitInstanceParameterInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */; };
+		44D1DFE822DF7B4A00EA1A1B /* profiling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D1DFE722DF7B4A00EA1A1B /* profiling.swift */; };
+		44D1DFEA22E362FF00EA1A1B /* LinearMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D1DFE922E362FF00EA1A1B /* LinearMeterView.swift */; };
+		44D1DFEC22E3668E00EA1A1B /* LoadMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D1DFEB22E3668E00EA1A1B /* LoadMeter.swift */; };
 		44ED396E21849B5A00CB15B4 /* NSRect+composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */; };
 		44ED39722184A6CE00CB15B4 /* NSRect+ComposableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */; };
 		44ED3974218755DC00CB15B4 /* WithTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ED3973218755DB00CB15B4 /* WithTime.swift */; };
@@ -217,6 +220,9 @@
 		44A769082282258A00ED2B69 /* UnitInterfaceWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitInterfaceWindowController.swift; sourceTree = "<group>"; };
 		44AAF6FB21B5B9E600F5F394 /* AudioUnitInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstance.swift; sourceTree = "<group>"; };
 		44AAF6FD21BF314A00F5F394 /* AudioUnitInstanceParameterInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitInstanceParameterInfo.swift; sourceTree = "<group>"; };
+		44D1DFE722DF7B4A00EA1A1B /* profiling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profiling.swift; sourceTree = "<group>"; };
+		44D1DFE922E362FF00EA1A1B /* LinearMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearMeterView.swift; sourceTree = "<group>"; };
+		44D1DFEB22E3668E00EA1A1B /* LoadMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMeter.swift; sourceTree = "<group>"; };
 		44ED396D21849B5A00CB15B4 /* NSRect+composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+composable.swift"; sourceTree = "<group>"; };
 		44ED39712184A6CE00CB15B4 /* NSRect+ComposableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRect+ComposableTests.swift"; sourceTree = "<group>"; };
 		44ED3973218755DB00CB15B4 /* WithTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithTime.swift; sourceTree = "<group>"; };
@@ -326,6 +332,7 @@
 				449D698021E027210083DAE5 /* Performance */,
 				447219732169055800B15AC0 /* Data Model */,
 				447219712169049A00B15AC0 /* UI */,
+				44D1DFE622DF7AF600EA1A1B /* Utility */,
 				4472199F216A586800B15AC0 /* Library */,
 				447219502169014800B15AC0 /* AppDelegate.swift */,
 				447219562169014C00B15AC0 /* Assets.xcassets */,
@@ -463,7 +470,9 @@
 			isa = PBXGroup;
 			children = (
 				4472198E216A50AC00B15AC0 /* ColorfulTextButton.swift */,
+				44D1DFE922E362FF00EA1A1B /* LinearMeterView.swift */,
 				445F6AA3218146E200E4419A /* LevelMeterView.swift */,
+				44D1DFEB22E3668E00EA1A1B /* LoadMeter.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -715,6 +724,14 @@
 			path = JSCore;
 			sourceTree = "<group>";
 		};
+		44D1DFE622DF7AF600EA1A1B /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				44D1DFE722DF7B4A00EA1A1B /* profiling.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		44ED396F2184A60F00CB15B4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -900,6 +917,7 @@
 				447219DC216BB77000B15AC0 /* UnitInterfaceViewController.swift in Sources */,
 				44AAF6FC21B5B9E600F5F394 /* AudioUnitInstance.swift in Sources */,
 				447219BE216A5E8F00B15AC0 /* UnitJSWrapper.swift in Sources */,
+				44D1DFE822DF7B4A00EA1A1B /* profiling.swift in Sources */,
 				44721992216A51A700B15AC0 /* NSColor+AppSpecific.swift in Sources */,
 				449D69A021F6459C0083DAE5 /* AudioBufferConsumer.swift in Sources */,
 				449D698621E116410083DAE5 /* BidirectionalCollection+WithTime.swift in Sources */,
@@ -935,6 +953,8 @@
 				447219D5216AEA0B00B15AC0 /* WorldModel.swift in Sources */,
 				449D699521EB6AD70083DAE5 /* CycleListViewController.swift in Sources */,
 				44A768FC22654CD700ED2B69 /* LevelSliderCell.swift in Sources */,
+				44D1DFEA22E362FF00EA1A1B /* LinearMeterView.swift in Sources */,
+				44D1DFEC22E3668E00EA1A1B /* LoadMeter.swift in Sources */,
 				447219B0216A59BC00B15AC0 /* AudioStreamBasicDescription+.swift in Sources */,
 				449D697F21DD89E20083DAE5 /* TickTimeFormattingService.swift in Sources */,
 				447219CD216AE3E500B15AC0 /* SchedulerJSWrapper.swift in Sources */,
