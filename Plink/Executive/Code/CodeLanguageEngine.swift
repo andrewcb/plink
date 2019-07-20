@@ -25,6 +25,9 @@ protocol CodeLanguageEngine {
     
     /// call a named procedure, passing given arguments
     func call(procedureNamed proc: String, withArguments args: [Any])
+    
+    /// set a variable to a CodeValueConvertible value
+    func set(variableNamed key: String, to value: CodeValueConvertible)
 }
 
 extension CodeLanguageEngine {

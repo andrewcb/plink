@@ -140,5 +140,16 @@ class JSCoreCodeEngine: CodeLanguageEngine {
             proc.call(withArguments: args)
         }
     }
+    
+    func set(variableNamed key: String, to value: CodeValueConvertible) {
+        let jsval: JSValue
+        if let intValue = value as? Int {
+            jsval = JSValue(int32: Int32(intValue), in: self.ctx)
+        }
+        else {
+            fatalError("Unsupported CodeValueConvertible: \(value)")
+        }
+        self.ctx.setObject(jsval, forKeyedSubscript: key as NSCopying & NSObjectProtocol)
+    }
 }
 
